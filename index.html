@@ -6,176 +6,188 @@
 <title>なんてつサーバー参加ルール</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
 
-    body {
-        font-family: 'DotGothic16', monospace;
-        background: linear-gradient(135deg, #6ec1e4, #9fd3f1);
-        margin: 0;
-        padding: 0;
-        -webkit-user-select: none; 
-        -moz-user-select: none; 
-        -ms-user-select: none; 
-        user-select: none; 
-        color: #222;
-    }
+body {
+    font-family: 'DotGothic16', monospace;
+    background: linear-gradient(135deg, #a7d9ff, #d6ecff);
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #111;
+}
 
-    .top-links {
-        position: fixed;
-        top: 10px;
-        right: 20px;
-        z-index: 100;
-    }
-    .top-links a {
-        color: #222;
-        margin-left: 15px;
-        font-size: 28px;
-        text-decoration: none;
-        transition: transform 0.2s;
-    }
-    .top-links a:hover {
-        transform: scale(1.2);
-    }
+.top-links {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    z-index: 100;
+}
+.top-links a {
+    color: #004c99;
+    margin-left: 15px;
+    font-size: 30px;
+    text-decoration: none;
+    transition: transform 0.2s, color 0.2s;
+}
+.top-links a:hover, .top-links a:focus {
+    transform: scale(1.2);
+    color: #2196f3;
+    outline: none;
+}
 
-    .container {
-        max-width: 1000px;
-        margin: 60px auto;
-        background: #f2f2f2cc;
-        padding: 50px;
-        border: 5px solid #000;
-        border-radius: 10px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
+.container {
+    max-width: 1000px;
+    margin: 70px auto;
+    background: #ffffffcc;
+    padding: 50px;
+    border: 4px solid #000;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
 
-    h1 {
-        text-align: center;
-        color: #00b0ff;
-        text-shadow: 1px 1px #000;
-        margin-bottom: 30px;
-    }
+h1 {
+    text-align: center;
+    color: #0078d4;
+    text-shadow: 1px 1px #000;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
 
-    ol {
-        margin-left: 30px;
-        margin-bottom: 30px;
-    }
+ol {
+    margin-left: 30px;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
 
-    #rules ol li, #howToJoin ol li {
-        background-color: #cce7ff;
-        margin-bottom: 10px;
-        padding: 10px;
-        border: 2px solid #000;
-        border-radius: 5px;
-        color: #222;
-    }
+#rules ol li, #howToJoin ol li {
+    background-color: #e8f4ff;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 2px solid #000;
+    border-radius: 5px;
+}
 
-    button {
-        display: block;
-        margin: 25px auto 0;
-        padding: 15px 30px;
-        font-size: 18px;
-        cursor: pointer;
-        border: 3px solid #000;
-        border-radius: 5px;
-        background-color: #2196f3;
-        color: #fff;
-        box-shadow: 3px 3px 0 #000;
-        transition: all 0.2s;
-    }
-    button:hover {
-        background-color: #1976d2;
-        transform: translateY(-2px);
-        box-shadow: 5px 5px 0 #000;
-    }
+button {
+    display: block;
+    margin: 25px auto 0;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: 3px solid #000;
+    border-radius: 8px;
+    background-color: #0078d4;
+    color: #fff;
+    box-shadow: 3px 3px 0 #000;
+    transition: all 0.2s;
+}
+button:hover, button:focus {
+    background-color: #005fa3;
+    transform: translateY(-2px);
+    box-shadow: 5px 5px 0 #000;
+    outline: none;
+}
 
-    .hidden {
-        display: none;
-    }
+.hidden { display: none; }
 
-    .notice {
-        color: #ff5252;
-        text-align: center;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
+.notice {
+    color: #d32f2f;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
 
-    .discord-msg {
-        margin-top: 25px;
-        padding: 20px;
-        background-color: #7289da88;
-        border: 3px solid #000;
-        border-radius: 10px;
-        text-align: center;
-        font-weight: bold;
-        color: #fff;
-        font-size: 16px;
-        box-shadow: 3px 3px 0 #000;
-    }
+.discord-msg {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: #7289daee;
+    border: 3px solid #000;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+    font-size: 1.1rem;
+    box-shadow: 3px 3px 0 #000;
+}
 
-    a.discord-link {
-        color: #ffe;
-        font-weight: bold;
-        text-decoration: underline;
-    }
+a.discord-link {
+    color: #fffeee;
+    font-weight: bold;
+    text-decoration: underline;
+}
 
-    .copyable {
-        user-select: text;
-        background-color: #fff3;
-        padding: 3px 5px;
-        border-radius: 3px;
-        border: 1px dashed #000;
-    }
+.copyable {
+    user-select: text;
+    background-color: #e0f7ff;
+    padding: 3px 6px;
+    border-radius: 4px;
+    border: 1px dashed #000;
+}
 
-    .quiz {
-        margin-top: 20px;
-    }
+.quiz {
+    margin-top: 20px;
+}
 
-    .quiz-question {
-        background-color: #d0f0ff;
-        border: 2px solid #000;
-        padding: 15px;
-        border-radius: 5px;
-        margin-bottom: 15px;
-    }
+.quiz-question {
+    background-color: #d0f0ff;
+    border: 2px solid #000;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
 
-    .quiz-answer {
-        display: block;
-        margin: 5px 0;
-        padding: 10px;
-        background-color: #2196f3;
-        color: #fff;
-        border: 2px solid #000;
-        border-radius: 5px;
-        cursor: pointer;
-        text-align: center;
-    }
+.quiz-answer {
+    display: block;
+    margin: 8px 0;
+    padding: 12px;
+    background-color: #0078d4;
+    color: #fff;
+    border: 2px solid #000;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 1.1rem;
+}
+.quiz-answer:hover, .quiz-answer:focus {
+    background-color: #005fa3;
+    outline: 2px solid #222;
+}
 
-    .quiz-answer:hover {
-        background-color: #1976d2;
-    }
-
-    .explanation {
-        margin-top: 15px;
-        padding: 10px;
-        color: #ff0000;
-        font-weight: bold;
-        border: 2px solid #f00;
-        border-radius: 5px;
-        background-color: #ffdcdc;
-        display: none;
-    }
-
+.feedback {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+.feedback.correct {
+    color: #2e7d32;
+    background-color: #c8f7c5;
+    border: 2px solid #2e7d32;
+}
+.feedback.wrong {
+    color: #d32f2f;
+    background-color: #ffdada;
+    border: 2px solid #d32f2f;
+}
 </style>
 </head>
+
 <body oncontextmenu="return false;" onkeydown="if(event.key=='PrintScreen'){alert('スクリーンショットは禁止です');event.preventDefault();}">
 
-<div class="top-links">
-    <a href="https://youtube.com/@なんてつ" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-    <a href="https://discord.gg/79H7Jy65nz" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+<div class="top-links" role="navigation" aria-label="外部リンク">
+    <a href="https://youtube.com/@なんてつ" target="_blank" aria-label="YouTubeへ移動"><i class="fab fa-youtube"></i></a>
+    <a href="https://discord.gg/79H7Jy65nz" target="_blank" aria-label="Discordへ移動"><i class="fab fa-discord"></i></a>
 </div>
 
 <div class="container">
-    <!-- ルール表示 -->
-    <div id="rules">
+    <!-- サーバールール -->
+    <div id="rules" role="region" aria-label="サーバールール">
         <h1>サーバールール</h1>
         <ol>
             <li>他の人に迷惑をかける行為</li>
@@ -188,18 +200,18 @@
             <li>改造クライアント・チートの使用</li>
         </ol>
         <p class="notice">※サーバールールに違反した場合、それ相応の罰を処します。</p>
-        <button id="agreeBtn">ルールに同意する</button>
+        <button id="agreeBtn" aria-label="ルールに同意するボタン">ルールに同意する</button>
     </div>
 
-    <!-- クイズ表示 -->
-    <div id="quiz" class="hidden">
+    <!-- クイズ -->
+    <div id="quiz" class="hidden" role="region" aria-label="ルール確認クイズ">
         <h1>簡単なルール確認クイズ</h1>
         <div class="quiz" id="quizContainer"></div>
-        <div class="explanation" id="explanation"></div>
+        <div id="feedback" class="feedback hidden" aria-live="assertive"></div>
     </div>
 
-    <!-- 参加方法表示 -->
-    <div id="howToJoin" class="hidden">
+    <!-- 参加方法 -->
+    <div id="howToJoin" class="hidden" role="region" aria-label="参加方法">
         <h1>参加方法</h1>
         <p class="notice">※スクリーンショットは禁止です</p>
         <ol>
@@ -208,7 +220,7 @@
         </ol>
         <div class="discord-msg">
             Discordサーバーに入ればお知らせなどを見たりサーバーからチャットを送信ができるようになります！<br>
-            <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank">ぜひこちらからぜひご参加ください！</a>
+            <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank">[なんてつさーばー]からぜひご参加ください！</a>
         </div>
     </div>
 </div>
@@ -218,30 +230,20 @@ const agreeBtn = document.getElementById("agreeBtn");
 const rulesDiv = document.getElementById("rules");
 const quizDiv = document.getElementById("quiz");
 const quizContainer = document.getElementById("quizContainer");
-const explanationDiv = document.getElementById("explanation");
+const feedbackDiv = document.getElementById("feedback");
 const howToJoinDiv = document.getElementById("howToJoin");
 
-// クイズパターン複数（解説付き）
+// クイズパターン
 const quizPatterns = [
     [
-        { q: "サーバーで無断で建築物を破壊したらどうなる？", a: ["罰せられる", "何も書いてない場合壊してもOK"], correct: 0, explanation: "他人の建築物を破壊するのはルール違反で、必ず罰があります" },
-        { q: "PvPは何の場合だけOK？", a: ["合意ありのみ", "どんな場合でもOK"], correct: 0, explanation: "PvPは相手の同意がある場合のみ許可されます" },
-        { q: "バグを見つけたらどうする？", a: ["報告する", "悪質じゃなかったらOK"], correct: 0, explanation: "どんなバグでも利用するのは禁止です。見つけたら報告しましょう" }
+        { q: "建築物を無断で壊すとどうなる？", a: ["罰せられる", "特に問題なし"], correct: 0, explanation: "他人の建築を壊すのはルール違反です" },
+        { q: "PvPはいつOK？", a: ["合意ありのみ", "自由にOK"], correct: 0, explanation: "PvPは相手の同意がある時のみ可能です" },
+        { q: "バグを見つけた時の正しい行動は？", a: ["報告する", "利用して遊ぶ"], correct: 0, explanation: "バグ利用は禁止。見つけたら報告してね！" }
     ],
     [
-        { q: "他のプレイヤーに迷惑をかけたら？", a: ["罰せられる", "注意だけ"], correct: 0, explanation: "迷惑行為は罰の対象です" },
-        { q: "アイテムを盗んだら？", a: ["罰せられる", "少しだけだったら許される"], correct: 0, explanation: "他人のアイテムを盗むのは禁止です" },
-        { q: "改造クライアントの使用は？", a: ["禁止", "チートじゃなかったらOK"], correct: 0, explanation: "チートでなくても改造クライアントやチートの使用は禁止です" }
-    ],
-    [
-        { q: "チャットでの宣伝は？", a: ["禁止", "少しだけだったらOK"], correct: 0, explanation: "無断の宣伝・勧誘は禁止です" },
-        { q: "建築主の許可なしに入るのは？", a: ["禁止", "書いてなかったらOK"], correct: 0, explanation: "書いてなくても許可なしの建築内侵入は禁止です" },
-        { q: "PvPは無許可でしてもいいか？", a: ["ダメ", "OK"], correct: 0, explanation: "PvPは相手の同意がある場合のみOKです" }
-    ],
-    [
-        { q: "不具合・バグは使っていい？", a: ["報告するだけ", "悪質じゃなかったらOK"], correct: 0, explanation: "どんなバグでも不具合やバグは報告のみで使用は禁止です" },
-        { q: "アイテム持ち逃げは？", a: ["禁止", "少しだけだったらOK"], correct: 0, explanation: "持ち逃げは絶対に禁止です" },
-        { q: "改造クライアント使用は？", a: ["禁止", "チートじゃなかったらOK"], correct: 0, explanation: "チートじゃなくても改造クライアントやチートの使用は禁止です" }
+        { q: "他人のアイテムを盗むのは？", a: ["禁止", "少しならOK"], correct: 0, explanation: "盗みは一切禁止です" },
+        { q: "チャットで宣伝するのは？", a: ["禁止", "たまにならOK"], correct: 0, explanation: "無断の宣伝・勧誘は禁止です" },
+        { q: "改造クライアントは？", a: ["禁止", "バニラに似てたらOK"], correct: 0, explanation: "チートでなくても改造クライアントは禁止です" }
     ]
 ];
 
@@ -252,17 +254,16 @@ agreeBtn.addEventListener("click", () => {
     rulesDiv.classList.add("hidden");
     quizDiv.classList.remove("hidden");
 
-    // ランダムでクイズパターン選択
-    currentQuiz = quizPatterns[Math.floor(Math.random()*quizPatterns.length)];
+    currentQuiz = quizPatterns[Math.floor(Math.random() * quizPatterns.length)];
     questionIndex = 0;
     showQuestion();
 });
 
 function showQuestion() {
     quizContainer.innerHTML = "";
-    explanationDiv.style.display = "none";
+    feedbackDiv.classList.add("hidden");
 
-    if(questionIndex >= currentQuiz.length){
+    if (questionIndex >= currentQuiz.length) {
         quizDiv.classList.add("hidden");
         howToJoinDiv.classList.remove("hidden");
         return;
@@ -275,30 +276,36 @@ function showQuestion() {
     qDiv.textContent = qObj.q;
     quizContainer.appendChild(qDiv);
 
-    qObj.a.forEach((answer, idx)=>{
-        const btn = document.createElement("div");
+    qObj.a.forEach((answer, idx) => {
+        const btn = document.createElement("button");
         btn.className = "quiz-answer";
         btn.textContent = answer;
-        btn.onclick = ()=>{
-            if(idx === qObj.correct){
-                questionIndex++;
-                showQuestion();
-            }else{
-                // 解説表示
-                explanationDiv.textContent = "不正解です！" + qObj.explanation;
-                explanationDiv.style.display = "block";
-                setTimeout(()=>{
-                    quizDiv.classList.add("hidden");
-                    rulesDiv.classList.remove("hidden");
-                }, 2000);
-            }
-        };
+        btn.setAttribute("tabindex", "0");
+        btn.onclick = () => handleAnswer(idx, qObj);
         quizContainer.appendChild(btn);
     });
 }
 
-document.addEventListener('contextmenu', event => event.preventDefault());
-</script>
+function handleAnswer(idx, qObj) {
+    feedbackDiv.classList.remove("hidden");
+    if (idx === qObj.correct) {
+        feedbackDiv.textContent = "✔ 正解！";
+        feedbackDiv.className = "feedback correct";
+        setTimeout(() => {
+            questionIndex++;
+            showQuestion();
+        }, 1200);
+    } else {
+        feedbackDiv.textContent = "❌ 不正解！ " + qObj.explanation;
+        feedbackDiv.className = "feedback wrong";
+        setTimeout(() => {
+            quizDiv.classList.add("hidden");
+            rulesDiv.classList.remove("hidden");
+        }, 2500);
+    }
+}
 
+document.addEventListener('contextmenu', e => e.preventDefault());
+</script>
 </body>
 </html>
