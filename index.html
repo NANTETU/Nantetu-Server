@@ -4,51 +4,85 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>サーバー参加ルール</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
     body {
         font-family: "Yu Gothic", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
-        background-color: #f0f0f0;
+        background: linear-gradient(135deg, #e0f7fa, #80deea);
         margin: 0;
         padding: 0;
-        -webkit-user-select: none; /* Safari */
-        -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* IE10+/Edge */
-        user-select: none; /* 標準 */
+        -webkit-user-select: none; 
+        -moz-user-select: none; 
+        -ms-user-select: none; 
+        user-select: none; 
+    }
+    .top-links {
+        position: fixed;
+        top: 10px;
+        right: 20px;
+        z-index: 100;
+    }
+    .top-links a {
+        color: #fff;
+        margin-left: 15px;
+        font-size: 24px;
+        text-decoration: none;
+        transition: transform 0.2s;
+    }
+    .top-links a:hover {
+        transform: scale(1.2);
     }
     .container {
-        max-width: 600px;
-        margin: 50px auto;
-        background: #fff;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        max-width: 700px;
+        margin: 80px auto;
+        background: #ffffffcc;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        backdrop-filter: blur(5px);
     }
     h1, h2 {
         text-align: center;
+        color: #00796b;
     }
     ol {
         margin-left: 20px;
     }
     button {
         display: block;
-        margin: 20px auto 0;
-        padding: 10px 20px;
-        font-size: 16px;
+        margin: 25px auto 0;
+        padding: 12px 25px;
+        font-size: 18px;
         cursor: pointer;
         border: none;
-        border-radius: 5px;
-        background-color: #4CAF50;
+        border-radius: 8px;
+        background-color: #00796b;
         color: white;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        transition: all 0.2s;
     }
     button:hover {
-        background-color: #45a049;
+        background-color: #004d40;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.25);
     }
     .hidden {
         display: none;
     }
+    .notice {
+        color: red;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
 </style>
 </head>
-<body oncontextmenu="return false;" onkeydown="if(event.key=='PrintScreen'){alert('スクリーンショットはできません');event.preventDefault();}">
+<body oncontextmenu="return false;" onkeydown="if(event.key=='PrintScreen'){alert('スクリーンショットは禁止です');event.preventDefault();}">
+    <div class="top-links">
+        <a href="https://youtube.com/@なんてつ" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://discord.gg/79H7Jy65nz" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+    </div>
+
     <div class="container">
         <div id="rules">
             <h1>サーバールール</h1>
@@ -67,7 +101,7 @@
 
         <div id="howToJoin" class="hidden">
             <h1>参加方法</h1>
-            <p style="color:red; text-align:center;">※スクリーンショットは禁止です</p>
+            <p class="notice">※スクリーンショットは禁止です</p>
             <ol>
                 <li>nantetu55877 にフレンド申請</li>
                 <li>少し待って招待されたら参加！</li>
@@ -85,7 +119,6 @@
             howToJoinDiv.classList.remove("hidden");
         });
 
-        // 右クリック禁止（追加）
         document.addEventListener('contextmenu', event => event.preventDefault());
     </script>
 </body>
