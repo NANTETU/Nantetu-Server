@@ -124,6 +124,35 @@
         border-radius: 3px;
         border: 1px dashed #000;
     }
+
+    .quiz {
+        margin-top: 20px;
+    }
+
+    .quiz-question {
+        background-color: #d0f0ff;
+        border: 2px solid #000;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+
+    .quiz-answer {
+        display: block;
+        margin: 5px 0;
+        padding: 10px;
+        background-color: #2196f3;
+        color: #fff;
+        border: 2px solid #000;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .quiz-answer:hover {
+        background-color: #1976d2;
+    }
+
 </style>
 </head>
 <body oncontextmenu="return false;" onkeydown="if(event.key=='PrintScreen'){alert('スクリーンショットは禁止です');event.preventDefault();}">
@@ -134,6 +163,7 @@
 </div>
 
 <div class="container">
+    <!-- ルール表示 -->
     <div id="rules">
         <h1>サーバールール</h1>
         <ol>
@@ -146,9 +176,17 @@
             <li>不具合・バグ利用(見つけたら報告してね！)</li>
             <li>改造クライアント・チートの使用</li>
         </ol>
+        <p class="notice">※サーバールールに違反した場合、それ相応の罰を処します。</p>
         <button id="agreeBtn">利用規約に同意する</button>
     </div>
 
+    <!-- クイズ表示 -->
+    <div id="quiz" class="hidden">
+        <h1>簡単なルール確認クイズ</h1>
+        <div class="quiz" id="quizContainer"></div>
+    </div>
+
+    <!-- 参加方法表示 -->
     <div id="howToJoin" class="hidden">
         <h1>参加方法</h1>
         <p class="notice">※スクリーンショットは禁止です</p>
@@ -158,22 +196,78 @@
         </ol>
         <div class="discord-msg">
             Discordサーバーに入ればお知らせなどを見たりサーバーからチャットを送信ができるようになります！<br>
-            <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank">ぜひここからぜひご参加ください！</a>
+            <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank">[なんてつさーばー]からぜひご参加ください！</a>
         </div>
     </div>
 </div>
 
 <script>
-    const agreeBtn = document.getElementById("agreeBtn");
-    const rulesDiv = document.getElementById("rules");
-    const howToJoinDiv = document.getElementById("howToJoin");
+const agreeBtn = document.getElementById("agreeBtn");
+const rulesDiv = document.getElementById("rules");
+const quizDiv = document.getElementById("quiz");
+const quizContainer = document.getElementById("quizContainer");
+const howToJoinDiv = document.getElementById("howToJoin");
 
-    agreeBtn.addEventListener("click", () => {
-        rulesDiv.classList.add("hidden");
+// クイズパターン例（複数作れる）
+const quizPatterns = [
+    [
+        { q: "サーバーで無断で建築物を破壊したらどうなる？", a: ["罰せられる", "許される"], correct: 0 },
+        { q: "PvPは何の場合だけOK？", a: ["合意ありのみ", "自由"], correct: 0 },
+        { q: "バグを見つけたらどうする？", a: ["報告する", "使い続ける"], correct: 0 }
+    ],
+    [
+        { q: "他のプレイヤーに迷惑をかけたら？", a: ["罰せられる", "注意だけ"], correct: 0 },
+        { q: "アイテムを盗んだら？", a: ["罰せられる", "バレなければセーフ"], correct: 0 },
+        { q: "改造クライアントの使用は？", a: ["禁止", "大丈夫"], correct: 0 }
+    ]
+];
+
+let currentQuiz = [];
+let questionIndex = 0;
+
+agreeBtn.addEventListener("click", () => {
+    rulesDiv.classList.add("hidden");
+    quizDiv.classList.remove("hidden");
+
+    // ランダムでクイズパターン選択
+    currentQuiz = quizPatterns[Math.floor(Math.random()*quizPatterns.length)];
+    questionIndex = 0;
+    showQuestion();
+});
+
+function showQuestion() {
+    quizContainer.innerHTML = "";
+
+    if(questionIndex >= currentQuiz.length){
+        quizDiv.classList.add("hidden");
         howToJoinDiv.classList.remove("hidden");
-    });
+        return;
+    }
 
-    document.addEventListener('contextmenu', event => event.preventDefault());
+    const qObj = currentQuiz[questionIndex];
+
+    const qDiv = document.createElement("div");
+    qDiv.className = "quiz-question";
+    qDiv.textContent = qObj.q;
+    quizContainer.appendChild(qDiv);
+
+    qObj.a.forEach((answer, idx)=>{
+        const btn = document.createElement("div");
+        btn.className = "quiz-answer";
+        btn.textContent = answer;
+        btn.onclick = ()=>{
+            if(idx === qObj.correct){
+                questionIndex++;
+                showQuestion();
+            }else{
+                alert("不正解です、もう一度考えてみてください！");
+            }
+        };
+        quizContainer.appendChild(btn);
+    });
+}
+
+document.addEventListener('contextmenu', event => event.preventDefault());
 </script>
 
 </body>
