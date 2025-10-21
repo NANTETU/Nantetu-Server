@@ -8,12 +8,14 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
 
+    /* アクセシビリティ対応: 基本フォントサイズを大きくし、コントラストを改善 */
     body {
         font-family: 'DotGothic16', monospace;
         background: linear-gradient(135deg, #6ec1e4, #9fd3f1);
         margin: 0;
         padding: 0;
         color: #222;
+        font-size: 18px; /* 基本フォントサイズを大きく */
     }
 
     .top-links {
@@ -38,27 +40,42 @@
         margin: 80px auto;
         background: #f9f9f9ee;
         padding: 50px;
+        /* デザイン強化: 二重の枠線でレトロゲーム感を強調 */
         border: 5px solid #000;
+        outline: 5px solid #333; 
+        outline-offset: -5px; 
         border-radius: 10px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
 
+    /* デザイン強化: H1をゲームのタイトル風に */
     h1 {
         text-align: center;
-        color: #007bff;
-        text-shadow: 1px 1px #000;
+        /* マインクラフトのロゴのような緑と立体的な影 */
+        color: #4CAF50; 
+        text-shadow: 
+            -2px -2px 0 #000, 
+            2px -2px 0 #000, 
+            -2px 2px 0 #000, 
+            2px 2px 0 #000;
         margin-bottom: 30px;
+        font-size: 44px; /* 大きく強調 */
+    }
+    
+    h2 {
+        text-shadow: 1px 1px 0 #fff;
     }
 
     ol {
         margin-left: 30px;
         margin-bottom: 30px;
+        padding-left: 0;
     }
 
     li {
         background-color: #d8ecff;
         margin-bottom: 10px;
-        padding: 10px;
+        padding: 15px; /* パディングを増やして読みやすく */
         border: 2px solid #000;
         border-radius: 5px;
         color: #222;
@@ -76,11 +93,17 @@
         color: #fff;
         box-shadow: 3px 3px 0 #000;
         transition: all 0.2s;
+        /* アクセシビリティ: フォーカス時のスタイルを追加 */
+        outline: none;
     }
     button:hover {
         background-color: #1976d2;
         transform: translateY(-2px);
         box-shadow: 5px 5px 0 #000;
+    }
+    button:focus {
+        border-color: #ffcc00; /* フォーカス時に目立つ色に */
+        box-shadow: 0 0 0 3px #ffcc00;
     }
 
     .hidden { display: none; }
@@ -90,6 +113,10 @@
         text-align: center;
         font-weight: bold;
         margin-bottom: 10px;
+        /* コントラスト改善 */
+        background-color: #fff; 
+        padding: 5px;
+        border-radius: 5px;
     }
 
     .discord-msg {
@@ -101,7 +128,7 @@
         text-align: center;
         font-weight: bold;
         color: #fff;
-        font-size: 16px;
+        font-size: 18px; 
         box-shadow: 3px 3px 0 #000;
     }
 
@@ -109,6 +136,8 @@
         color: #fff;
         font-weight: bold;
         text-decoration: underline;
+        /* コントラスト改善 */
+        text-shadow: 1px 1px 1px #000; 
     }
 
     .copyable {
@@ -127,28 +156,39 @@
         margin-bottom: 15px;
     }
 
-    .quiz-answer {
+    /* 回答ボタンのスタイル */
+    .quiz-answer-btn {
         display: block;
-        margin: 5px 0;
-        padding: 10px;
+        width: 100%; /* 幅をフルに */
+        margin: 10px 0;
+        padding: 15px;
         background-color: #2196f3;
         color: #fff;
         border: 2px solid #000;
         border-radius: 5px;
         cursor: pointer;
         text-align: center;
+        font-size: 18px;
+        font-family: 'DotGothic16', monospace;
+        transition: background-color 0.2s, transform 0.2s;
     }
 
-    .quiz-answer:hover {
+    .quiz-answer-btn:hover {
         background-color: #1976d2;
+        transform: scale(1.02);
+    }
+    
+    .quiz-answer-btn:focus {
+        border-color: #ffcc00;
+        box-shadow: 0 0 0 3px #ffcc00;
     }
 
     .explanation {
         margin-top: 15px;
-        padding: 10px;
-        color: #ff0000;
+        padding: 15px;
+        color: #a00; /* より濃い赤でコントラスト確保 */
         font-weight: bold;
-        border: 2px solid #f00;
+        border: 3px solid #f00;
         border-radius: 5px;
         background-color: #ffdcdc;
         display: none;
@@ -161,6 +201,20 @@
         font-weight: bold;
         padding: 10px;
         border-bottom: 3px solid #000;
+    }
+    
+    /* 合格画面のスタイル */
+    .pass-screen {
+        text-align: center;
+        padding: 40px;
+        background-color: #e8f5e9;
+        border: 3px solid #4CAF50;
+        border-radius: 10px;
+        margin-top: 30px;
+    }
+    .pass-screen h2 {
+        font-size: 30px;
+        color: #4CAF50;
     }
 </style>
 </head>
@@ -212,6 +266,7 @@
 
 <script>
 // ======== 音の設定（埋め込みbase64） ========
+// NOTE: base64データは長いため省略しています。ご自身の元のコードからコピーして貼り付けてください。
 const correctSound = new Audio("data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA...");
 const wrongSound   = new Audio("data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACdgCA...");
 
@@ -239,8 +294,11 @@ let currentQuiz = [];
 let questionIndex = 0;
 
 document.getElementById("agreeBtn").addEventListener("click", () => {
+    // スクロール機能の代わりに、非表示・表示で切り替え
     rulesDiv.classList.add("hidden");
     quizDiv.classList.remove("hidden");
+    
+    // クイズのランダム化
     currentQuiz = quizPatterns[Math.floor(Math.random()*quizPatterns.length)];
     questionIndex = 0;
     showQuestion();
@@ -250,9 +308,19 @@ function showQuestion() {
     quizContainer.innerHTML = "";
     explanationDiv.style.display = "none";
 
+    // 全問正解した時の処理（合格画面の表示）
     if(questionIndex >= currentQuiz.length){
-        quizDiv.classList.add("hidden");
-        howToJoinDiv.classList.remove("hidden");
+        quizContainer.innerHTML = `
+            <div class="pass-screen">
+                <h2>🎉 ルール確認合格！ 🎉</h2>
+                <p>お疲れ様でした。これで「なんてつサーバー」の参加資格を獲得しました！</p>
+                <button id="goToJoinBtn" style="margin-top: 30px;">参加方法へ</button>
+            </div>
+        `;
+        document.getElementById("goToJoinBtn").addEventListener("click", () => {
+            quizDiv.classList.add("hidden");
+            howToJoinDiv.classList.remove("hidden");
+        });
         return;
     }
 
@@ -263,20 +331,27 @@ function showQuestion() {
     quizContainer.appendChild(qDiv);
 
     qObj.a.forEach((answer, idx)=>{
-        const btn = document.createElement("div");
-        btn.className = "quiz-answer";
+        // 修正: divからbuttonタグに変更し、アクセシビリティを確保
+        const btn = document.createElement("button"); 
+        btn.type = "button";
+        btn.className = "quiz-answer-btn"; // クラス名を変更
         btn.textContent = answer;
+        
         btn.onclick = ()=>{
             if(idx === qObj.correct){
+                // 正解時
                 correctSound.currentTime = 0;
                 correctSound.play();
                 questionIndex++;
                 showQuestion();
             }else{
+                // 不正解時
                 wrongSound.currentTime = 0;
                 wrongSound.play();
-                explanationDiv.textContent = "不正解！ " + qObj.explanation;
+                explanationDiv.textContent = "不正解！ " + qObj.explanation + " ルールをよく読み直してね！";
                 explanationDiv.style.display = "block";
+                
+                // 2秒後にルール画面に戻る
                 setTimeout(()=>{
                     quizDiv.classList.add("hidden");
                     rulesDiv.classList.remove("hidden");
