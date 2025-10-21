@@ -225,23 +225,23 @@ const howToJoinDiv = document.getElementById("howToJoin");
 const quizPatterns = [
     [
         { q: "サーバーで無断で建築物を破壊したらどうなる？", a: ["罰せられる", "何も書いてない場合壊してもOK"], correct: 0, explanation: "他人の建築物を破壊するのはルール違反で、必ず罰があります" },
-        { q: "PvPは何の場合だけOK？", a: ["合意ありのみ", "OK"], correct: 0, explanation: "PvPは相手の同意がある場合のみ許可されます" },
+        { q: "PvPは何の場合だけOK？", a: ["合意ありのみ", "どんな場合でもOK"], correct: 0, explanation: "PvPは相手の同意がある場合のみ許可されます" },
         { q: "バグを見つけたらどうする？", a: ["報告する", "悪質じゃなかったらOK"], correct: 0, explanation: "どんなバグでも利用するのは禁止です。見つけたら報告しましょう" }
     ],
     [
         { q: "他のプレイヤーに迷惑をかけたら？", a: ["罰せられる", "注意だけ"], correct: 0, explanation: "迷惑行為は罰の対象です" },
-        { q: "アイテムを盗んだら？", a: ["罰せられる", "許される"], correct: 0, explanation: "他人のアイテムを盗むのは禁止です" },
-        { q: "改造クライアントの使用は？", a: ["禁止", "OK"], correct: 0, explanation: "改造クライアントやチートの使用は禁止です" }
+        { q: "アイテムを盗んだら？", a: ["罰せられる", "少しだけだったら許される"], correct: 0, explanation: "他人のアイテムを盗むのは禁止です" },
+        { q: "改造クライアントの使用は？", a: ["禁止", "チートじゃなかったらOK"], correct: 0, explanation: "チートでなくても改造クライアントやチートの使用は禁止です" }
     ],
     [
-        { q: "チャットでの宣伝は？", a: ["禁止", "OK"], correct: 0, explanation: "無断の宣伝・勧誘は禁止です" },
+        { q: "チャットでの宣伝は？", a: ["禁止", "少しだけだったらOK"], correct: 0, explanation: "無断の宣伝・勧誘は禁止です" },
         { q: "建築主の許可なしに入るのは？", a: ["禁止", "書いてなかったらOK"], correct: 0, explanation: "書いてなくても許可なしの建築内侵入は禁止です" },
         { q: "PvPは無許可でしてもいいか？", a: ["ダメ", "OK"], correct: 0, explanation: "PvPは相手の同意がある場合のみOKです" }
     ],
     [
         { q: "不具合・バグは使っていい？", a: ["報告するだけ", "悪質じゃなかったらOK"], correct: 0, explanation: "どんなバグでも不具合やバグは報告のみで使用は禁止です" },
-        { q: "アイテム持ち逃げは？", a: ["禁止", "OK"], correct: 0, explanation: "持ち逃げは絶対に禁止です" },
-        { q: "改造クライアント使用は？", a: ["禁止", "OK"], correct: 0, explanation: "改造クライアントの使用は禁止です" }
+        { q: "アイテム持ち逃げは？", a: ["禁止", "少しだけだったらOK"], correct: 0, explanation: "持ち逃げは絶対に禁止です" },
+        { q: "改造クライアント使用は？", a: ["禁止", "チートじゃなかったらOK"], correct: 0, explanation: "チートじゃなくても改造クライアントやチートの使用は禁止です" }
     ]
 ];
 
@@ -285,7 +285,7 @@ function showQuestion() {
                 showQuestion();
             }else{
                 // 解説表示
-                explanationDiv.textContent = "不正解です！ " + qObj.explanation;
+                explanationDiv.textContent = "不正解です！" + qObj.explanation;
                 explanationDiv.style.display = "block";
                 setTimeout(()=>{
                     quizDiv.classList.add("hidden");
