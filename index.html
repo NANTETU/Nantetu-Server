@@ -288,8 +288,8 @@ function showQuestion() {
                 explanationDiv.textContent = "不正解です！ " + qObj.explanation;
                 explanationDiv.style.display = "block";
                 setTimeout(()=>{
-                    questionIndex = 0;
-                    showQuestion();
+                    quizDiv.classList.add("hidden");
+                    rulesDiv.classList.remove("hidden");
                 }, 2000);
             }
         };
