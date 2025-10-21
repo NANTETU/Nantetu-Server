@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>サーバー参加ルール</title>
+<style>
+    body {
+        font-family: "Yu Gothic", "Hiragino Kaku Gothic Pro", Meiryo, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 0;
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+/Edge */
+        user-select: none; /* 標準 */
+    }
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+        text-align: center;
+    }
+    ol {
+        margin-left: 20px;
+    }
+    button {
+        display: block;
+        margin: 20px auto 0;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+    }
+    button:hover {
+        background-color: #45a049;
+    }
+    .hidden {
+        display: none;
+    }
+</style>
+</head>
+<body oncontextmenu="return false;" onkeydown="if(event.key=='PrintScreen'){alert('スクリーンショットはできません');event.preventDefault();}">
+    <div class="container">
+        <div id="rules">
+            <h1>サーバールール</h1>
+            <ol>
+                <li>他の人に迷惑をかける行為</li>
+                <li>建築物の破壊・無断使用</li>
+                <li>アイテムの持ち逃げ・盗み</li>
+                <li>建築主の許可なしの入室</li>
+                <li>チャットでの宣伝・勧誘</li>
+                <li>一方的な攻撃(PvPは合意ありのみ)</li>
+                <li>不具合・バグ利用(見つけたら報告してね！)</li>
+                <li>改造クライアント・チートの使用</li>
+            </ol>
+            <button id="agreeBtn">利用規約に同意する</button>
+        </div>
+
+        <div id="howToJoin" class="hidden">
+            <h1>参加方法</h1>
+            <p style="color:red; text-align:center;">※スクリーンショットは禁止です</p>
+            <ol>
+                <li>nantetu55877 にフレンド申請</li>
+                <li>少し待って招待されたら参加！</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        const agreeBtn = document.getElementById("agreeBtn");
+        const rulesDiv = document.getElementById("rules");
+        const howToJoinDiv = document.getElementById("howToJoin");
+
+        agreeBtn.addEventListener("click", () => {
+            rulesDiv.classList.add("hidden");
+            howToJoinDiv.classList.remove("hidden");
+        });
+
+        // 右クリック禁止（追加）
+        document.addEventListener('contextmenu', event => event.preventDefault());
+    </script>
+</body>
+</html>
