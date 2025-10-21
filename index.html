@@ -10,14 +10,14 @@
 
     body {
         font-family: 'Press Start 2P', monospace;
-        background: linear-gradient(135deg, #7ec850, #5aa432); /* 緑っぽいマイクラ草ブロック感 */
+        background: linear-gradient(135deg, #6ec1e4, #9fd3f1); /* 明るめ青グラデ */
         margin: 0;
         padding: 0;
         -webkit-user-select: none; 
         -moz-user-select: none; 
         -ms-user-select: none; 
         user-select: none; 
-        color: #fff;
+        color: #222;
     }
 
     .top-links {
@@ -27,7 +27,7 @@
         z-index: 100;
     }
     .top-links a {
-        color: #fff;
+        color: #222;
         margin-left: 15px;
         font-size: 28px;
         text-decoration: none;
@@ -40,24 +40,32 @@
     .container {
         max-width: 1000px;
         margin: 60px auto;
-        background: #3e3e3ecc;
+        background: #f2f2f2cc; /* 薄い石っぽいグレー */
         padding: 50px;
         border: 5px solid #000;
         border-radius: 10px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        backdrop-filter: blur(2px);
     }
 
     h1 {
         text-align: center;
-        color: #ffeb3b;
-        text-shadow: 2px 2px #000;
+        color: #00b0ff;
+        text-shadow: 1px 1px #000;
         margin-bottom: 30px;
     }
 
     ol {
         margin-left: 30px;
         margin-bottom: 30px;
+    }
+
+    #rules ol li, #howToJoin ol li {
+        background-color: #cce7ff; /* 薄いブルー系 */
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 2px solid #000;
+        border-radius: 5px;
+        color: #222;
     }
 
     button {
@@ -68,13 +76,13 @@
         cursor: pointer;
         border: 3px solid #000;
         border-radius: 5px;
-        background-color: #ff5722;
-        color: white;
+        background-color: #2196f3; /* ボタンも青 */
+        color: #fff;
         box-shadow: 3px 3px 0 #000;
         transition: all 0.2s;
     }
     button:hover {
-        background-color: #e64a19;
+        background-color: #1976d2;
         transform: translateY(-2px);
         box-shadow: 5px 5px 0 #000;
     }
@@ -93,7 +101,7 @@
     .discord-msg {
         margin-top: 25px;
         padding: 20px;
-        background-color: #7289dacc;
+        background-color: #7289da88;
         border: 3px solid #000;
         border-radius: 10px;
         text-align: center;
@@ -109,14 +117,13 @@
         text-decoration: underline;
     }
 
-    /* ルールと参加方法にブロックっぽい背景 */
-    #rules ol li, #howToJoin ol li {
-        background-color: #b0b0b0;
-        margin-bottom: 10px;
-        padding: 10px;
-        border: 2px solid #000;
-        border-radius: 5px;
-        color: #000;
+    /* 参加方法のユーザー名だけコピー可能にする */
+    .copyable {
+        user-select: text;
+        background-color: #fff3;
+        padding: 3px 5px;
+        border-radius: 3px;
+        border: 1px dashed #000;
     }
 </style>
 </head>
@@ -147,7 +154,7 @@
         <h1>参加方法</h1>
         <p class="notice">※スクリーンショットは禁止です</p>
         <ol>
-            <li>nantetu55877 にフレンド申請</li>
+            <li><span class="copyable">nantetu55877</span> にフレンド申請</li>
             <li>少し待って招待されたら参加！</li>
         </ol>
         <div class="discord-msg">
