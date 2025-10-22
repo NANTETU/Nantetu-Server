@@ -50,24 +50,47 @@
         border-radius: 10px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* 影を復活させ、濃さを調整 */
     }
+    
+    /* ★追加★ サーバー状態表示ボックスのスタイル */
+    .status-box {
+        text-align: center;
+        margin: -50px 0 30px; /* containerの上側に食い込ませる */
+        padding: 15px;
+        border: 3px solid #333;
+        border-radius: 5px;
+        font-weight: bold;
+        text-shadow: 1px 1px 0 #fff;
+        font-size: 22px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .status-online {
+        background-color: #a8e6a8; /* 緑系 */
+        color: #1a73e8;
+        border-color: #27ae60;
+    }
+    .status-offline {
+        background-color: #ffcccb; /* 赤系 */
+        color: #d93025;
+        border-color: #c0392b;
+    }
+
 
     /* デザイン強化: H1をゲームのタイトル風に */
-h1 {
-    
-    text-align: center;
-    color: #ff4500; /* オレンジレッドで目立たせる */
-    font-weight: bold; /* 太字に追加 */
-    text-shadow: 
-        -3px -3px 0 #000, 
-        3px -3px 0 #000, 
-        -3px 3px 0 #000, 
-        3px 3px 0 #000,
-        3px 3px 0 #8B0000; /* 更に影を追加 */
-    margin-bottom: 30px;
-    font-size: 55px; 
-    padding-bottom: 10px;
-    border-bottom: 5px double #000; 
-}
+    h1 {
+        text-align: center;
+        color: #a00; /* 深い赤に変更 */
+        font-weight: bold;
+        text-shadow: 
+            -3px -3px 0 #333, /* 影の色を黒から濃いグレーに */
+            3px -3px 0 #333, 
+            -3px 3px 0 #333, 
+            3px 3px 0 #333,
+            4px 4px 0 #600; /* 更に影の色を深い赤に */
+        margin-bottom: 30px;
+        font-size: 55px; 
+        padding-bottom: 10px;
+        border-bottom: 5px double #333; /* 線も濃いグレーに */
+    }
     
     h2 {
         text-shadow: 1px 1px 0 #fff;
@@ -245,7 +268,7 @@ h1 {
         font-weight: bold;
     }
 
-    /* ★追加★ ルールクイズのヒントスタイル */
+    /* ルールクイズのヒントスタイル */
     .quiz-hint {
         font-size: 10px; /* 極小 */
         color: #aaa; /* 薄いグレー */
@@ -263,6 +286,10 @@ h1 {
 </div>
 
 <div class="container">
+    <div id="serverStatus" class="status-box">
+        ...読み込み中...
+    </div>
+
     <div id="rules">
         <h1>サーバールール</h1>
         <ol>
@@ -289,10 +316,10 @@ h1 {
     <div id="gamerTagInput" class="hidden">
         <h1>ゲーマータグ登録</h1>
         <div class="pass-screen">
-            <h2>✨ルール確認合格！✨</h2>
+            <h2>✨ ルール確認合格！ ✨</h2>
             <p class="important-notice">
                 迷惑行為対策のため、<br>
-                ゲーマータグ（MinecraftのID）の登録によろしければご協力お願いします。
+                ゲーマータグ（MinecraftのID）の登録にできるだけご協力お願いします。
             </p>
             <p>登録は任意ですが、ご協力いただくことでスムーズに招待され、問題発生時の対応が迅速になります。</p>
             <form id="gamerTagForm">
@@ -323,6 +350,49 @@ h1 {
 //  ※ ステップ1-3で取得したURLに置き換えてください
 // ====================================================================
 const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx2waJRTLD6_g-kq7qPez3_ZqoCVBYY4f7q0UIw0_ElDps2INHkBOJp75gVwaMrglWDMw/exec"; 
+
+// ====================================================================
+// ★追加★ サーバー監視設定
+// ====================================================================
+const SERVER_ADDRESS = "discount-findlaw.gl.at.ply.gg";
+const SERVER_PORT = "5346";
+const API_URL = `https://api.mcstatus.io/v2/status/bedrock/${SERVER_ADDRESS}:${SERVER_PORT}`;
+const statusElement = document.getElementById("serverStatus");
+
+
+// サーバー状態を取得し、Webサイトに反映する関数
+function fetchServerStatus() {
+    statusElement.classList.remove("status-online", "status-offline");
+    statusElement.textContent = "🔄 サーバー状態を読み込み中...";
+
+    fetch(API_URL)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('APIの応答エラー: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.online) {
+                const players = data.players.online || 0;
+                const maxPlayers = data.players.max || 0;
+                statusElement.textContent = `✅ サーバー起動中！ | プレイヤー数: ${players} / ${maxPlayers} 人`;
+                statusElement.classList.add("status-online");
+            } else {
+                statusElement.textContent = "❌ サーバーは停止中です。";
+                statusElement.classList.add("status-offline");
+            }
+        })
+        .catch(error => {
+            console.error('サーバー状態の取得エラー:', error);
+            statusElement.textContent = "⚠️ サーバー状態の取得に失敗しました。";
+            statusElement.classList.add("status-offline");
+        });
+}
+
+// ページロード時と、その後1分おきにステータスを更新
+fetchServerStatus();
+setInterval(fetchServerStatus, 60000); // 60000ミリ秒 = 1分
 
 // ====================================================================
 // クイズデータ (変更なし)
