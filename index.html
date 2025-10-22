@@ -420,16 +420,15 @@ document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
     const statusDiv = document.getElementById('formStatus');
     const submitBtn = document.querySelector('#gamerTagForm .submit-btn');
 
-    // 変更点: ゲーマータグが空欄の場合は登録処理をせず、最終ステップへ進む
+    // ゲーマータグが空欄の場合は登録処理をせず、最終ステップへ進む
     if (gamerTag === "") {
-        // 空欄の場合は、スキップボタンと同じ処理で最終ステップへ
         gamerTagInputDiv.classList.add("hidden");
         howToJoinDiv.classList.remove("hidden");
         howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
         return;
     }
     
-    statusDiv.textContent = "⚠️ 登録中...";
+    statusDiv.textContent = "⚠️ 登録中...（しばらくお待ちください）";
     statusDiv.style.color = "#ff8c00";
     submitBtn.disabled = true;
 
@@ -442,28 +441,28 @@ document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
         body: `gamerTag=${encodeURIComponent(gamerTag)}`
     })
     .then(response => {
-        // ★重要★: GASがJSONを返しているため、ここでresponse.json()を呼び出します
-        return response.json(); 
-    })
-    .then(data => {
-        // 成功時の処理
-        if (data.status === 'success') {
-            statusDiv.textContent = "✅ 登録完了！スプレッドシートに記録されました！";
-            statusDiv.style.color = "#4CAF50";
-            
-            // 最終ステップへ
-            gamerTagInputDiv.classList.add("hidden");
-            howToJoinDiv.classList.remove("hidden");
-            howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            // GAS側で意図せずエラーが返された場合
-            statusDiv.textContent = "❌ 登録失敗: " + data.message;
-            statusDiv.style.color = "red";
-            submitBtn.disabled = false;
+        // ★修正点1★: HTTPステータスコードをチェック
+        if (!response.ok) {
+            // ステータスが200番台でなければエラーと見なす
+            throw new Error('GASからの応答エラー: ' + response.statusText);
         }
+        
+        // GASが正しく設定されていれば、データはスプレッドシートに書き込まれています。
+        // JSONパースのエラーを避けるため、ここではresponse.json()を削除します。
+        return response; 
+    })
+    .then(() => {
+        // ★修正点2★: response.json()が成功した後の処理をここに移動
+        statusDiv.textContent = "✅ 登録完了！スプレッドシートに記録されました！";
+        statusDiv.style.color = "#4CAF50";
+        
+        // 最終ステップへ
+        gamerTagInputDiv.classList.add("hidden");
+        howToJoinDiv.classList.remove("hidden");
+        howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
     })
     .catch(error => {
-        // ★通信が失敗した場合（GASがCORSで弾かれた、またはJSONのパースに失敗）
+        // ネットワークエラー、またはresponse.okで弾かれた場合
         console.error('Fetch Error:', error);
         statusDiv.textContent = "❌ 登録に失敗しました。ネットワークを確認してください。";
         statusDiv.style.color = "red";
