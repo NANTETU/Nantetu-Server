@@ -9,17 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
-    /* ========== モダンデザインへの変更 ========== */
+    /* ========== モダンデザインへの変更（前回からの継続） ========== */
     
     body {
-        /* フォントをモダンなものに変更 */
         font-family: 'Noto Sans JP', sans-serif;
-        /* 背景色をクリーンなライトグレーに統一 */
         background-color: #f4f7f6; 
         margin: 0;
         padding: 0;
         color: #333;
-        font-size: 16px; /* 文字サイズを標準に */
+        font-size: 16px;
         line-height: 1.6;
     }
 
@@ -30,12 +28,12 @@
         z-index: 100;
     }
     .top-links a {
-        color: #3b5998; /* 落ち着いた青 */
+        color: #3b5998; 
         margin-left: 15px;
         font-size: 28px;
         text-decoration: none;
         transition: color 0.2s;
-        text-shadow: none; /* 影を削除 */
+        text-shadow: none; 
     }
     .top-links a:hover {
         color: #2d4373;
@@ -44,13 +42,12 @@
 
     .container {
         max-width: 900px;
-        margin: 100px auto 50px; /* 上部マージンを増やしてヘッダーと分離 */
-        /* 背景を白に変更し、シンプルでモダンな影を追加 */
+        margin: 100px auto 50px;
         background: #ffffff;
         padding: 40px;
         border: none;
-        border-radius: 12px; /* 角を丸く */
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* 控えめな影 */
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         outline: none;
         outline-offset: 0;
     }
@@ -58,26 +55,26 @@
     /* サーバー状態表示ボックスのスタイル */
     .status-box {
         text-align: center;
-        margin: -70px 0 40px; /* containerの上側に大きく食い込ませる */
+        margin: -70px 0 40px;
         padding: 20px;
         border: none;
         border-radius: 10px;
-        font-weight: 700; /* 太字 */
+        font-weight: 700;
         text-shadow: none;
         font-size: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* 新しい影 */
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         display: flex;
         justify-content: space-around;
         align-items: center;
     }
     .status-online {
-        background-color: #e6ffe6; /* 薄い緑の背景 */
-        color: #28a745; /* 濃い緑の文字 */
+        background-color: #e6ffe6;
+        color: #28a745;
         border: 1px solid #28a745; 
     }
     .status-offline {
-        background-color: #ffebe6; /* 薄い赤の背景 */
-        color: #dc3545; /* 濃い赤の文字 */
+        background-color: #ffebe6;
+        color: #dc3545;
         border: 1px solid #dc3545;
         justify-content: center;
     }
@@ -90,16 +87,16 @@
         font-size: 18px;
     }
 
-    /* タイトルと見出しの変更 */
+    /* タイトルと見出し */
     h1 {
         text-align: center;
-        color: #3b5998; /* 落ち着いたディープブルー */
+        color: #3b5998;
         font-weight: 700;
         text-shadow: none; 
         margin-bottom: 30px;
         font-size: 32px; 
         padding-bottom: 10px;
-        border-bottom: 2px solid #eee; /* シンプルな細い線 */
+        border-bottom: 2px solid #eee;
     }
     
     h2 {
@@ -113,91 +110,60 @@
     }
 
     li {
-        background-color: #f8f9fa; /* 非常に薄いグレー */
+        background-color: #f8f9fa;
         margin-bottom: 10px;
         padding: 15px;
-        border: 1px solid #ddd; /* 細い境界線 */
-        border-left: 5px solid #3b5998; /* アクセントカラーの縦線 */
+        border: 1px solid #ddd;
+        border-left: 5px solid #3b5998;
         border-radius: 6px;
         color: #333;
         box-shadow: none; 
     }
 
-    /* ボタンのスタイルをフラットに */
+    /* ボタンのスタイル */
     button, .submit-btn {
         display: block;
         margin: 25px auto 0;
         padding: 12px 25px;
         font-size: 18px;
         cursor: pointer;
-        border: none; /* 枠線を削除 */
+        border: none;
         border-radius: 6px;
-        background-color: #3b5998; /* アクセントカラー */
+        background-color: #3b5998;
         color: #fff;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 控えめな影 */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         transition: all 0.2s;
         outline: none;
         font-family: 'Noto Sans JP', sans-serif;
         font-weight: 700;
     }
     button:hover, .submit-btn:hover {
-        background-color: #2d4373; /* ホバーで少し濃く */
+        background-color: #2d4373;
         transform: translateY(-2px); 
         box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); 
     }
     button:focus, .submit-btn:focus {
         border-color: none;
-        box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.5); /* フォーカスリング */
+        box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.5);
     }
 
     .hidden { display: none; }
 
-    .notice {
-        color: #dc3545; 
-        text-align: center;
+    .notice, .important-notice {
+        color: #dc3545;
         font-weight: 700;
+        text-align: center;
         margin-bottom: 15px;
-        background-color: #fff0f0; 
-        padding: 10px;
+        padding: 10px 15px;
         border-radius: 4px;
-        border: 1px solid #dc3545; 
+        background-color: #fff0f0;
+        border: 1px solid #dc3545;
     }
     
-    .important-notice {
-        color: #dc3545; 
-        text-align: center;
-        font-weight: 700;
-        margin-bottom: 20px;
-        padding: 15px;
-        border: 2px dashed #dc3545; 
-        border-radius: 8px;
-        background-color: #fff8f8; 
-        box-shadow: none;
-    }
-
-    .discord-msg {
-        margin-top: 25px;
-        padding: 20px;
-        background-color: #7289da; /* Discordカラー */
-        border: none;
-        border-radius: 8px;
-        text-align: center;
-        font-weight: 700;
-        color: #fff;
-        font-size: 16px; 
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    a.discord-link {
-        color: #fff;
-        font-weight: 700;
-        text-decoration: underline;
-        text-shadow: none; 
-    }
-
+    /* コピー機能 */
     .copyable {
         user-select: none;
-        background-color: #e9ecef; /* ライトグレーの背景 */
+        background-color: #e9ecef;
         padding: 5px 10px;
         border-radius: 4px;
         border: 1px solid #ced4da;
@@ -206,11 +172,25 @@
         cursor: pointer;
         position: relative;
         font-weight: 700;
+        /* コピー時のホバー/アクティブスタイルを明確化 */
+        transition: background-color 0.1s;
+    }
+    .copyable:hover {
+        background-color: #dde1e5;
     }
     .copy-icon {
         margin-left: 8px;
         color: #3b5998;
-        transition: color 0.2s;
+        transition: color 0.2s, transform 0.2s;
+    }
+    /* ★新規追加★ コピー成功時のバウンスアニメーション */
+    @keyframes icon-bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-3px); }
+    }
+    .copyable.copied .copy-icon {
+        color: #28a745 !important;
+        animation: icon-bounce 0.3s ease-out;
     }
     .copy-message {
         background-color: #333;
@@ -218,16 +198,17 @@
         padding: 5px 10px;
         border-radius: 4px;
         font-size: 12px;
-        /* 位置調整 */
         bottom: 100%;
         left: 50%;
         transform: translate(-50%, -15px);
         opacity: 0;
         transition: opacity 0.3s;
+        pointer-events: none;
+        z-index: 10;
     }
 
     .quiz-question {
-        background-color: #f1f8ff; /* 薄い青系の背景 */
+        background-color: #f1f8ff;
         border: 1px solid #3b5998; 
         padding: 20px;
         border-radius: 8px;
@@ -239,11 +220,10 @@
     /* 回答ボタンのスタイル */
     .quiz-answer-btn {
         width: 100%; 
-        background-color: #17a2b8; /* クールなシアン系 */
+        background-color: #17a2b8;
         color: #fff;
         border: none;
     }
-
     .quiz-answer-btn:hover {
         background-color: #138496; 
     }
@@ -252,17 +232,6 @@
         color: #dc3545; 
         border: 1px solid #dc3545;
         background-color: #fff0f0; 
-    }
-    
-    /* 合格画面のスタイル */
-    .pass-screen {
-        background-color: #e2f7e2; /* 薄い緑系に */
-        border: 1px solid #28a745; 
-        border-radius: 8px;
-    }
-    .pass-screen h2 {
-        color: #28a745; 
-        font-size: 24px;
     }
     
     /* フォームのスタイル */
@@ -274,13 +243,13 @@
         font-family: 'Noto Sans JP', sans-serif;
     }
     .submit-btn[type="submit"] {
-        background-color: #28a745 !important; /* タグ登録ボタンを緑に */
+        background-color: #28a745 !important;
     }
     .submit-btn[type="submit"]:hover {
         background-color: #1e7e34 !important;
     }
     .submit-btn#skipTagBtn {
-        background-color: #6c757d !important; /* スキップボタンをグレーに */
+        background-color: #6c757d !important;
     }
     .submit-btn#skipTagBtn:hover {
         background-color: #5a6268 !important;
@@ -288,36 +257,8 @@
 
     /* FAQスタイル */
     #faq h2 {
-        margin-top: 40px;
-        padding: 10px;
-        border-bottom: 1px solid #ccc;
-        text-align: left; /* 左寄せに変更 */
+        text-align: left;
         font-size: 24px;
-    }
-    .faq-item {
-        background-color: #f9f9f9;
-        border: 1px solid #eee;
-        border-left: 4px solid #17a2b8; /* シアンの縦線 */
-        border-radius: 6px;
-        padding: 15px;
-        margin-bottom: 10px;
-        box-shadow: none;
-    }
-    .faq-item strong {
-        color: #3b5998;
-        display: block;
-        margin-bottom: 5px;
-        font-weight: 700;
-    }
-
-    /* 最終更新日スタイル */
-    .footer-info {
-        text-align: right;
-        font-size: 12px;
-        color: #888;
-        margin-top: 30px;
-        border-top: 1px solid #eee;
-        padding-top: 10px;
     }
 
 </style>
@@ -355,8 +296,7 @@
         <h1>ルール確認クイズ</h1>
         <div id="quizContainer"></div>
         <div class="explanation" id="explanation"></div>
-        <div class="quiz-hint">※実は上が全部答えです</div>
-    </div>
+        </div>
 
     <div id="gamerTagInput" class="hidden">
         <h1>ゲーマータグ登録</h1>
@@ -369,8 +309,8 @@
             <p>登録は任意ですが、ご協力いただくことでスムーズに招待され、問題発生時の対応が迅速になります。</p>
             <form id="gamerTagForm">
                 <input type="text" id="gamerTag" placeholder="例:Tarou123"> 
-                <button type="submit" class="submit-btn" style="background-color: #e67e22;">タグを登録して参加方法へ</button>
-                <button type="button" id="skipTagBtn" class="submit-btn" style="background-color: #7f8c8d; margin-top: 10px;">スキップして参加方法へ</button>
+                <button type="submit" class="submit-btn">タグを登録して参加方法へ</button>
+                <button type="button" id="skipTagBtn" class="submit-btn" style="margin-top: 10px;">スキップして参加方法へ</button>
                 <div id="formStatus"></div>
             </form>
         </div>
@@ -420,12 +360,11 @@
 <script>
 // ====================================================================
 //  [要設定] Google Apps Script (GAS) のウェブアプリURL
-//  ※ ゲーマータグ登録に必要
 // ====================================================================
 const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx2waJRTLD6_g-kq7qPez3_ZqoCVBYY4f7q0UIw0_ElDps2INHkBOJp75gVwaMrglDMMw/exec"; 
 
 // ====================================================================
-// サーバー監視設定 (Ping値はN/A対策で調整)
+// サーバー監視設定 (Ping値はN/A対策で非表示に調整)
 // ====================================================================
 const SERVER_ADDRESS = "discount-findlaw.gl.at.ply.gg";
 const SERVER_PORT = "5346";
@@ -435,11 +374,10 @@ const statusTextElement = statusElement.querySelector(".status-text");
 const pingTextElement = document.getElementById("serverPing");
 
 
-// サーバー状態を取得し、Webサイトに反映する関数
 function fetchServerStatus() {
     statusElement.classList.remove("status-online", "status-offline");
     statusTextElement.textContent = "🔄 サーバー状態を読み込み中...";
-    pingTextElement.style.display = 'none'; // Pingは最初は非表示
+    pingTextElement.style.display = 'none';
 
     fetch(API_URL)
         .then(response => {
@@ -462,7 +400,6 @@ function fetchServerStatus() {
                     pingTextElement.textContent = `Ping: ${ping} ms`; 
                     pingTextElement.style.display = 'block'; 
                 } else {
-                    // PingがN/A (測定不可) の場合は非表示
                     pingTextElement.style.display = 'none';
                 }
                 
@@ -480,28 +417,30 @@ function fetchServerStatus() {
         });
 }
 
-// ページロード時と、その後1分おきにステータスを更新
 fetchServerStatus();
-setInterval(fetchServerStatus, 60000); // 60000ミリ秒 = 1分
+setInterval(fetchServerStatus, 60000); 
 
 // ====================================================================
-// コピー機能の実装
+// コピー機能の実装 (★コピー時のアニメーションを追加★)
 // ====================================================================
 document.getElementById('gamerTagToCopy').addEventListener('click', copyGamerTag);
 
 function copyGamerTag() {
     const tagElement = document.getElementById('gamerTagToCopy');
-    const tagText = 'nantetu5877'; // タグを直接指定
+    const tagText = 'nantetu5877'; 
 
     navigator.clipboard.writeText(tagText)
         .then(() => {
             const copyMsg = document.getElementById('copyMsg');
+            
+            // アニメーションとフィードバックの開始
+            tagElement.classList.add('copied');
             copyMsg.style.opacity = '1';
-            tagElement.querySelector('.copy-icon').style.color = '#28a745'; // コピー成功時は緑色
 
             setTimeout(() => {
+                // アニメーションとフィードバックの終了
                 copyMsg.style.opacity = '0';
-                tagElement.querySelector('.copy-icon').style.color = '#3b5998'; // 元の色に戻す
+                tagElement.classList.remove('copied');
             }, 1000);
 
         })
@@ -515,11 +454,9 @@ function copyGamerTag() {
 // 最終更新日の自動書き込み
 // ====================================================================
 function updateLastModifiedDate() {
-    // このファイルがサーバーにアップロードされた日時（ブラウザが取得した最終更新日時）
     const lastModified = document.lastModified;
     const date = new Date(lastModified);
     
-    // 日付を「YYYY/MM/DD」形式にフォーマット
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
@@ -530,9 +467,8 @@ function updateLastModifiedDate() {
 updateLastModifiedDate();
 
 // ====================================================================
-// クイズデータ・画面切り替え (変更なし、音源のみ要調整)
+// クイズデータ・画面切り替え
 // ====================================================================
-// NOTE: base64データは元のコードからコピーして貼り付けてください。
 const correctSound = new Audio("data:audio/mp3;base64,..."); 
 const wrongSound   = new Audio("data:audio/mp3;base64,..."); 
 
@@ -623,21 +559,21 @@ document.getElementById('skipTagBtn').addEventListener('click', () => {
     howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
 });
 
-// === GAS Webアプリへのデータ送信処理 ===
+// === GAS Webアプリへのデータ送信処理 (★空欄処理を分離し、フォーム処理を簡略化★) ===
 document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     const gamerTag = document.getElementById('gamerTag').value.trim();
-    const statusDiv = document.getElementById('formStatus');
-    const submitBtn = document.querySelector('#gamerTagForm .submit-btn');
-
+    
+    // タグが空欄の場合（スキップの場合と同様に）最終ステップへ進む
     if (gamerTag === "") {
-        gamerTagInputDiv.classList.add("hidden");
-        howToJoinDiv.classList.remove("hidden");
-        howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('skipTagBtn').click(); // スキップ処理を呼び出す
         return;
     }
     
+    const statusDiv = document.getElementById('formStatus');
+    const submitBtn = document.querySelector('#gamerTagForm .submit-btn');
+
     statusDiv.textContent = "⚠️ 登録中...（しばらくお待ちください）";
     statusDiv.style.color = "#ff8c00";
     submitBtn.disabled = true;
@@ -659,6 +595,7 @@ document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
         statusDiv.textContent = "✅ 登録完了！スプレッドシートに記録されました！";
         statusDiv.style.color = "#28a745";
         
+        // 登録完了後、最終ステップへ
         gamerTagInputDiv.classList.add("hidden");
         howToJoinDiv.classList.remove("hidden");
         howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
