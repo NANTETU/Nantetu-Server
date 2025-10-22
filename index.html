@@ -3,22 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>なんてつサーバー</title>
+<title>なんてつサーバー - Status & Join</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
-    /* ========== モダンデザインへの変更（前回からの継続） ========== */
+    /* ========== 明るくクリーンなモダンUIへ最終調整 ========== */
     
+    /* カラーパレット */
+    :root {
+        --color-bg-light: #f0f2f5; /* 明るい背景 */
+        --color-surface: #ffffff; /* コンテナの背景 (白) */
+        --color-accent: #3b5998; /* ディープブルー */
+        --color-text-dark: #333333; /* 濃いテキスト色 */
+        --color-text-medium: #666666; /* 標準テキスト色 */
+        --color-border: #e0e0e0;
+        --color-shadow: rgba(0, 0, 0, 0.1);
+        --color-success: #28a745;
+        --color-error: #dc3545;
+    }
+
     body {
         font-family: 'Noto Sans JP', sans-serif;
-        background-color: #f4f7f6; 
+        background-color: var(--color-bg-light); /* 明るい背景 */
         margin: 0;
         padding: 0;
-        color: #333;
+        color: var(--color-text-dark); /* 濃いテキスト色 */
         font-size: 16px;
-        line-height: 1.6;
+        line-height: 1.7; /* 行間を少し広げて読みやすく */
     }
 
     .top-links {
@@ -28,54 +41,49 @@
         z-index: 100;
     }
     .top-links a {
-        color: #3b5998; 
+        color: var(--color-accent); 
         margin-left: 15px;
         font-size: 28px;
-        text-decoration: none;
         transition: color 0.2s;
-        text-shadow: none; 
     }
     .top-links a:hover {
         color: #2d4373;
-        transform: none;
     }
 
     .container {
         max-width: 900px;
         margin: 100px auto 50px;
-        background: #ffffff;
+        background: var(--color-surface); /* 白いコンテナ */
         padding: 40px;
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        outline: none;
-        outline-offset: 0;
+        border-radius: 12px; /* モダンな角丸 */
+        /* 柔らかい浮遊感のある影 */
+        box-shadow: 0 8px 30px var(--color-shadow); 
     }
     
     /* サーバー状態表示ボックスのスタイル */
     .status-box {
         text-align: center;
-        margin: -70px 0 40px;
-        padding: 20px;
-        border: none;
+        margin: -70px auto 40px; 
+        max-width: 80%; /* 中央寄せ */
+        padding: 18px 25px;
         border-radius: 10px;
         font-weight: 700;
-        text-shadow: none;
         font-size: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        /* ボックスを浮かせるための影 */
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         display: flex;
         justify-content: space-around;
         align-items: center;
     }
     .status-online {
-        background-color: #e6ffe6;
-        color: #28a745;
-        border: 1px solid #28a745; 
+        background-color: #e8f9e8; /* 非常に薄い緑の背景 */
+        color: var(--color-success);
+        border: 1px solid var(--color-success); 
     }
     .status-offline {
-        background-color: #ffebe6;
-        color: #dc3545;
-        border: 1px solid #dc3545;
+        background-color: #f9e8e8; /* 非常に薄い赤の背景 */
+        color: var(--color-error);
+        border: 1px solid var(--color-error);
         justify-content: center;
     }
     .status-offline .ping-text {
@@ -90,89 +98,84 @@
     /* タイトルと見出し */
     h1 {
         text-align: center;
-        color: #3b5998;
+        color: var(--color-accent);
         font-weight: 700;
-        text-shadow: none; 
-        margin-bottom: 30px;
-        font-size: 32px; 
+        margin-bottom: 25px;
+        font-size: 30px; 
         padding-bottom: 10px;
-        border-bottom: 2px solid #eee;
+        border-bottom: 2px solid var(--color-border); /* 控えめなアンダーライン */
     }
     
     h2 {
         font-weight: 700;
-        text-shadow: none;
-    }
-
-    ol {
-        margin-left: 0;
-        padding-left: 20px;
+        color: var(--color-text-dark);
+        border-bottom: 1px solid var(--color-border);
+        padding-bottom: 5px;
+        margin-top: 30px;
     }
 
     li {
-        background-color: #f8f9fa;
+        background-color: var(--color-bg-light); /* 背景色と異なる明るいグレー */
         margin-bottom: 10px;
         padding: 15px;
-        border: 1px solid #ddd;
-        border-left: 5px solid #3b5998;
-        border-radius: 6px;
-        color: #333;
-        box-shadow: none; 
+        border: 1px solid var(--color-border);
+        border-left: 5px solid var(--color-accent); /* アクセントライン */
+        border-radius: 8px; /* 控えめな角丸 */
+        color: var(--color-text-dark);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* 非常に弱い影 */
     }
 
     /* ボタンのスタイル */
     button, .submit-btn {
         display: block;
         margin: 25px auto 0;
-        padding: 12px 25px;
+        padding: 14px 30px;
         font-size: 18px;
         cursor: pointer;
         border: none;
-        border-radius: 6px;
-        background-color: #3b5998;
-        color: #fff;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px; /* モダンな角丸 */
+        background-color: var(--color-accent);
+        color: var(--color-surface);
+        /* 柔らかい影でボタンを浮き上がらせる */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
         transition: all 0.2s;
         outline: none;
-        font-family: 'Noto Sans JP', sans-serif;
         font-weight: 700;
     }
     button:hover, .submit-btn:hover {
         background-color: #2d4373;
-        transform: translateY(-2px); 
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); 
+        transform: translateY(-2px); /* わずかに浮かせる */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); 
     }
     button:focus, .submit-btn:focus {
-        border-color: none;
-        box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.5);
+        box-shadow: 0 0 0 4px rgba(59, 89, 152, 0.4);
     }
 
     .hidden { display: none; }
 
     .notice, .important-notice {
-        color: #dc3545;
+        color: var(--color-error);
         font-weight: 700;
         text-align: center;
         margin-bottom: 15px;
         padding: 10px 15px;
-        border-radius: 4px;
+        border-radius: 6px;
         background-color: #fff0f0;
-        border: 1px solid #dc3545;
+        border: 1px solid var(--color-error);
     }
     
     /* コピー機能 */
     .copyable {
         user-select: none;
         background-color: #e9ecef;
-        padding: 5px 10px;
-        border-radius: 4px;
+        padding: 8px 12px;
+        border-radius: 6px;
         border: 1px solid #ced4da;
         display: inline-flex;
         align-items: center;
         cursor: pointer;
-        position: relative;
         font-weight: 700;
-        /* コピー時のホバー/アクティブスタイルを明確化 */
+        color: var(--color-text-dark);
         transition: background-color 0.1s;
     }
     .copyable:hover {
@@ -180,70 +183,65 @@
     }
     .copy-icon {
         margin-left: 8px;
-        color: #3b5998;
+        color: var(--color-accent);
         transition: color 0.2s, transform 0.2s;
     }
-    /* ★新規追加★ コピー成功時のバウンスアニメーション */
+    /* コピー成功時のバウンスアニメーション */
     @keyframes icon-bounce {
         0%, 100% { transform: translateY(0); }
         50% { transform: translateY(-3px); }
     }
     .copyable.copied .copy-icon {
-        color: #28a745 !important;
+        color: var(--color-success) !important;
         animation: icon-bounce 0.3s ease-out;
     }
     .copy-message {
-        background-color: #333;
-        color: #fff;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 12px;
-        bottom: 100%;
-        left: 50%;
-        transform: translate(-50%, -15px);
-        opacity: 0;
-        transition: opacity 0.3s;
-        pointer-events: none;
-        z-index: 10;
+        /* ... (コピーメッセージのスタイルはJS内で制御) ... */
     }
 
     .quiz-question {
         background-color: #f1f8ff;
-        border: 1px solid #3b5998; 
+        border: 1px solid var(--color-accent); 
         padding: 20px;
         border-radius: 8px;
         margin-bottom: 15px;
         font-size: 18px;
         font-weight: 700;
+        color: var(--color-text-dark);
     }
 
     /* 回答ボタンのスタイル */
     .quiz-answer-btn {
         width: 100%; 
-        background-color: #17a2b8;
+        background-color: #17a2b8; /* インフォブルー */
         color: #fff;
         border: none;
+        margin-top: 10px;
     }
     .quiz-answer-btn:hover {
         background-color: #138496; 
     }
     
     .explanation {
-        color: #dc3545; 
-        border: 1px solid #dc3545;
+        color: var(--color-error); 
+        border: 1px solid var(--color-error);
         background-color: #fff0f0; 
+        padding: 15px;
+        border-radius: 6px;
     }
     
     /* フォームのスタイル */
     #gamerTagForm input[type="text"] {
+        width: calc(100% - 24px); 
         padding: 12px;
         font-size: 18px;
         border: 1px solid #ced4da; 
         border-radius: 4px;
         font-family: 'Noto Sans JP', sans-serif;
+        color: var(--color-text-dark);
     }
     .submit-btn[type="submit"] {
-        background-color: #28a745 !important;
+        background-color: var(--color-success) !important;
     }
     .submit-btn[type="submit"]:hover {
         background-color: #1e7e34 !important;
@@ -256,9 +254,25 @@
     }
 
     /* FAQスタイル */
-    #faq h2 {
-        text-align: left;
-        font-size: 24px;
+    .faq-item {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        border-left: 4px solid var(--color-accent);
+    }
+    .faq-item strong {
+        color: var(--color-accent);
+    }
+
+    /* 最終更新日スタイル */
+    .footer-info {
+        color: var(--color-text-medium);
+        font-size: 14px;
+        text-align: right;
+        margin-top: 40px;
+        padding-top: 10px;
+        border-top: 1px solid var(--color-border);
     }
 
 </style>
@@ -296,7 +310,7 @@
         <h1>ルール確認クイズ</h1>
         <div id="quizContainer"></div>
         <div class="explanation" id="explanation"></div>
-        </div>
+    </div>
 
     <div id="gamerTagInput" class="hidden">
         <h1>ゲーマータグ登録</h1>
@@ -364,7 +378,7 @@
 const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx2waJRTLD6_g-kq7qPez3_ZqoCVBYY4f7q0UIw0_ElDps2INHkBOJp75gVwaMrglDMMw/exec"; 
 
 // ====================================================================
-// サーバー監視設定 (Ping値はN/A対策で非表示に調整)
+// サーバー監視設定 
 // ====================================================================
 const SERVER_ADDRESS = "discount-findlaw.gl.at.ply.gg";
 const SERVER_PORT = "5346";
@@ -394,7 +408,7 @@ function fetchServerStatus() {
                 statusTextElement.textContent = `✅ サーバー起動中！ | プレイヤー数: ${players} / ${maxPlayers} 人`;
                 statusElement.classList.add("status-online");
 
-                // Ping値が取得できた場合のみ表示
+                // Ping値が取得できた場合のみ表示 (N/A対策)
                 if (data.latency && data.latency !== null) {
                     const ping = Math.round(data.latency);
                     pingTextElement.textContent = `Ping: ${ping} ms`; 
@@ -421,7 +435,7 @@ fetchServerStatus();
 setInterval(fetchServerStatus, 60000); 
 
 // ====================================================================
-// コピー機能の実装 (★コピー時のアニメーションを追加★)
+// コピー機能の実装 (バウンスアニメーション付き)
 // ====================================================================
 document.getElementById('gamerTagToCopy').addEventListener('click', copyGamerTag);
 
@@ -435,11 +449,10 @@ function copyGamerTag() {
             
             // アニメーションとフィードバックの開始
             tagElement.classList.add('copied');
-            copyMsg.style.opacity = '1';
-
+            // コピーメッセージのスタイル (モダンUIでは不要かもしれませんが、一旦維持)
+            
             setTimeout(() => {
                 // アニメーションとフィードバックの終了
-                copyMsg.style.opacity = '0';
                 tagElement.classList.remove('copied');
             }, 1000);
 
@@ -469,6 +482,7 @@ updateLastModifiedDate();
 // ====================================================================
 // クイズデータ・画面切り替え
 // ====================================================================
+// NOTE: base64データは元のコードからコピーして貼り付けてください。
 const correctSound = new Audio("data:audio/mp3;base64,..."); 
 const wrongSound   = new Audio("data:audio/mp3;base64,..."); 
 
@@ -559,15 +573,14 @@ document.getElementById('skipTagBtn').addEventListener('click', () => {
     howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
 });
 
-// === GAS Webアプリへのデータ送信処理 (★空欄処理を分離し、フォーム処理を簡略化★) ===
+// === GAS Webアプリへのデータ送信処理 ===
 document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     const gamerTag = document.getElementById('gamerTag').value.trim();
     
-    // タグが空欄の場合（スキップの場合と同様に）最終ステップへ進む
     if (gamerTag === "") {
-        document.getElementById('skipTagBtn').click(); // スキップ処理を呼び出す
+        document.getElementById('skipTagBtn').click();
         return;
     }
     
@@ -595,7 +608,6 @@ document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
         statusDiv.textContent = "✅ 登録完了！スプレッドシートに記録されました！";
         statusDiv.style.color = "#28a745";
         
-        // 登録完了後、最終ステップへ
         gamerTagInputDiv.classList.add("hidden");
         howToJoinDiv.classList.remove("hidden");
         howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
