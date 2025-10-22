@@ -3,19 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>なんてつサーバー参加ルール</title>
+<title>なんてつサーバー</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
     @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
 
-    /* アクセシビリティ対応: 基本フォントサイズを大きくし、コントラストを改善 */
+    /* アクセシビリティ・デザイン調整 */
     body {
         font-family: 'DotGothic16', monospace;
-        background: linear-gradient(135deg, #6ec1e4, #9fd3f1);
+        /* 背景をより明るく、メリハリをつける */
+        background: linear-gradient(135deg, #4c6693, #6ec1e4);
         margin: 0;
         padding: 0;
         color: #222;
-        font-size: 18px; /* 基本フォントサイズを大きく */
+        font-size: 18px; 
     }
 
     .top-links {
@@ -25,11 +26,12 @@
         z-index: 100;
     }
     .top-links a {
-        color: #222;
+        color: #fff; /* アイコンの色を白に変更して背景とのコントラストを確保 */
         margin-left: 15px;
-        font-size: 28px;
+        font-size: 30px;
         text-decoration: none;
         transition: transform 0.2s;
+        text-shadow: 2px 2px 0 #000;
     }
     .top-links a:hover {
         transform: scale(1.2);
@@ -38,29 +40,35 @@
     .container {
         max-width: 1000px;
         margin: 80px auto;
-        background: #f9f9f9ee;
+        /* 背景色を白に近い色にし、枠線を強調 */
+        background: #ffffffe0;
         padding: 50px;
-        /* デザイン強化: 二重の枠線でレトロゲーム感を強調 */
-        border: 5px solid #000;
-        outline: 5px solid #333; 
-        outline-offset: -5px; 
+        /* 派手さUP: 枠線をさらに太く、コントラストを強調 */
+        border: 7px solid #000;
+        outline: 7px solid #ffcc00; 
+        outline-offset: -7px; 
         border-radius: 10px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8); /* 影を濃く */
+        box-shadow: none;
     }
 
-    /* デザイン強化: H1をゲームのタイトル風に */
-    h1 {
-        text-align: center;
-        /* マインクラフトのロゴのような緑と立体的な影 */
-        color: #4CAF50; 
-        text-shadow: 
-            -2px -2px 0 #000, 
-            2px -2px 0 #000, 
-            -2px 2px 0 #000, 
-            2px 2px 0 #000;
-        margin-bottom: 30px;
-        font-size: 44px; /* 大きく強調 */
-    }
+    /* デザイン強化: H1をゲームのタイトル風に（派手さMAX） */
+h1 {
+    text-align: center;
+    color: #ff4500; /* オレンジレッドで目立たせる */
+    font-weight: bold; /* 太字に追加 */
+    text-shadow: 
+        -3px -3px 0 #000, 
+        3px -3px 0 #000, 
+        -3px 3px 0 #000, 
+        3px 3px 0 #000,
+        3px 3px 0 #8B0000; /* 更に影を追加 */
+    margin-bottom: 30px;
+    font-size: 55px; 
+    padding-bottom: 10px;
+    border-bottom: 5px double #000; 
+}
+
     
     h2 {
         text-shadow: 1px 1px 0 #fff;
@@ -73,37 +81,38 @@
     }
 
     li {
-        background-color: #d8ecff;
+        background-color: #ffe0b2; 
         margin-bottom: 10px;
-        padding: 15px; /* パディングを増やして読みやすく */
+        padding: 15px;
         border: 2px solid #000;
         border-radius: 5px;
         color: #222;
+        box-shadow: 2px 2px 0 #000;
     }
 
-    button {
+    button, .submit-btn {
         display: block;
         margin: 25px auto 0;
         padding: 15px 30px;
-        font-size: 18px;
+        font-size: 20px;
         cursor: pointer;
         border: 3px solid #000;
         border-radius: 5px;
         background-color: #2196f3;
         color: #fff;
-        box-shadow: 3px 3px 0 #000;
+        box-shadow: 7px 7px 0 #000; 
         transition: all 0.2s;
-        /* アクセシビリティ: フォーカス時のスタイルを追加 */
         outline: none;
+        font-family: 'DotGothic16', monospace; 
     }
-    button:hover {
+    button:hover, .submit-btn:hover {
         background-color: #1976d2;
-        transform: translateY(-2px);
-        box-shadow: 5px 5px 0 #000;
+        transform: translate(-3px, -3px); 
+        box-shadow: 10px 10px 0 #000; 
     }
-    button:focus {
-        border-color: #ffcc00; /* フォーカス時に目立つ色に */
-        box-shadow: 0 0 0 3px #ffcc00;
+    button:focus, .submit-btn:focus {
+        border-color: #ffcc00; 
+        box-shadow: 0 0 0 5px #ffcc00; 
     }
 
     .hidden { display: none; }
@@ -113,30 +122,41 @@
         text-align: center;
         font-weight: bold;
         margin-bottom: 10px;
-        /* コントラスト改善 */
         background-color: #fff; 
         padding: 5px;
         border-radius: 5px;
+        border: 2px dashed #ff3333;
+    }
+    
+    .important-notice {
+        color: #ff4500;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 3px solid #ff4500;
+        border-radius: 5px;
+        background-color: #fff0e0;
+        box-shadow: 2px 2px 0 #ff4500;
     }
 
     .discord-msg {
         margin-top: 25px;
         padding: 20px;
-        background-color: #7289daaa;
+        background-color: #7289da; 
         border: 3px solid #000;
         border-radius: 10px;
         text-align: center;
         font-weight: bold;
         color: #fff;
         font-size: 18px; 
-        box-shadow: 3px 3px 0 #000;
+        box-shadow: 5px 5px 0 #000;
     }
 
     a.discord-link {
         color: #fff;
         font-weight: bold;
         text-decoration: underline;
-        /* コントラスト改善 */
         text-shadow: 1px 1px 1px #000; 
     }
 
@@ -159,10 +179,10 @@
     /* 回答ボタンのスタイル */
     .quiz-answer-btn {
         display: block;
-        width: 100%; /* 幅をフルに */
+        width: 100%; 
         margin: 10px 0;
         padding: 15px;
-        background-color: #2196f3;
+        background-color: #ff8c00; 
         color: #fff;
         border: 2px solid #000;
         border-radius: 5px;
@@ -174,33 +194,24 @@
     }
 
     .quiz-answer-btn:hover {
-        background-color: #1976d2;
+        background-color: #cc7000;
         transform: scale(1.02);
     }
     
     .quiz-answer-btn:focus {
-        border-color: #ffcc00;
-        box-shadow: 0 0 0 3px #ffcc00;
+        border-color: #00ffff; 
+        box-shadow: 0 0 0 3px #00ffff;
     }
 
     .explanation {
         margin-top: 15px;
         padding: 15px;
-        color: #a00; /* より濃い赤でコントラスト確保 */
+        color: #a00; 
         font-weight: bold;
         border: 3px solid #f00;
         border-radius: 5px;
         background-color: #ffdcdc;
         display: none;
-    }
-
-    .sound-notice {
-        background-color: #fff5b3;
-        color: #222;
-        text-align: center;
-        font-weight: bold;
-        padding: 10px;
-        border-bottom: 3px solid #000;
     }
     
     /* 合格画面のスタイル */
@@ -216,12 +227,28 @@
         font-size: 30px;
         color: #4CAF50;
     }
+    
+    /* フォームのスタイル */
+    #gamerTagForm input[type="text"] {
+        width: 80%;
+        padding: 15px;
+        margin: 15px auto;
+        display: block;
+        font-size: 20px;
+        border: 3px solid #000; 
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-family: 'DotGothic16', monospace;
+        text-align: center; 
+    }
+    #formStatus {
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
 </style>
 </head>
 <body oncontextmenu="return false;">
-<div class="sound-notice">
-    🔊 このページではクイズ時に正解・不正解の音が鳴ります
-</div>
 
 <div class="top-links">
     <a href="https://youtube.com/@なんてつ" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
@@ -251,6 +278,24 @@
         <div class="explanation" id="explanation"></div>
     </div>
 
+    <div id="gamerTagInput" class="hidden">
+        <h1>ゲーマータグ登録</h1>
+        <div class="pass-screen">
+            <h2>✨ ルール確認合格！ ✨</h2>
+            <p class="important-notice">
+                迷惑行為対策のため、<br>
+                ゲーマータグ（MinecraftのID）の登録にできるだけご協力お願いします。
+            </p>
+            <p>登録は任意ですが、ご協力いただくことでスムーズに招待され、問題発生時の対応が迅速になります。</p>
+            <form id="gamerTagForm">
+                <input type="text" id="gamerTag" placeholder="例:Tarou123"> 
+                <button type="submit" class="submit-btn" style="background-color: #ff4500;">タグを登録して参加方法へ</button>
+                <button type="button" id="skipTagBtn" class="submit-btn" style="background-color: #6c757d; margin-top: 10px;">スキップして参加方法へ</button>
+                <div id="formStatus"></div>
+            </form>
+        </div>
+    </div>
+    
     <div id="howToJoin" class="hidden">
         <h1>参加方法</h1>
         <ol>
@@ -259,21 +304,28 @@
         </ol>
         <div class="discord-msg">
             Discordサーバーに入ればお知らせなどを見たりサーバーからチャットを送信ができるようになります！<br>
-            <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank">[なんてつさーばー]からぜひご参加ください！</a>
+            <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank">ここからぜひご参加ください！</a>
         </div>
     </div>
 </div>
 
 <script>
-// ======== 音の設定（埋め込みbase64） ========
-// NOTE: base64データは長いため省略しています。ご自身の元のコードからコピーして貼り付けてください。
-const correctSound = new Audio("data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCA...");
-const wrongSound   = new Audio("data:audio/mp3;base64,//uQxAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACdgCA...");
+// ====================================================================
+//  [要設定] Google Apps Script (GAS) のウェブアプリURL
+//  ※ ステップ1-3で取得したURLに置き換えてください
+// ====================================================================
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzYezYlXWJNXFkwzpP5rCQpTPVrUks5sY5zM-Isac1PXPpgdU3ivEbD2Jf0xcMtOQLX7A/exec"; 
 
-// ======== クイズデータ ========
+// ====================================================================
+// クイズデータ (変更なし)
+// ====================================================================
+// NOTE: base64データは元のコードからコピーして貼り付けてください。
+const correctSound = new Audio("data:audio/mp3;base64,..."); 
+const wrongSound   = new Audio("data:audio/mp3;base64,..."); 
+
 const quizPatterns = [
     [
-        { q: "建築物を勝手に壊したら？", a: ["罰せられる", "OK"], correct: 0, explanation: "他人の建築を壊すのは禁止です" },
+        { q: "建築物を勝手に壊したら？", a: ["罰せられる", "ちょっとなら許される"], correct: 0, explanation: "他人の建築を壊すのは禁止です" },
         { q: "PvPはいつOK？", a: ["合意ありのみ", "常にOK"], correct: 0, explanation: "PvPは相手の同意が必要です" },
         { q: "バグを見つけたら？", a: ["報告する", "放置する"], correct: 0, explanation: "バグを利用せず報告しましょう" }
     ],
@@ -288,17 +340,18 @@ const rulesDiv = document.getElementById("rules");
 const quizDiv = document.getElementById("quiz");
 const quizContainer = document.getElementById("quizContainer");
 const explanationDiv = document.getElementById("explanation");
+const gamerTagInputDiv = document.getElementById("gamerTagInput"); 
 const howToJoinDiv = document.getElementById("howToJoin");
 
 let currentQuiz = [];
 let questionIndex = 0;
 
 document.getElementById("agreeBtn").addEventListener("click", () => {
-    // スクロール機能の代わりに、非表示・表示で切り替え
     rulesDiv.classList.add("hidden");
     quizDiv.classList.remove("hidden");
     
-    // クイズのランダム化
+    quizDiv.scrollIntoView({ behavior: 'smooth' });
+
     currentQuiz = quizPatterns[Math.floor(Math.random()*quizPatterns.length)];
     questionIndex = 0;
     showQuestion();
@@ -308,19 +361,11 @@ function showQuestion() {
     quizContainer.innerHTML = "";
     explanationDiv.style.display = "none";
 
-    // 全問正解した時の処理（合格画面の表示）
+    // 全問正解した時の処理（ゲーマータグ入力画面へ）
     if(questionIndex >= currentQuiz.length){
-        quizContainer.innerHTML = `
-            <div class="pass-screen">
-                <h2>🎉 ルール確認合格！ 🎉</h2>
-                <p>お疲れ様でした。これで「なんてつサーバー」の参加資格を獲得しました！</p>
-                <button id="goToJoinBtn" style="margin-top: 30px;">参加方法へ</button>
-            </div>
-        `;
-        document.getElementById("goToJoinBtn").addEventListener("click", () => {
-            quizDiv.classList.add("hidden");
-            howToJoinDiv.classList.remove("hidden");
-        });
+        quizDiv.classList.add("hidden");
+        gamerTagInputDiv.classList.remove("hidden"); 
+        gamerTagInputDiv.scrollIntoView({ behavior: 'smooth' });
         return;
     }
 
@@ -331,36 +376,98 @@ function showQuestion() {
     quizContainer.appendChild(qDiv);
 
     qObj.a.forEach((answer, idx)=>{
-        // 修正: divからbuttonタグに変更し、アクセシビリティを確保
         const btn = document.createElement("button"); 
         btn.type = "button";
-        btn.className = "quiz-answer-btn"; // クラス名を変更
+        btn.className = "quiz-answer-btn"; 
         btn.textContent = answer;
         
         btn.onclick = ()=>{
             if(idx === qObj.correct){
-                // 正解時
                 correctSound.currentTime = 0;
                 correctSound.play();
                 questionIndex++;
                 showQuestion();
             }else{
-                // 不正解時
                 wrongSound.currentTime = 0;
                 wrongSound.play();
                 explanationDiv.textContent = "不正解！ " + qObj.explanation + " ルールをよく読み直してね！";
                 explanationDiv.style.display = "block";
                 
-                // 2秒後にルール画面に戻る
                 setTimeout(()=>{
                     quizDiv.classList.add("hidden");
                     rulesDiv.classList.remove("hidden");
+                    rulesDiv.scrollIntoView({ behavior: 'smooth' }); 
                 }, 2000);
             }
         };
         quizContainer.appendChild(btn);
     });
 }
+
+// === [追加] スキップボタンのイベントリスナー ===
+document.getElementById('skipTagBtn').addEventListener('click', () => {
+    // ゲーマータグ入力をスキップし、最終ステップへ進む
+    gamerTagInputDiv.classList.add("hidden");
+    howToJoinDiv.classList.remove("hidden");
+    howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
+});
+
+// === [変更] GAS Webアプリへのデータ送信処理 ===
+document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const gamerTag = document.getElementById('gamerTag').value.trim();
+    const statusDiv = document.getElementById('formStatus');
+    const submitBtn = document.querySelector('#gamerTagForm .submit-btn');
+
+    // 変更点: ゲーマータグが空欄の場合は登録処理をせず、最終ステップへ進む
+    if (gamerTag === "") {
+        // 空欄の場合は、スキップボタンと同じ処理で最終ステップへ
+        gamerTagInputDiv.classList.add("hidden");
+        howToJoinDiv.classList.remove("hidden");
+        howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
+        return;
+    }
+    
+    statusDiv.textContent = "⚠️ 登録中...";
+    statusDiv.style.color = "#ff8c00";
+    submitBtn.disabled = true;
+
+    // GAS WebアプリにPOSTリクエストを送信 (タグがある場合のみ)
+    fetch(GAS_WEB_APP_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `gamerTag=${encodeURIComponent(gamerTag)}`
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        if (data.status === 'success') {
+            statusDiv.textContent = "✅ 登録完了！スプレッドシートに記録されました！";
+            statusDiv.style.color = "#4CAF50";
+            
+            // 最終ステップへ
+            gamerTagInputDiv.classList.add("hidden");
+            howToJoinDiv.classList.remove("hidden");
+            howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            // GAS側でエラーが返された場合
+            statusDiv.textContent = "❌ 登録失敗: " + data.message;
+            statusDiv.style.color = "red";
+            submitBtn.disabled = false;
+        }
+    })
+    .catch(error => {
+        // ネットワークエラーなど
+        console.error('Fetch Error:', error);
+        statusDiv.textContent = "❌ 登録に失敗しました。ネットワークを確認してください。";
+        statusDiv.style.color = "red";
+        submitBtn.disabled = false;
+    });
+});
 </script>
 </body>
 </html>
