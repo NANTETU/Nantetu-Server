@@ -54,7 +54,7 @@
     /* デザイン強化: H1をゲームのタイトル風に */
     h1 {
         text-align: center;
-        color: #FF6; /* 深い赤に変更 */
+        color: #a00; /* 深い赤に変更 */
         font-weight: bold;
         text-shadow: 
             -3px -3px 0 #333, /* 影の色を黒から濃いグレーに */
@@ -244,6 +244,14 @@
         font-weight: bold;
     }
 
+    /* ★追加★ ルールクイズのヒントスタイル */
+    .quiz-hint {
+        font-size: 10px; /* 極小 */
+        color: #aaa; /* 薄いグレー */
+        text-align: right; /* 右寄せ */
+        margin-top: 20px;
+    }
+
 </style>
 </head>
 <body oncontextmenu="return false;">
@@ -274,6 +282,7 @@
         <h1>ルール確認クイズ</h1>
         <div id="quizContainer"></div>
         <div class="explanation" id="explanation"></div>
+        <div class="quiz-hint">※実は上が全部答えです</div>
     </div>
 
     <div id="gamerTagInput" class="hidden">
@@ -282,7 +291,7 @@
             <h2>✨ ルール確認合格！ ✨</h2>
             <p class="important-notice">
                 迷惑行為対策のため、<br>
-                ゲーマータグ（MinecraftのID）の登録によろしければご協力お願いします。
+                ゲーマータグ（MinecraftのID）の登録にできるだけご協力お願いします。
             </p>
             <p>登録は任意ですが、ご協力いただくことでスムーズに招待され、問題発生時の対応が迅速になります。</p>
             <form id="gamerTagForm">
