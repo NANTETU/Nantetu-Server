@@ -51,7 +51,7 @@
         box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* 影を復活させ、濃さを調整 */
     }
     
-    /* ★追加★ サーバー状態表示ボックスのスタイル */
+    /* サーバー状態表示ボックスのスタイル */
     .status-box {
         text-align: center;
         margin: -50px 0 30px; /* containerの上側に食い込ませる */
@@ -62,6 +62,13 @@
         text-shadow: 1px 1px 0 #fff;
         font-size: 22px;
         box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        display: flex; /* Ping値とステータスを並べる */
+        justify-content: space-between; /* 両端寄せ */
+        align-items: center;
+    }
+    .status-text, .ping-text {
+        flex-grow: 1; /* スペースを埋める */
+        text-align: center;
     }
     .status-online {
         background-color: #a8e6a8; /* 緑系 */
@@ -72,9 +79,13 @@
         background-color: #ffcccb; /* 赤系 */
         color: #d93025;
         border-color: #c0392b;
+        justify-content: center; /* オフライン時は中央寄せ */
+    }
+    .status-offline .ping-text {
+        display: none; /* オフライン時はPingを非表示 */
     }
 
-
+    
     /* デザイン強化: H1をゲームのタイトル風に */
     h1 {
         text-align: center;
@@ -183,11 +194,38 @@
     }
 
     .copyable {
-        user-select: text;
-        background-color: rgba(255,255,255,0.2); /* 透明度を上げて背景に馴染ませる */
+        user-select: none; /* テキスト選択を無効化 */
+        background-color: rgba(255,255,255,0.2); 
         padding: 3px 5px;
         border-radius: 3px;
-        border: 1px dashed #666; /* 枠線を濃いグレーに */
+        border: 1px dashed #666; 
+        display: inline-flex; /* flexにしてアイコンとタグを横並びに */
+        align-items: center;
+        cursor: pointer; /* コピーできることを示す */
+        position: relative; /* コピー通知用 */
+    }
+    .copy-icon {
+        margin-left: 8px;
+        transition: color 0.2s;
+    }
+    .copy-message {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translate(-50%, -10px);
+        background-color: #000;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none; /* クリックイベントを無視 */
+        z-index: 10;
+    }
+    .copyable:active .copy-icon {
+        color: #2ecc71; /* コピー時に色を変える */
     }
 
     .quiz-question {
@@ -276,6 +314,37 @@
         margin-top: 20px;
     }
 
+    /* FAQスタイル */
+    #faq h2 {
+        margin-top: 40px;
+        padding: 10px;
+        border-bottom: 3px dashed #333;
+        text-align: center;
+    }
+    .faq-item {
+        background-color: #fff;
+        border: 2px solid #4e8acb; /* 落ち着いた青の枠線 */
+        border-radius: 5px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+    }
+    .faq-item strong {
+        color: #4e8acb;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    /* 最終更新日スタイル */
+    .footer-info {
+        text-align: right;
+        font-size: 14px;
+        color: #555;
+        margin-top: 40px;
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+    }
+
 </style>
 </head>
 <body oncontextmenu="return false;">
@@ -287,7 +356,8 @@
 
 <div class="container">
     <div id="serverStatus" class="status-box">
-        ...読み込み中...
+        <span class="status-text">...読み込み中...</span>
+        <span class="ping-text" id="serverPing"></span>
     </div>
 
     <div id="rules">
@@ -334,7 +404,14 @@
     <div id="howToJoin" class="hidden">
         <h1>参加方法</h1>
         <ol>
-            <li><span class="copyable">nantetu5877</span> にフレンド申請</li>
+            <li>
+                <span id="gamerTagToCopy" class="copyable">
+                    nantetu5877
+                    <i class="fas fa-copy copy-icon"></i>
+                    <span id="copyMsg" class="copy-message">コピーしました！</span>
+                </span>
+                にフレンド申請
+            </li>
             <li>少し待って招待されたら参加！</li>
         </ol>
         <div class="discord-msg">
@@ -342,28 +419,56 @@
             <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank">ここからぜひご参加ください！</a>
         </div>
     </div>
+
+    <div id="faq">
+        <h2>よくある質問 (FAQ)</h2>
+        <div class="faq-item">
+            <strong>Q. 招待はどれくらいの時間でされますか？</strong>
+            A. 数秒~1分程度で自動で招待されます。もしされなかったら障害が起きている可能性があるのでDiscordで報告してくださると助かります。
+        </div>
+        <div class="faq-item">
+            <strong>Q. PvPの「合意あり」とはどういう意味ですか？</strong>
+            A. 相手のプレイヤーがPvPを承諾していることを、チャットなどで確認してから攻撃してください。突然の攻撃はルール違反となります。
+        </div>
+        <div class="faq-item">
+            <strong>Q. サーバーが動いていない時はいつ再開しますか？</strong>
+            A. メンテナンス中や負荷が高い時に一時的に停止することがあります。Discordでお知らせしていますが、基本的には数時間~1日以内に再起動されます。
+        </div>
+        <div class="faq-item">
+            <strong>Q. TPAコマンドはどうやって使えばいいですか？</strong>
+            A. `/tpa`コマンドで使用することができます。できなかったら`/tpa ＜プレイヤー名＞`で確実に使用することができるはずです。
+        </div>
+    </div>
+
+    <div class="footer-info">
+        <span id="lastUpdated"></span>
+    </div>
+
 </div>
 
 <script>
 // ====================================================================
 //  [要設定] Google Apps Script (GAS) のウェブアプリURL
-//  ※ ステップ1-3で取得したURLに置き換えてください
+//  ※ ゲーマータグ登録に必要
 // ====================================================================
-const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx2waJRTLD6_g-kq7qPez3_ZqoCVBYY4f7q0UIw0_ElDps2INHkBOJp75gVwaMrglWDMw/exec"; 
+const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx2waJRTLD6_g-kq7qPez3_ZqoCVBYY4f7q0UIw0_ElDps2INHkBOJp75gVwaMrglDMMw/exec"; 
 
 // ====================================================================
-// ★追加★ サーバー監視設定
+// サーバー監視設定 (Ping値取得含む)
 // ====================================================================
 const SERVER_ADDRESS = "discount-findlaw.gl.at.ply.gg";
 const SERVER_PORT = "5346";
 const API_URL = `https://api.mcstatus.io/v2/status/bedrock/${SERVER_ADDRESS}:${SERVER_PORT}`;
 const statusElement = document.getElementById("serverStatus");
+const statusTextElement = statusElement.querySelector(".status-text");
+const pingTextElement = document.getElementById("serverPing");
 
 
 // サーバー状態を取得し、Webサイトに反映する関数
 function fetchServerStatus() {
     statusElement.classList.remove("status-online", "status-offline");
-    statusElement.textContent = "🔄 サーバー状態を読み込み中...";
+    statusTextElement.textContent = "🔄 サーバー状態を読み込み中...";
+    pingTextElement.textContent = ""; 
 
     fetch(API_URL)
         .then(response => {
@@ -376,16 +481,20 @@ function fetchServerStatus() {
             if (data.online) {
                 const players = data.players.online || 0;
                 const maxPlayers = data.players.max || 0;
-                statusElement.textContent = `✅ サーバー起動中！ | プレイヤー数: ${players} / ${maxPlayers} 人`;
+                const ping = data.latency ? Math.round(data.latency) : 'N/A'; // Ping値取得
+                
+                statusTextElement.textContent = `✅ サーバー起動中！ | プレイヤー数: ${players} / ${maxPlayers} 人`;
+                pingTextElement.textContent = `Ping: ${ping} ms`; // Ping値を表示
+                
                 statusElement.classList.add("status-online");
             } else {
-                statusElement.textContent = "❌ サーバーは停止中です。";
+                statusTextElement.textContent = "❌ サーバーは停止中です。";
                 statusElement.classList.add("status-offline");
             }
         })
         .catch(error => {
             console.error('サーバー状態の取得エラー:', error);
-            statusElement.textContent = "⚠️ サーバー状態の取得に失敗しました。";
+            statusTextElement.textContent = "⚠️ サーバー状態の取得に失敗しました。";
             statusElement.classList.add("status-offline");
         });
 }
@@ -395,7 +504,54 @@ fetchServerStatus();
 setInterval(fetchServerStatus, 60000); // 60000ミリ秒 = 1分
 
 // ====================================================================
-// クイズデータ (変更なし)
+// コピー機能の実装 (変更なし)
+// ====================================================================
+document.getElementById('gamerTagToCopy').addEventListener('click', copyGamerTag);
+
+function copyGamerTag() {
+    const tagElement = document.getElementById('gamerTagToCopy');
+    const tagText = tagElement.textContent.trim().replace(/\s*copyしました\s*/i, '').replace('nantetu5877', 'nantetu5877'); // 正しいタグを抽出
+    
+    // クリップボードにコピー
+    navigator.clipboard.writeText(tagText)
+        .then(() => {
+            // コピー成功時のフィードバック表示
+            const copyMsg = document.getElementById('copyMsg');
+            copyMsg.style.opacity = '1';
+            tagElement.querySelector('.copy-icon').style.color = '#2ecc71'; // アイコンを緑色に
+
+            setTimeout(() => {
+                copyMsg.style.opacity = '0';
+                tagElement.querySelector('.copy-icon').style.color = ''; // アイコンの色を元に戻す
+            }, 1000);
+
+        })
+        .catch(err => {
+            console.error('コピー失敗:', err);
+            alert('コピーに失敗しました。手動でコピーしてください: ' + tagText);
+        });
+}
+
+// ====================================================================
+// 最終更新日の自動書き込み (★新規追加★)
+// ====================================================================
+function updateLastModifiedDate() {
+    // ファイルの最終更新日時を取得
+    const lastModified = document.lastModified;
+    const date = new Date(lastModified);
+    
+    // 日付を「YYYY/MM/DD」形式にフォーマット
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    
+    document.getElementById('lastUpdated').textContent = `最終更新日: ${year}/${month}/${day}`;
+}
+
+updateLastModifiedDate();
+
+// ====================================================================
+// クイズデータ・画面切り替え (変更なし)
 // ====================================================================
 // NOTE: base64データは元のコードからコピーして貼り付けてください。
 const correctSound = new Audio("data:audio/mp3;base64,..."); 
@@ -526,12 +682,11 @@ document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
         }
         
         // GASが正しく設定されていれば、データはスプレッドシートに書き込まれています。
-        // JSONパースのエラーを避けるため、ここではresponse.json()を削除します。
         return response; 
     })
     .then(() => {
         // ★修正点2★: response.json()が成功した後の処理をここに移動
-        statusDiv.textContent = "✅ 登録完了！スプレッドシートに記録されました！";
+        statusDiv.textContent = "✅ 登録完了！ご協力ありがとうございます！";
         statusDiv.style.color = "#4CAF50";
         
         // 最終ステップへ
