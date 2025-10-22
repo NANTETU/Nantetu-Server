@@ -3,96 +3,124 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>なんてつサーバー - Status & Join</title>
+<title>なんてつさーばー</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
-    /* ========== 明るくクリーンなモダンUIへ最終調整 ========== */
+    /* ========== 明るい/暗い両対応のモダンUI & ワイドコンテナ ========== */
     
-    /* カラーパレット */
+    /* 基本カラースキーム (Light Mode) */
     :root {
-        --color-bg-light: #f0f2f5; /* 明るい背景 */
-        --color-surface: #ffffff; /* コンテナの背景 (白) */
+        --color-bg-light: #f0f2f5; 
+        --color-surface: #ffffff;
         --color-accent: #3b5998; /* ディープブルー */
-        --color-text-dark: #333333; /* 濃いテキスト色 */
-        --color-text-medium: #666666; /* 標準テキスト色 */
+        --color-text-dark: #333333;
+        --color-text-medium: #666666;
         --color-border: #e0e0e0;
         --color-shadow: rgba(0, 0, 0, 0.1);
         --color-success: #28a745;
         --color-error: #dc3545;
+        --color-status-online-bg: #e8f9e8;
+        --color-status-offline-bg: #f9e8e8;
+        --color-quiz-btn: #17a2b8; /* クイズボタン色 */
+        --color-quiz-btn-hover: #138496;
+    }
+
+    /* ダークモードのカラースキーム */
+    body.dark-mode {
+        --color-bg-light: #1e1e1e;
+        --color-surface: #2a2a2a;
+        --color-text-dark: #f0f0f0;
+        --color-text-medium: #cccccc;
+        --color-border: #444444;
+        --color-shadow: rgba(0, 0, 0, 0.4);
+        --color-success: #4ade80;
+        --color-error: #f87171;
+        --color-accent: #7b9cff;
+        --color-status-online-bg: #1a2a1a;
+        --color-status-offline-bg: #2a1a1a;
+        --color-quiz-btn: #138496;
+        --color-quiz-btn-hover: #106c7d;
     }
 
     body {
         font-family: 'Noto Sans JP', sans-serif;
-        background-color: var(--color-bg-light); /* 明るい背景 */
+        background-color: var(--color-bg-light); 
         margin: 0;
         padding: 0;
-        color: var(--color-text-dark); /* 濃いテキスト色 */
+        color: var(--color-text-dark); 
         font-size: 16px;
-        line-height: 1.7; /* 行間を少し広げて読みやすく */
+        line-height: 1.7;
+        transition: background-color 0.3s, color 0.3s;
     }
 
+    /* ========== トップリンク & ダークモードトグル ========== */
     .top-links {
         position: fixed;
         top: 20px;
         right: 20px;
         z-index: 100;
+        display: flex;
+        align-items: center;
     }
-    .top-links a {
+    .top-links a, #darkModeToggle {
         color: var(--color-accent); 
         margin-left: 15px;
         font-size: 28px;
         transition: color 0.2s;
+        cursor: pointer;
+        background: none;
+        border: none;
+        padding: 0;
+        line-height: 1;
     }
-    .top-links a:hover {
+    .top-links a:hover, #darkModeToggle:hover {
         color: #2d4373;
     }
+    body.dark-mode .top-links a, body.dark-mode #darkModeToggle {
+        color: var(--color-accent); 
+    }
+    body.dark-mode .top-links a:hover, body.dark-mode #darkModeToggle:hover {
+        color: #a0b3ff;
+    }
 
+    /* ========== コンテナ (ワイド化) ========== */
     .container {
-        max-width: 900px;
+        max-width: 1100px;
         margin: 100px auto 50px;
-        background: var(--color-surface); /* 白いコンテナ */
+        background: var(--color-surface); 
         padding: 40px;
-        border-radius: 12px; /* モダンな角丸 */
-        /* 柔らかい浮遊感のある影 */
+        border-radius: 12px; 
         box-shadow: 0 8px 30px var(--color-shadow); 
+        transition: background-color 0.3s, box-shadow 0.3s;
     }
     
-    /* サーバー状態表示ボックスのスタイル */
+    /* サーバー状態表示ボックス */
     .status-box {
         text-align: center;
         margin: -70px auto 40px; 
-        max-width: 80%; /* 中央寄せ */
+        max-width: 80%;
         padding: 18px 25px;
         border-radius: 10px;
         font-weight: 700;
         font-size: 20px;
-        /* ボックスを浮かせるための影 */
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 15px var(--color-shadow);
         display: flex;
         justify-content: space-around;
         align-items: center;
     }
     .status-online {
-        background-color: #e8f9e8; /* 非常に薄い緑の背景 */
+        background-color: var(--color-status-online-bg);
         color: var(--color-success);
         border: 1px solid var(--color-success); 
     }
     .status-offline {
-        background-color: #f9e8e8; /* 非常に薄い赤の背景 */
+        background-color: var(--color-status-offline-bg);
         color: var(--color-error);
         border: 1px solid var(--color-error);
         justify-content: center;
-    }
-    .status-offline .ping-text {
-        display: none;
-    }
-    .status-text, .ping-text {
-        flex-grow: 0;
-        padding: 0 10px;
-        font-size: 18px;
     }
 
     /* タイトルと見出し */
@@ -103,7 +131,7 @@
         margin-bottom: 25px;
         font-size: 30px; 
         padding-bottom: 10px;
-        border-bottom: 2px solid var(--color-border); /* 控えめなアンダーライン */
+        border-bottom: 2px solid var(--color-border);
     }
     
     h2 {
@@ -115,111 +143,94 @@
     }
 
     li {
-        background-color: var(--color-bg-light); /* 背景色と異なる明るいグレー */
+        background-color: var(--color-bg-light); 
         margin-bottom: 10px;
         padding: 15px;
         border: 1px solid var(--color-border);
-        border-left: 5px solid var(--color-accent); /* アクセントライン */
-        border-radius: 8px; /* 控えめな角丸 */
+        border-left: 5px solid var(--color-accent); 
+        border-radius: 8px;
         color: var(--color-text-dark);
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* 非常に弱い影 */
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+    }
+    body.dark-mode li {
+        background-color: #333333;
+        border-color: #555555;
     }
 
-    /* ボタンのスタイル */
-    button, .submit-btn {
+    /* ボタンの共通スタイル */
+    button:not(#darkModeToggle), .submit-btn {
         display: block;
         margin: 25px auto 0;
         padding: 14px 30px;
         font-size: 18px;
         cursor: pointer;
         border: none;
-        border-radius: 8px; /* モダンな角丸 */
+        border-radius: 8px;
         background-color: var(--color-accent);
         color: var(--color-surface);
-        /* 柔らかい影でボタンを浮き上がらせる */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
         transition: all 0.2s;
         outline: none;
         font-weight: 700;
     }
-    button:hover, .submit-btn:hover {
+    button:not(#darkModeToggle):hover, .submit-btn:hover {
         background-color: #2d4373;
-        transform: translateY(-2px); /* わずかに浮かせる */
+        transform: translateY(-2px); 
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); 
     }
-    button:focus, .submit-btn:focus {
-        box-shadow: 0 0 0 4px rgba(59, 89, 152, 0.4);
-    }
-
+    
     .hidden { display: none; }
 
+    /* 通知ボックス */
     .notice, .important-notice {
-        color: var(--color-error);
         font-weight: 700;
         text-align: center;
         margin-bottom: 15px;
         padding: 10px 15px;
         border-radius: 6px;
+        color: var(--color-error);
         background-color: #fff0f0;
         border: 1px solid var(--color-error);
     }
-    
-    /* コピー機能 */
-    .copyable {
-        user-select: none;
-        background-color: #e9ecef;
-        padding: 8px 12px;
-        border-radius: 6px;
-        border: 1px solid #ced4da;
-        display: inline-flex;
-        align-items: center;
-        cursor: pointer;
-        font-weight: 700;
-        color: var(--color-text-dark);
-        transition: background-color 0.1s;
-    }
-    .copyable:hover {
-        background-color: #dde1e5;
-    }
-    .copy-icon {
-        margin-left: 8px;
-        color: var(--color-accent);
-        transition: color 0.2s, transform 0.2s;
-    }
-    /* コピー成功時のバウンスアニメーション */
-    @keyframes icon-bounce {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-3px); }
-    }
-    .copyable.copied .copy-icon {
-        color: var(--color-success) !important;
-        animation: icon-bounce 0.3s ease-out;
-    }
-    .copy-message {
-        /* ... (コピーメッセージのスタイルはJS内で制御) ... */
+    body.dark-mode .notice, body.dark-mode .important-notice {
+        background-color: #381f1f;
+        color: var(--color-error);
     }
 
+    /* コピー機能 */
+    .copyable {
+        /* ... スタイル維持 ... */
+    }
+    
+    /* ========== クイズスタイル (★★★修正点★★★) ========== */
     .quiz-question {
         background-color: #f1f8ff;
         border: 1px solid var(--color-accent); 
         padding: 20px;
         border-radius: 8px;
-        margin-bottom: 15px;
+        margin-bottom: 25px; /* ボタンとの間隔を空ける */
         font-size: 18px;
         font-weight: 700;
         color: var(--color-text-dark);
+        text-align: center;
+    }
+    body.dark-mode .quiz-question {
+        background-color: #2d3e50;
     }
 
     /* 回答ボタンのスタイル */
     .quiz-answer-btn {
-        width: 100%; 
-        background-color: #17a2b8; /* インフォブルー */
+        width: 80%; /* 中央に寄せるために幅を制限 */
+        max-width: 400px;
+        background-color: var(--color-quiz-btn); /* インフォブルー */
         color: #fff;
         border: none;
-        margin-top: 10px;
+        margin: 10px auto; /* 中央寄せ */
+        padding: 12px 25px;
+        font-size: 16px;
     }
     .quiz-answer-btn:hover {
-        background-color: #138496; 
+        background-color: var(--color-quiz-btn-hover); 
     }
     
     .explanation {
@@ -228,43 +239,133 @@
         background-color: #fff0f0; 
         padding: 15px;
         border-radius: 6px;
+        margin-top: 20px;
+        text-align: center;
     }
-    
-    /* フォームのスタイル */
+    body.dark-mode .explanation {
+        background-color: #381f1f;
+    }
+
+    /* ========== フォームのスタイル (★★★修正点★★★) ========== */
+    #gamerTagForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px; /* 要素間のスペース */
+    }
     #gamerTagForm input[type="text"] {
-        width: calc(100% - 24px); 
+        width: 100%; 
+        max-width: 300px; /* 入力欄の幅を調整 */
         padding: 12px;
         font-size: 18px;
         border: 1px solid #ced4da; 
         border-radius: 4px;
         font-family: 'Noto Sans JP', sans-serif;
         color: var(--color-text-dark);
+        box-sizing: border-box;
     }
+    body.dark-mode #gamerTagForm input[type="text"] {
+        background-color: #333333;
+        border-color: #555555;
+        color: #f0f0f0;
+    }
+
+    /* 登録ボタン (緑) */
     .submit-btn[type="submit"] {
         background-color: var(--color-success) !important;
+        width: 100%;
+        max-width: 300px;
+        margin: 0; /* flexで制御するためリセット */
     }
     .submit-btn[type="submit"]:hover {
         background-color: #1e7e34 !important;
     }
+    /* スキップボタン (グレー) */
     .submit-btn#skipTagBtn {
         background-color: #6c757d !important;
+        width: 100%;
+        max-width: 300px;
+        margin: 0; /* flexで制御するためリセット */
     }
     .submit-btn#skipTagBtn:hover {
         background-color: #5a6268 !important;
     }
+    #formStatus {
+        margin-top: 10px;
+        font-weight: 700;
+        text-align: center;
+    }
 
-    /* FAQスタイル */
+
+    /* Discordリンクの装飾 */
+    .discord-msg {
+        text-align: center;
+        margin-top: 30px;
+        padding: 20px;
+        border: 1px dashed var(--color-border);
+        border-radius: 8px;
+        background-color: var(--color-bg-light);
+    }
+    body.dark-mode .discord-msg {
+        background-color: #3a3a3a;
+    }
+    .discord-link {
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 25px;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--color-surface);
+        background-color: var(--color-accent);
+        border-radius: 6px;
+        text-decoration: none;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.2s, transform 0.2s;
+    }
+    .discord-link:hover {
+        background-color: #2d4373;
+        transform: translateY(-1px);
+    }
+
+    /* ========== FAQスタイル (★★★再修正点★★★) ========== */
     .faq-item {
         background-color: #f8f9fa;
         padding: 15px;
         border-radius: 8px;
         margin-bottom: 10px;
         border-left: 4px solid var(--color-accent);
+        position: relative;
+        padding-left: 15px; /* リセット */
     }
-    .faq-item strong {
-        color: var(--color-accent);
+    body.dark-mode .faq-item {
+        background-color: #333333;
     }
 
+    .faq-item strong {
+        color: var(--color-accent);
+        display: block; /* Q.を独立行に */
+        margin-bottom: 8px; 
+        font-size: 16px;
+        padding-left: 25px; /* Q.の文字分のスペースを確保 */
+        text-indent: -25px; /* Q.の文字を左に突き出す */
+    }
+    .faq-item strong::before {
+        content: "Q. ";
+        color: var(--color-error);
+        font-weight: 700;
+        margin-right: 5px;
+    }
+    .faq-item strong + * { /* 質問の直後のテキスト（回答）にスタイル適用 */
+        display: block; /* 回答を次の行に */
+        padding-left: 25px; /* Q.と同様にインデント */
+        text-indent: -25px; /* A.の文字を左に突き出す */
+    }
+    .faq-item strong + *::before {
+        content: "A. ";
+        color: var(--color-success);
+        font-weight: 700;
+        margin-right: 5px;
+    }
     /* 最終更新日スタイル */
     .footer-info {
         color: var(--color-text-medium);
@@ -274,12 +375,12 @@
         padding-top: 10px;
         border-top: 1px solid var(--color-border);
     }
-
 </style>
 </head>
 <body oncontextmenu="return false;">
 
 <div class="top-links">
+    <button id="darkModeToggle" title="ダークモード切り替え"><i class="fas fa-moon"></i></button>
     <a href="https://youtube.com/@なんてつ" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
     <a href="https://discord.gg/79H7Jy65nz" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
 </div>
@@ -324,7 +425,7 @@
             <form id="gamerTagForm">
                 <input type="text" id="gamerTag" placeholder="例:Tarou123"> 
                 <button type="submit" class="submit-btn">タグを登録して参加方法へ</button>
-                <button type="button" id="skipTagBtn" class="submit-btn" style="margin-top: 10px;">スキップして参加方法へ</button>
+                <button type="button" id="skipTagBtn" class="submit-btn">スキップして参加方法へ</button>
                 <div id="formStatus"></div>
             </form>
         </div>
@@ -345,7 +446,7 @@
         </ol>
         <div class="discord-msg">
             Discordサーバーに入ればお知らせなどを見たりサーバーからチャットを送信ができるようになります！<br>
-            <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank">ここからぜひご参加ください！</a>
+            <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank"><i class="fab fa-discord"></i> Discordサーバーに参加する</a>
         </div>
     </div>
 
@@ -353,7 +454,7 @@
         <h2>よくある質問 (FAQ)</h2>
         <div class="faq-item">
             <strong>Q. 招待はどれくらいの時間でされますか？</strong>
-            A. 運営が手動で招待を行っています。数分〜数時間かかる場合がありますが、基本的には24時間以内には対応しています。
+            A. 数秒~1分程度で自動で招待されます。もしされなかったら障害が起きている可能性があるのでDiscordで報告してくださると助かります。
         </div>
         <div class="faq-item">
             <strong>Q. PvPの「合意あり」とはどういう意味ですか？</strong>
@@ -361,7 +462,11 @@
         </div>
         <div class="faq-item">
             <strong>Q. サーバーが動いていない時はいつ再開しますか？</strong>
-            A. メンテナンス中や負荷が高い時に一時的に停止することがあります。Discordでお知らせしていますが、基本的には数時間以内に再起動されます。
+            A. メンテナンス中や負荷が高い時に一時的に停止することがあります。Discordでお知らせしていますが、基本的には数時間~1日以内に再起動されます。
+        </div>
+        <div class="faq-item">
+            <strong>Q. TPAコマンドはどうやって使えばいいですか？</strong>
+            A. `/tpa`コマンドで使用することができます。できなかったら`/tpa ＜プレイヤー名＞`で確実に使用することができるはずです。
         </div>
     </div>
 
@@ -376,6 +481,48 @@
 //  [要設定] Google Apps Script (GAS) のウェブアプリURL
 // ====================================================================
 const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx2waJRTLD6_g-kq7qPez3_ZqoCVBYY4f7q0UIw0_ElDps2INHkBOJp75gVwaMrglDMMw/exec"; 
+
+// ====================================================================
+// ダークモード切り替え機能 
+// ====================================================================
+const body = document.body;
+const toggleBtn = document.getElementById('darkModeToggle');
+
+function enableDarkMode() {
+    body.classList.add('dark-mode');
+    toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    toggleBtn.title = 'ライトモードに切り替え';
+    localStorage.setItem('theme', 'dark');
+}
+
+function disableDarkMode() {
+    body.classList.remove('dark-mode');
+    toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+    toggleBtn.title = 'ダークモードに切り替え';
+    localStorage.setItem('theme', 'light');
+}
+
+function toggleDarkMode() {
+    if (body.classList.contains('dark-mode')) {
+        disableDarkMode();
+    } else {
+        enableDarkMode();
+    }
+}
+
+// ページロード時にlocalStorageの設定を読み込む
+(function loadTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    // デフォルトはライトモード（何も設定されていなければ）
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        enableDarkMode();
+    } else {
+        disableDarkMode();
+    }
+})();
+
+toggleBtn.addEventListener('click', toggleDarkMode);
+
 
 // ====================================================================
 // サーバー監視設定 
@@ -435,7 +582,7 @@ fetchServerStatus();
 setInterval(fetchServerStatus, 60000); 
 
 // ====================================================================
-// コピー機能の実装 (バウンスアニメーション付き)
+// コピー機能の実装
 // ====================================================================
 document.getElementById('gamerTagToCopy').addEventListener('click', copyGamerTag);
 
@@ -445,14 +592,9 @@ function copyGamerTag() {
 
     navigator.clipboard.writeText(tagText)
         .then(() => {
-            const copyMsg = document.getElementById('copyMsg');
-            
-            // アニメーションとフィードバックの開始
             tagElement.classList.add('copied');
-            // コピーメッセージのスタイル (モダンUIでは不要かもしれませんが、一旦維持)
             
             setTimeout(() => {
-                // アニメーションとフィードバックの終了
                 tagElement.classList.remove('copied');
             }, 1000);
 
