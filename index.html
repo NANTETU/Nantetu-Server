@@ -4,344 +4,319 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>なんてつサーバー</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
-
-    /* アクセシビリティ・デザイン調整 */
+    /* ========== モダンデザインへの変更 ========== */
+    
     body {
-        font-family: 'DotGothic16', monospace;
-        /* 背景グラデーションを少し落ち着いた青緑系に調整 */
-        background: linear-gradient(135deg, #6a85b6, #bac8e0); /* 落ち着いた青から薄い青へ */
+        /* フォントをモダンなものに変更 */
+        font-family: 'Noto Sans JP', sans-serif;
+        /* 背景色をクリーンなライトグレーに統一 */
+        background-color: #f4f7f6; 
         margin: 0;
         padding: 0;
-        color: #333; /* 文字色を少し濃くして視認性向上 */
-        font-size: 18px; 
+        color: #333;
+        font-size: 16px; /* 文字サイズを標準に */
+        line-height: 1.6;
     }
 
     .top-links {
         position: fixed;
-        top: 10px;
+        top: 20px;
         right: 20px;
         z-index: 100;
     }
     .top-links a {
-        color: #fff;
+        color: #3b5998; /* 落ち着いた青 */
         margin-left: 15px;
-        font-size: 30px;
+        font-size: 28px;
         text-decoration: none;
-        transition: transform 0.2s;
-        text-shadow: 2px 2px 0 rgba(0,0,0,0.5); /* 影を柔らかく */
+        transition: color 0.2s;
+        text-shadow: none; /* 影を削除 */
     }
     .top-links a:hover {
-        transform: scale(1.2);
+        color: #2d4373;
+        transform: none;
     }
 
     .container {
-        max-width: 1000px;
-        margin: 80px auto;
-        /* 背景色を白に近い色にし、枠線を強調 */
-        background: #fdfdfd; /* わずかにオフホワイト */
-        padding: 50px;
-        /* 枠線を調整: 黄色のoutlineを少し落ち着いたゴールド系に、影を復活 */
-        border: 7px solid #000;
-        outline: 7px solid #d4af37; /* ゴールド系 */
-        outline-offset: -7px; 
-        border-radius: 10px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* 影を復活させ、濃さを調整 */
+        max-width: 900px;
+        margin: 100px auto 50px; /* 上部マージンを増やしてヘッダーと分離 */
+        /* 背景を白に変更し、シンプルでモダンな影を追加 */
+        background: #ffffff;
+        padding: 40px;
+        border: none;
+        border-radius: 12px; /* 角を丸く */
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1); /* 控えめな影 */
+        outline: none;
+        outline-offset: 0;
     }
     
     /* サーバー状態表示ボックスのスタイル */
     .status-box {
         text-align: center;
-        margin: -50px 0 30px; /* containerの上側に食い込ませる */
-        padding: 15px;
-        border: 3px solid #333;
-        border-radius: 5px;
-        font-weight: bold;
-        text-shadow: 1px 1px 0 #fff;
-        font-size: 22px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        display: flex; /* Ping値とステータスを並べる */
-        justify-content: space-between; /* 両端寄せ */
+        margin: -70px 0 40px; /* containerの上側に大きく食い込ませる */
+        padding: 20px;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700; /* 太字 */
+        text-shadow: none;
+        font-size: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15); /* 新しい影 */
+        display: flex;
+        justify-content: space-around;
         align-items: center;
     }
-    .status-text, .ping-text {
-        flex-grow: 1; /* スペースを埋める */
-        text-align: center;
-    }
     .status-online {
-        background-color: #a8e6a8; /* 緑系 */
-        color: #1a73e8;
-        border-color: #27ae60;
+        background-color: #e6ffe6; /* 薄い緑の背景 */
+        color: #28a745; /* 濃い緑の文字 */
+        border: 1px solid #28a745; 
     }
     .status-offline {
-        background-color: #ffcccb; /* 赤系 */
-        color: #d93025;
-        border-color: #c0392b;
-        justify-content: center; /* オフライン時は中央寄せ */
+        background-color: #ffebe6; /* 薄い赤の背景 */
+        color: #dc3545; /* 濃い赤の文字 */
+        border: 1px solid #dc3545;
+        justify-content: center;
     }
     .status-offline .ping-text {
-        display: none; /* オフライン時はPingを非表示 */
+        display: none;
+    }
+    .status-text, .ping-text {
+        flex-grow: 0;
+        padding: 0 10px;
+        font-size: 18px;
     }
 
-    
-    /* デザイン強化: H1をゲームのタイトル風に */
+    /* タイトルと見出しの変更 */
     h1 {
         text-align: center;
-        color: #a00; /* 深い赤に変更 */
-        font-weight: bold;
-        text-shadow: 
-            -3px -3px 0 #333, /* 影の色を黒から濃いグレーに */
-            3px -3px 0 #333, 
-            -3px 3px 0 #333, 
-            3px 3px 0 #333,
-            4px 4px 0 #600; /* 更に影の色を深い赤に */
+        color: #3b5998; /* 落ち着いたディープブルー */
+        font-weight: 700;
+        text-shadow: none; 
         margin-bottom: 30px;
-        font-size: 55px; 
+        font-size: 32px; 
         padding-bottom: 10px;
-        border-bottom: 5px double #333; /* 線も濃いグレーに */
+        border-bottom: 2px solid #eee; /* シンプルな細い線 */
     }
     
     h2 {
-        text-shadow: 1px 1px 0 #fff;
+        font-weight: 700;
+        text-shadow: none;
     }
 
     ol {
-        margin-left: 30px;
-        margin-bottom: 30px;
-        padding-left: 0;
+        margin-left: 0;
+        padding-left: 20px;
     }
 
     li {
-        background-color: #fce4ec; /* 薄いピンクベージュ系に */
+        background-color: #f8f9fa; /* 非常に薄いグレー */
         margin-bottom: 10px;
         padding: 15px;
-        border: 2px solid #666; /* 枠線を落ち着いたグレーに */
-        border-radius: 5px;
+        border: 1px solid #ddd; /* 細い境界線 */
+        border-left: 5px solid #3b5998; /* アクセントカラーの縦線 */
+        border-radius: 6px;
         color: #333;
-        box-shadow: 2px 2px 0 rgba(0,0,0,0.3); /* 影を柔らかく */
+        box-shadow: none; 
     }
 
+    /* ボタンのスタイルをフラットに */
     button, .submit-btn {
         display: block;
         margin: 25px auto 0;
-        padding: 15px 30px;
-        font-size: 20px;
+        padding: 12px 25px;
+        font-size: 18px;
         cursor: pointer;
-        border: 3px solid #333; /* 枠線を濃いグレーに */
-        border-radius: 5px;
-        background-color: #4e8acb; /* 落ち着いた青に */
+        border: none; /* 枠線を削除 */
+        border-radius: 6px;
+        background-color: #3b5998; /* アクセントカラー */
         color: #fff;
-        box-shadow: 7px 7px 0 rgba(0,0,0,0.4); /* 影を調整 */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 控えめな影 */
         transition: all 0.2s;
         outline: none;
-        font-family: 'DotGothic16', monospace; 
+        font-family: 'Noto Sans JP', sans-serif;
+        font-weight: 700;
     }
     button:hover, .submit-btn:hover {
-        background-color: #3a6fa8; /* ホバーで少し濃く */
-        transform: translate(-3px, -3px); 
-        box-shadow: 10px 10px 0 rgba(0,0,0,0.5); 
+        background-color: #2d4373; /* ホバーで少し濃く */
+        transform: translateY(-2px); 
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); 
     }
     button:focus, .submit-btn:focus {
-        border-color: #d4af37; /* フォーカスの枠をゴールド系に */
-        box-shadow: 0 0 0 5px #d4af37; 
+        border-color: none;
+        box-shadow: 0 0 0 3px rgba(59, 89, 152, 0.5); /* フォーカスリング */
     }
 
     .hidden { display: none; }
 
     .notice {
-        color: #c0392b; /* 少し落ち着いた赤に */
+        color: #dc3545; 
         text-align: center;
-        font-weight: bold;
-        margin-bottom: 10px;
-        background-color: #fff; 
-        padding: 5px;
-        border-radius: 5px;
-        border: 2px dashed #c0392b; 
+        font-weight: 700;
+        margin-bottom: 15px;
+        background-color: #fff0f0; 
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #dc3545; 
     }
     
     .important-notice {
-        color: #a00; /* h1と同じ深い赤 */
+        color: #dc3545; 
         text-align: center;
-        font-weight: bold;
+        font-weight: 700;
         margin-bottom: 20px;
-        padding: 10px;
-        border: 3px solid #a00; 
-        border-radius: 5px;
-        background-color: #fff5f5; /* 薄い赤系の背景 */
-        box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+        padding: 15px;
+        border: 2px dashed #dc3545; 
+        border-radius: 8px;
+        background-color: #fff8f8; 
+        box-shadow: none;
     }
 
     .discord-msg {
         margin-top: 25px;
         padding: 20px;
-        background-color: #7289da; /* Discordカラーはそのまま */
-        border: 3px solid #333; /* 枠線を濃いグレーに */
-        border-radius: 10px;
+        background-color: #7289da; /* Discordカラー */
+        border: none;
+        border-radius: 8px;
         text-align: center;
-        font-weight: bold;
+        font-weight: 700;
         color: #fff;
-        font-size: 18px; 
-        box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+        font-size: 16px; 
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     a.discord-link {
         color: #fff;
-        font-weight: bold;
+        font-weight: 700;
         text-decoration: underline;
-        text-shadow: 1px 1px 1px rgba(0,0,0,0.5); 
+        text-shadow: none; 
     }
 
     .copyable {
-        user-select: none; /* テキスト選択を無効化 */
-        background-color: rgba(255,255,255,0.2); 
-        padding: 3px 5px;
-        border-radius: 3px;
-        border: 1px dashed #666; 
-        display: inline-flex; /* flexにしてアイコンとタグを横並びに */
+        user-select: none;
+        background-color: #e9ecef; /* ライトグレーの背景 */
+        padding: 5px 10px;
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+        display: inline-flex;
         align-items: center;
-        cursor: pointer; /* コピーできることを示す */
-        position: relative; /* コピー通知用 */
+        cursor: pointer;
+        position: relative;
+        font-weight: 700;
     }
     .copy-icon {
         margin-left: 8px;
+        color: #3b5998;
         transition: color 0.2s;
     }
     .copy-message {
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        transform: translate(-50%, -10px);
-        background-color: #000;
+        background-color: #333;
         color: #fff;
         padding: 5px 10px;
-        border-radius: 5px;
-        font-size: 14px;
-        white-space: nowrap;
+        border-radius: 4px;
+        font-size: 12px;
+        /* 位置調整 */
+        bottom: 100%;
+        left: 50%;
+        transform: translate(-50%, -15px);
         opacity: 0;
         transition: opacity 0.3s;
-        pointer-events: none; /* クリックイベントを無視 */
-        z-index: 10;
-    }
-    .copyable:active .copy-icon {
-        color: #2ecc71; /* コピー時に色を変える */
     }
 
     .quiz-question {
-        background-color: #e0f2f7; /* 薄い水色に */
-        border: 2px solid #666; /* 枠線を濃いグレーに */
-        padding: 15px;
-        border-radius: 5px;
+        background-color: #f1f8ff; /* 薄い青系の背景 */
+        border: 1px solid #3b5998; 
+        padding: 20px;
+        border-radius: 8px;
         margin-bottom: 15px;
+        font-size: 18px;
+        font-weight: 700;
     }
 
     /* 回答ボタンのスタイル */
     .quiz-answer-btn {
-        display: block;
         width: 100%; 
-        margin: 10px 0;
-        padding: 15px;
-        background-color: #e67e22; /* 落ち着いたオレンジに */
+        background-color: #17a2b8; /* クールなシアン系 */
         color: #fff;
-        border: 2px solid #333; /* 枠線を濃いグレーに */
-        border-radius: 5px;
-        cursor: pointer;
-        text-align: center;
-        font-size: 18px;
-        font-family: 'DotGothic16', monospace;
-        transition: background-color 0.2s, transform 0.2s;
+        border: none;
     }
 
     .quiz-answer-btn:hover {
-        background-color: #d35400; /* ホバーで少し濃く */
-        transform: scale(1.02);
+        background-color: #138496; 
     }
     
-    .quiz-answer-btn:focus {
-        border-color: #d4af37; /* フォーカスの枠をゴールド系に */
-        box-shadow: 0 0 0 3px #d4af37;
-    }
-
     .explanation {
-        margin-top: 15px;
-        padding: 15px;
-        color: #c0392b; 
-        font-weight: bold;
-        border: 3px solid #e74c3c; /* 少し落ち着いた赤に */
-        border-radius: 5px;
-        background-color: #fef0f0; /* 薄い赤系の背景 */
-        display: none;
+        color: #dc3545; 
+        border: 1px solid #dc3545;
+        background-color: #fff0f0; 
     }
     
     /* 合格画面のスタイル */
     .pass-screen {
-        text-align: center;
-        padding: 40px;
-        background-color: #e9f7ef; /* 薄い緑系に */
-        border: 3px solid #27ae60; /* 落ち着いた緑に */
-        border-radius: 10px;
-        margin-top: 30px;
+        background-color: #e2f7e2; /* 薄い緑系に */
+        border: 1px solid #28a745; 
+        border-radius: 8px;
     }
     .pass-screen h2 {
-        font-size: 30px;
-        color: #27ae60; 
+        color: #28a745; 
+        font-size: 24px;
     }
     
     /* フォームのスタイル */
     #gamerTagForm input[type="text"] {
-        width: 80%;
-        padding: 15px;
-        margin: 15px auto;
-        display: block;
-        font-size: 20px;
-        border: 3px solid #333; 
-        border-radius: 5px;
-        box-sizing: border-box;
-        font-family: 'DotGothic16', monospace;
-        text-align: center; 
+        padding: 12px;
+        font-size: 18px;
+        border: 1px solid #ced4da; 
+        border-radius: 4px;
+        font-family: 'Noto Sans JP', sans-serif;
     }
-    #formStatus {
-        margin-top: 15px;
-        font-weight: bold;
+    .submit-btn[type="submit"] {
+        background-color: #28a745 !important; /* タグ登録ボタンを緑に */
     }
-
-    /* ルールクイズのヒントスタイル */
-    .quiz-hint {
-        font-size: 10px; /* 極小 */
-        color: #aaa; /* 薄いグレー */
-        text-align: right; /* 右寄せ */
-        margin-top: 20px;
+    .submit-btn[type="submit"]:hover {
+        background-color: #1e7e34 !important;
+    }
+    .submit-btn#skipTagBtn {
+        background-color: #6c757d !important; /* スキップボタンをグレーに */
+    }
+    .submit-btn#skipTagBtn:hover {
+        background-color: #5a6268 !important;
     }
 
     /* FAQスタイル */
     #faq h2 {
         margin-top: 40px;
         padding: 10px;
-        border-bottom: 3px dashed #333;
-        text-align: center;
+        border-bottom: 1px solid #ccc;
+        text-align: left; /* 左寄せに変更 */
+        font-size: 24px;
     }
     .faq-item {
-        background-color: #fff;
-        border: 2px solid #4e8acb; /* 落ち着いた青の枠線 */
-        border-radius: 5px;
+        background-color: #f9f9f9;
+        border: 1px solid #eee;
+        border-left: 4px solid #17a2b8; /* シアンの縦線 */
+        border-radius: 6px;
         padding: 15px;
-        margin-bottom: 15px;
-        box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+        margin-bottom: 10px;
+        box-shadow: none;
     }
     .faq-item strong {
-        color: #4e8acb;
+        color: #3b5998;
         display: block;
         margin-bottom: 5px;
+        font-weight: 700;
     }
 
     /* 最終更新日スタイル */
     .footer-info {
         text-align: right;
-        font-size: 14px;
-        color: #555;
-        margin-top: 40px;
-        border-top: 1px solid #ccc;
+        font-size: 12px;
+        color: #888;
+        margin-top: 30px;
+        border-top: 1px solid #eee;
         padding-top: 10px;
     }
 
@@ -357,7 +332,7 @@
 <div class="container">
     <div id="serverStatus" class="status-box">
         <span class="status-text">...読み込み中...</span>
-        <span class="ping-text" id="serverPing"></span>
+        <span class="ping-text" id="serverPing" style="display:none;"></span>
     </div>
 
     <div id="rules">
@@ -424,7 +399,7 @@
         <h2>よくある質問 (FAQ)</h2>
         <div class="faq-item">
             <strong>Q. 招待はどれくらいの時間でされますか？</strong>
-            A. 数秒~1分程度で自動で招待されます。もしされなかったら障害が起きている可能性があるのでDiscordで報告してくださると助かります。
+            A. 運営が手動で招待を行っています。数分〜数時間かかる場合がありますが、基本的には24時間以内には対応しています。
         </div>
         <div class="faq-item">
             <strong>Q. PvPの「合意あり」とはどういう意味ですか？</strong>
@@ -432,11 +407,7 @@
         </div>
         <div class="faq-item">
             <strong>Q. サーバーが動いていない時はいつ再開しますか？</strong>
-            A. メンテナンス中や負荷が高い時に一時的に停止することがあります。Discordでお知らせしていますが、基本的には数時間~1日以内に再起動されます。
-        </div>
-        <div class="faq-item">
-            <strong>Q. TPAコマンドはどうやって使えばいいですか？</strong>
-            A. `/tpa`コマンドで使用することができます。できなかったら`/tpa ＜プレイヤー名＞`で確実に使用することができるはずです。
+            A. メンテナンス中や負荷が高い時に一時的に停止することがあります。Discordでお知らせしていますが、基本的には数時間以内に再起動されます。
         </div>
     </div>
 
@@ -454,7 +425,7 @@
 const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx2waJRTLD6_g-kq7qPez3_ZqoCVBYY4f7q0UIw0_ElDps2INHkBOJp75gVwaMrglDMMw/exec"; 
 
 // ====================================================================
-// サーバー監視設定 (Ping値取得含む)
+// サーバー監視設定 (Ping値はN/A対策で調整)
 // ====================================================================
 const SERVER_ADDRESS = "discount-findlaw.gl.at.ply.gg";
 const SERVER_PORT = "5346";
@@ -468,7 +439,7 @@ const pingTextElement = document.getElementById("serverPing");
 function fetchServerStatus() {
     statusElement.classList.remove("status-online", "status-offline");
     statusTextElement.textContent = "🔄 サーバー状態を読み込み中...";
-    pingTextElement.textContent = ""; 
+    pingTextElement.style.display = 'none'; // Pingは最初は非表示
 
     fetch(API_URL)
         .then(response => {
@@ -481,20 +452,30 @@ function fetchServerStatus() {
             if (data.online) {
                 const players = data.players.online || 0;
                 const maxPlayers = data.players.max || 0;
-                const ping = data.latency ? Math.round(data.latency) : 'N/A'; // Ping値取得
                 
                 statusTextElement.textContent = `✅ サーバー起動中！ | プレイヤー数: ${players} / ${maxPlayers} 人`;
-                pingTextElement.textContent = `Ping: ${ping} ms`; // Ping値を表示
-                
                 statusElement.classList.add("status-online");
+
+                // Ping値が取得できた場合のみ表示
+                if (data.latency && data.latency !== null) {
+                    const ping = Math.round(data.latency);
+                    pingTextElement.textContent = `Ping: ${ping} ms`; 
+                    pingTextElement.style.display = 'block'; 
+                } else {
+                    // PingがN/A (測定不可) の場合は非表示
+                    pingTextElement.style.display = 'none';
+                }
+                
             } else {
                 statusTextElement.textContent = "❌ サーバーは停止中です。";
+                pingTextElement.style.display = 'none';
                 statusElement.classList.add("status-offline");
             }
         })
         .catch(error => {
             console.error('サーバー状態の取得エラー:', error);
             statusTextElement.textContent = "⚠️ サーバー状態の取得に失敗しました。";
+            pingTextElement.style.display = 'none';
             statusElement.classList.add("status-offline");
         });
 }
@@ -504,25 +485,23 @@ fetchServerStatus();
 setInterval(fetchServerStatus, 60000); // 60000ミリ秒 = 1分
 
 // ====================================================================
-// コピー機能の実装 (変更なし)
+// コピー機能の実装
 // ====================================================================
 document.getElementById('gamerTagToCopy').addEventListener('click', copyGamerTag);
 
 function copyGamerTag() {
     const tagElement = document.getElementById('gamerTagToCopy');
-    const tagText = tagElement.textContent.trim().replace(/\s*copyしました\s*/i, '').replace('nantetu5877', 'nantetu5877'); // 正しいタグを抽出
-    
-    // クリップボードにコピー
+    const tagText = 'nantetu5877'; // タグを直接指定
+
     navigator.clipboard.writeText(tagText)
         .then(() => {
-            // コピー成功時のフィードバック表示
             const copyMsg = document.getElementById('copyMsg');
             copyMsg.style.opacity = '1';
-            tagElement.querySelector('.copy-icon').style.color = '#2ecc71'; // アイコンを緑色に
+            tagElement.querySelector('.copy-icon').style.color = '#28a745'; // コピー成功時は緑色
 
             setTimeout(() => {
                 copyMsg.style.opacity = '0';
-                tagElement.querySelector('.copy-icon').style.color = ''; // アイコンの色を元に戻す
+                tagElement.querySelector('.copy-icon').style.color = '#3b5998'; // 元の色に戻す
             }, 1000);
 
         })
@@ -533,10 +512,10 @@ function copyGamerTag() {
 }
 
 // ====================================================================
-// 最終更新日の自動書き込み (★新規追加★)
+// 最終更新日の自動書き込み
 // ====================================================================
 function updateLastModifiedDate() {
-    // ファイルの最終更新日時を取得
+    // このファイルがサーバーにアップロードされた日時（ブラウザが取得した最終更新日時）
     const lastModified = document.lastModified;
     const date = new Date(lastModified);
     
@@ -551,7 +530,7 @@ function updateLastModifiedDate() {
 updateLastModifiedDate();
 
 // ====================================================================
-// クイズデータ・画面切り替え (変更なし)
+// クイズデータ・画面切り替え (変更なし、音源のみ要調整)
 // ====================================================================
 // NOTE: base64データは元のコードからコピーして貼り付けてください。
 const correctSound = new Audio("data:audio/mp3;base64,..."); 
@@ -583,7 +562,6 @@ let questionIndex = 0;
 document.getElementById("agreeBtn").addEventListener("click", () => {
     rulesDiv.classList.add("hidden");
     quizDiv.classList.remove("hidden");
-    
     quizDiv.scrollIntoView({ behavior: 'smooth' });
 
     currentQuiz = quizPatterns[Math.floor(Math.random()*quizPatterns.length)];
@@ -617,13 +595,13 @@ function showQuestion() {
         
         btn.onclick = ()=>{
             if(idx === qObj.correct){
-                correctSound.currentTime = 0;
-                correctSound.play();
+                // correctSound.currentTime = 0;
+                // correctSound.play();
                 questionIndex++;
                 showQuestion();
             }else{
-                wrongSound.currentTime = 0;
-                wrongSound.play();
+                // wrongSound.currentTime = 0;
+                // wrongSound.play();
                 explanationDiv.textContent = "不正解！ " + qObj.explanation + " ルールをよく読み直してね！";
                 explanationDiv.style.display = "block";
                 
@@ -638,15 +616,14 @@ function showQuestion() {
     });
 }
 
-// === [追加] スキップボタンのイベントリスナー ===
+// === スキップボタンのイベントリスナー ===
 document.getElementById('skipTagBtn').addEventListener('click', () => {
-    // ゲーマータグ入力をスキップし、最終ステップへ進む
     gamerTagInputDiv.classList.add("hidden");
     howToJoinDiv.classList.remove("hidden");
     howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
 });
 
-// === [変更] GAS Webアプリへのデータ送信処理 ===
+// === GAS Webアプリへのデータ送信処理 ===
 document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
@@ -654,7 +631,6 @@ document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
     const statusDiv = document.getElementById('formStatus');
     const submitBtn = document.querySelector('#gamerTagForm .submit-btn');
 
-    // ゲーマータグが空欄の場合は登録処理をせず、最終ステップへ進む
     if (gamerTag === "") {
         gamerTagInputDiv.classList.add("hidden");
         howToJoinDiv.classList.remove("hidden");
@@ -666,7 +642,6 @@ document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
     statusDiv.style.color = "#ff8c00";
     submitBtn.disabled = true;
 
-    // GAS WebアプリにPOSTリクエストを送信 (タグがある場合のみ)
     fetch(GAS_WEB_APP_URL, {
         method: 'POST',
         headers: {
@@ -675,27 +650,20 @@ document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
         body: `gamerTag=${encodeURIComponent(gamerTag)}`
     })
     .then(response => {
-        // ★修正点1★: HTTPステータスコードをチェック
         if (!response.ok) {
-            // ステータスが200番台でなければエラーと見なす
             throw new Error('GASからの応答エラー: ' + response.statusText);
         }
-        
-        // GASが正しく設定されていれば、データはスプレッドシートに書き込まれています。
         return response; 
     })
     .then(() => {
-        // ★修正点2★: response.json()が成功した後の処理をここに移動
-        statusDiv.textContent = "✅ 登録完了！ご協力ありがとうございます！";
-        statusDiv.style.color = "#4CAF50";
+        statusDiv.textContent = "✅ 登録完了！スプレッドシートに記録されました！";
+        statusDiv.style.color = "#28a745";
         
-        // 最終ステップへ
         gamerTagInputDiv.classList.add("hidden");
         howToJoinDiv.classList.remove("hidden");
         howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
     })
     .catch(error => {
-        // ネットワークエラー、またはresponse.okで弾かれた場合
         console.error('Fetch Error:', error);
         statusDiv.textContent = "❌ 登録に失敗しました。ネットワークを確認してください。";
         statusDiv.style.color = "red";
