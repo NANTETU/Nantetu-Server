@@ -11,11 +11,11 @@
     /* アクセシビリティ・デザイン調整 */
     body {
         font-family: 'DotGothic16', monospace;
-        /* 背景をより明るく、メリハリをつける */
-        background: linear-gradient(135deg, #4c6693, #6ec1e4);
+        /* 背景グラデーションを少し落ち着いた青緑系に調整 */
+        background: linear-gradient(135deg, #6a85b6, #bac8e0); /* 落ち着いた青から薄い青へ */
         margin: 0;
         padding: 0;
-        color: #222;
+        color: #333; /* 文字色を少し濃くして視認性向上 */
         font-size: 18px; 
     }
 
@@ -26,12 +26,12 @@
         z-index: 100;
     }
     .top-links a {
-        color: #fff; /* アイコンの色を白に変更して背景とのコントラストを確保 */
+        color: #fff;
         margin-left: 15px;
         font-size: 30px;
         text-decoration: none;
         transition: transform 0.2s;
-        text-shadow: 2px 2px 0 #000;
+        text-shadow: 2px 2px 0 rgba(0,0,0,0.5); /* 影を柔らかく */
     }
     .top-links a:hover {
         transform: scale(1.2);
@@ -41,34 +41,32 @@
         max-width: 1000px;
         margin: 80px auto;
         /* 背景色を白に近い色にし、枠線を強調 */
-        background: #ffffffe0;
+        background: #fdfdfd; /* わずかにオフホワイト */
         padding: 50px;
-        /* 派手さUP: 枠線をさらに太く、コントラストを強調 */
+        /* 枠線を調整: 黄色のoutlineを少し落ち着いたゴールド系に、影を復活 */
         border: 7px solid #000;
-        outline: 7px solid #ffcc00; 
+        outline: 7px solid #d4af37; /* ゴールド系 */
         outline-offset: -7px; 
         border-radius: 10px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.8); /* 影を濃く */
-        box-shadow: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* 影を復活させ、濃さを調整 */
     }
 
-    /* デザイン強化: H1をゲームのタイトル風に（派手さMAX） */
-h1 {
-    text-align: center;
-    color: #ff4500; /* オレンジレッドで目立たせる */
-    font-weight: bold; /* 太字に追加 */
-    text-shadow: 
-        -3px -3px 0 #000, 
-        3px -3px 0 #000, 
-        -3px 3px 0 #000, 
-        3px 3px 0 #000,
-        3px 3px 0 #8B0000; /* 更に影を追加 */
-    margin-bottom: 30px;
-    font-size: 55px; 
-    padding-bottom: 10px;
-    border-bottom: 5px double #000; 
-}
-
+    /* デザイン強化: H1をゲームのタイトル風に */
+    h1 {
+        text-align: center;
+        color: #FF6; /* 深い赤に変更 */
+        font-weight: bold;
+        text-shadow: 
+            -3px -3px 0 #333, /* 影の色を黒から濃いグレーに */
+            3px -3px 0 #333, 
+            -3px 3px 0 #333, 
+            3px 3px 0 #333,
+            4px 4px 0 #600; /* 更に影の色を深い赤に */
+        margin-bottom: 30px;
+        font-size: 55px; 
+        padding-bottom: 10px;
+        border-bottom: 5px double #333; /* 線も濃いグレーに */
+    }
     
     h2 {
         text-shadow: 1px 1px 0 #fff;
@@ -81,13 +79,13 @@ h1 {
     }
 
     li {
-        background-color: #ffe0b2; 
+        background-color: #fce4ec; /* 薄いピンクベージュ系に */
         margin-bottom: 10px;
         padding: 15px;
-        border: 2px solid #000;
+        border: 2px solid #666; /* 枠線を落ち着いたグレーに */
         border-radius: 5px;
-        color: #222;
-        box-shadow: 2px 2px 0 #000;
+        color: #333;
+        box-shadow: 2px 2px 0 rgba(0,0,0,0.3); /* 影を柔らかく */
     }
 
     button, .submit-btn {
@@ -96,81 +94,81 @@ h1 {
         padding: 15px 30px;
         font-size: 20px;
         cursor: pointer;
-        border: 3px solid #000;
+        border: 3px solid #333; /* 枠線を濃いグレーに */
         border-radius: 5px;
-        background-color: #2196f3;
+        background-color: #4e8acb; /* 落ち着いた青に */
         color: #fff;
-        box-shadow: 7px 7px 0 #000; 
+        box-shadow: 7px 7px 0 rgba(0,0,0,0.4); /* 影を調整 */
         transition: all 0.2s;
         outline: none;
         font-family: 'DotGothic16', monospace; 
     }
     button:hover, .submit-btn:hover {
-        background-color: #1976d2;
+        background-color: #3a6fa8; /* ホバーで少し濃く */
         transform: translate(-3px, -3px); 
-        box-shadow: 10px 10px 0 #000; 
+        box-shadow: 10px 10px 0 rgba(0,0,0,0.5); 
     }
     button:focus, .submit-btn:focus {
-        border-color: #ffcc00; 
-        box-shadow: 0 0 0 5px #ffcc00; 
+        border-color: #d4af37; /* フォーカスの枠をゴールド系に */
+        box-shadow: 0 0 0 5px #d4af37; 
     }
 
     .hidden { display: none; }
 
     .notice {
-        color: #ff3333;
+        color: #c0392b; /* 少し落ち着いた赤に */
         text-align: center;
         font-weight: bold;
         margin-bottom: 10px;
         background-color: #fff; 
         padding: 5px;
         border-radius: 5px;
-        border: 2px dashed #ff3333;
+        border: 2px dashed #c0392b; 
     }
     
     .important-notice {
-        color: #ff4500;
+        color: #a00; /* h1と同じ深い赤 */
         text-align: center;
         font-weight: bold;
         margin-bottom: 20px;
         padding: 10px;
-        border: 3px solid #ff4500;
+        border: 3px solid #a00; 
         border-radius: 5px;
-        background-color: #fff0e0;
-        box-shadow: 2px 2px 0 #ff4500;
+        background-color: #fff5f5; /* 薄い赤系の背景 */
+        box-shadow: 2px 2px 0 rgba(0,0,0,0.3);
     }
 
     .discord-msg {
         margin-top: 25px;
         padding: 20px;
-        background-color: #7289da; 
-        border: 3px solid #000;
+        background-color: #7289da; /* Discordカラーはそのまま */
+        border: 3px solid #333; /* 枠線を濃いグレーに */
         border-radius: 10px;
         text-align: center;
         font-weight: bold;
         color: #fff;
         font-size: 18px; 
-        box-shadow: 5px 5px 0 #000;
+        box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
     }
 
     a.discord-link {
         color: #fff;
         font-weight: bold;
         text-decoration: underline;
-        text-shadow: 1px 1px 1px #000; 
+        text-shadow: 1px 1px 1px rgba(0,0,0,0.5); 
     }
 
     .copyable {
         user-select: text;
-        background-color: #ffffff33;
+        background-color: rgba(255,255,255,0.2); /* 透明度を上げて背景に馴染ませる */
         padding: 3px 5px;
         border-radius: 3px;
-        border: 1px dashed #000;
+        border: 1px dashed #666; /* 枠線を濃いグレーに */
     }
 
     .quiz-question {
-        background-color: #d0f0ff;
-        border: 2px solid #000;
+        background-color: #e0f2f7; /* 薄い水色に */
+        border: 2px solid #666; /* 枠線を濃いグレーに */
         padding: 15px;
         border-radius: 5px;
         margin-bottom: 15px;
@@ -182,9 +180,9 @@ h1 {
         width: 100%; 
         margin: 10px 0;
         padding: 15px;
-        background-color: #ff8c00; 
+        background-color: #e67e22; /* 落ち着いたオレンジに */
         color: #fff;
-        border: 2px solid #000;
+        border: 2px solid #333; /* 枠線を濃いグレーに */
         border-radius: 5px;
         cursor: pointer;
         text-align: center;
@@ -194,23 +192,23 @@ h1 {
     }
 
     .quiz-answer-btn:hover {
-        background-color: #cc7000;
+        background-color: #d35400; /* ホバーで少し濃く */
         transform: scale(1.02);
     }
     
     .quiz-answer-btn:focus {
-        border-color: #00ffff; 
-        box-shadow: 0 0 0 3px #00ffff;
+        border-color: #d4af37; /* フォーカスの枠をゴールド系に */
+        box-shadow: 0 0 0 3px #d4af37;
     }
 
     .explanation {
         margin-top: 15px;
         padding: 15px;
-        color: #a00; 
+        color: #c0392b; 
         font-weight: bold;
-        border: 3px solid #f00;
+        border: 3px solid #e74c3c; /* 少し落ち着いた赤に */
         border-radius: 5px;
-        background-color: #ffdcdc;
+        background-color: #fef0f0; /* 薄い赤系の背景 */
         display: none;
     }
     
@@ -218,14 +216,14 @@ h1 {
     .pass-screen {
         text-align: center;
         padding: 40px;
-        background-color: #e8f5e9;
-        border: 3px solid #4CAF50;
+        background-color: #e9f7ef; /* 薄い緑系に */
+        border: 3px solid #27ae60; /* 落ち着いた緑に */
         border-radius: 10px;
         margin-top: 30px;
     }
     .pass-screen h2 {
         font-size: 30px;
-        color: #4CAF50;
+        color: #27ae60; 
     }
     
     /* フォームのスタイル */
@@ -235,7 +233,7 @@ h1 {
         margin: 15px auto;
         display: block;
         font-size: 20px;
-        border: 3px solid #000; 
+        border: 3px solid #333; 
         border-radius: 5px;
         box-sizing: border-box;
         font-family: 'DotGothic16', monospace;
@@ -289,8 +287,8 @@ h1 {
             <p>登録は任意ですが、ご協力いただくことでスムーズに招待され、問題発生時の対応が迅速になります。</p>
             <form id="gamerTagForm">
                 <input type="text" id="gamerTag" placeholder="例:Tarou123"> 
-                <button type="submit" class="submit-btn" style="background-color: #ff4500;">タグを登録して参加方法へ</button>
-                <button type="button" id="skipTagBtn" class="submit-btn" style="background-color: #6c757d; margin-top: 10px;">スキップして参加方法へ</button>
+                <button type="submit" class="submit-btn" style="background-color: #e67e22;">タグを登録して参加方法へ</button>
+                <button type="button" id="skipTagBtn" class="submit-btn" style="background-color: #7f8c8d; margin-top: 10px;">スキップして参加方法へ</button>
                 <div id="formStatus"></div>
             </form>
         </div>
