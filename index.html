@@ -442,9 +442,11 @@ document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
         body: `gamerTag=${encodeURIComponent(gamerTag)}`
     })
     .then(response => {
-        return response.json();
+        // ★重要★: GASがJSONを返しているため、ここでresponse.json()を呼び出します
+        return response.json(); 
     })
     .then(data => {
+        // 成功時の処理
         if (data.status === 'success') {
             statusDiv.textContent = "✅ 登録完了！スプレッドシートに記録されました！";
             statusDiv.style.color = "#4CAF50";
@@ -454,14 +456,14 @@ document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
             howToJoinDiv.classList.remove("hidden");
             howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
         } else {
-            // GAS側でエラーが返された場合
+            // GAS側で意図せずエラーが返された場合
             statusDiv.textContent = "❌ 登録失敗: " + data.message;
             statusDiv.style.color = "red";
             submitBtn.disabled = false;
         }
     })
     .catch(error => {
-        // ネットワークエラーなど
+        // ★通信が失敗した場合（GASがCORSで弾かれた、またはJSONのパースに失敗）
         console.error('Fetch Error:', error);
         statusDiv.textContent = "❌ 登録に失敗しました。ネットワークを確認してください。";
         statusDiv.style.color = "red";
