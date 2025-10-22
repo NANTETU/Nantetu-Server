@@ -3,19 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>なんてつさーばー</title>
+<title>なんてつサーバー</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
-    /* ========== 明るい/暗い両対応のモダンUI & ワイドコンテナ ========== */
+    /* ========== 背景グラデーション用 変数追加 ========== */
     
     /* 基本カラースキーム (Light Mode) */
     :root {
         --color-bg-light: #f0f2f5; 
         --color-surface: #ffffff;
-        --color-accent: #3b5998; /* ディープブルー */
+        --color-accent: #3b5998; 
+        /* --- グラデーション色 (ライトモード) --- */
+        --color-gradient-start: #ffffff; /* 非常に明るい白 */
+        --color-gradient-end: #dce3e7; /* 薄いグレーブルー */
+        /* ------------------------------------- */
         --color-text-dark: #333333;
         --color-text-medium: #666666;
         --color-border: #e0e0e0;
@@ -24,7 +28,7 @@
         --color-error: #dc3545;
         --color-status-online-bg: #e8f9e8;
         --color-status-offline-bg: #f9e8e8;
-        --color-quiz-btn: #17a2b8; /* クイズボタン色 */
+        --color-quiz-btn: #17a2b8;
         --color-quiz-btn-hover: #138496;
     }
 
@@ -43,17 +47,45 @@
         --color-status-offline-bg: #2a1a1a;
         --color-quiz-btn: #138496;
         --color-quiz-btn-hover: #106c7d;
+        /* --- グラデーション色 (ダークモード) --- */
+        --color-gradient-start: #232a32; /* 暗い青灰色 */
+        --color-gradient-end: #1e1e1e; /* 非常に暗い黒 */
+        /* ------------------------------------- */
     }
 
     body {
         font-family: 'Noto Sans JP', sans-serif;
-        background-color: var(--color-bg-light); 
+        /* ★★★ここをグラデーションに変更★★★ */
+        background: linear-gradient(135deg, var(--color-gradient-start) 0%, var(--color-gradient-end) 100%);
+        background-attachment: fixed; /* 画面をスクロールしても背景は固定 */
+        /* ★★★★★★★★★★★★★★★★★★★ */
         margin: 0;
         padding: 0;
         color: var(--color-text-dark); 
         font-size: 16px;
         line-height: 1.7;
         transition: background-color 0.3s, color 0.3s;
+    }
+    
+    /* ========== モバイル向けフォントサイズ調整 ========== */
+    @media (max-width: 768px) {
+        body {
+            font-size: 15px;
+        }
+        h1 {
+            font-size: 26px;
+        }
+        .status-box {
+            font-size: 16px;
+            padding: 12px 15px;
+        }
+        li {
+            padding: 12px 15px 12px 40px; 
+        }
+        li::before {
+            left: 12px;
+            top: 12px;
+        }
     }
 
     /* ========== トップリンク & ダークモードトグル ========== */
@@ -142,15 +174,31 @@
         margin-top: 30px;
     }
 
+    /* ルールリストの調整 */
+    ol {
+        padding-left: 0;
+        list-style: none;
+        counter-reset: rule-counter;
+    }
     li {
+        counter-increment: rule-counter;
         background-color: var(--color-bg-light); 
-        margin-bottom: 10px;
-        padding: 15px;
+        margin-bottom: 12px;
+        padding: 15px 15px 15px 50px;
         border: 1px solid var(--color-border);
-        border-left: 5px solid var(--color-accent); 
         border-radius: 8px;
-        color: var(--color-text-dark);
+        position: relative;
         box-shadow: 0 2px 5px rgba(0,0,0,0.05); 
+        line-height: 1.5;
+    }
+    li::before {
+        content: counter(rule-counter) ".";
+        position: absolute;
+        left: 15px;
+        top: 15px;
+        font-weight: 700;
+        color: var(--color-accent);
+        font-size: 110%;
     }
     body.dark-mode li {
         background-color: #333333;
@@ -198,17 +246,53 @@
     }
 
     /* コピー機能 */
-    .copyable {
-        /* ... スタイル維持 ... */
+    @keyframes bounce {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); } 
     }
-    
-    /* ========== クイズスタイル (★★★修正点★★★) ========== */
+    .copyable {
+        user-select: none;
+        background-color: #e9ecef;
+        padding: 8px 12px;
+        border-radius: 6px;
+        border: 1px solid #ced4da;
+        color: var(--color-text-dark);
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.2s;
+    }
+    body.dark-mode .copyable {
+        background-color: #333;
+        border-color: #555;
+    }
+    .copyable:hover {
+        background-color: #d8dee3;
+    }
+    body.dark-mode .copyable:hover {
+        background-color: #444;
+    }
+    .copyable.copied {
+        background-color: var(--color-success);
+        color: #fff;
+        animation: bounce 0.3s ease-out; 
+    }
+    .copyable.copied .fa-copy {
+        color: #fff; 
+    }
+    .fa-copy {
+        margin-left: 8px;
+        color: var(--color-accent);
+    }
+
+
+    /* ========== クイズスタイル ========== */
     .quiz-question {
         background-color: #f1f8ff;
         border: 1px solid var(--color-accent); 
         padding: 20px;
         border-radius: 8px;
-        margin-bottom: 25px; /* ボタンとの間隔を空ける */
+        margin-bottom: 25px; 
         font-size: 18px;
         font-weight: 700;
         color: var(--color-text-dark);
@@ -217,20 +301,29 @@
     body.dark-mode .quiz-question {
         background-color: #2d3e50;
     }
-
-    /* 回答ボタンのスタイル */
+    
+    #quizContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+    }
     .quiz-answer-btn {
-        width: 80%; /* 中央に寄せるために幅を制限 */
+        width: 80%; 
         max-width: 400px;
-        background-color: var(--color-quiz-btn); /* インフォブルー */
+        background-color: var(--color-quiz-btn); 
         color: #fff;
         border: none;
-        margin: 10px auto; /* 中央寄せ */
+        margin: 10px 0; 
         padding: 12px 25px;
         font-size: 16px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.2s, transform 0.2s;
     }
     .quiz-answer-btn:hover {
         background-color: var(--color-quiz-btn-hover); 
+        transform: translateY(-1px);
     }
     
     .explanation {
@@ -246,16 +339,16 @@
         background-color: #381f1f;
     }
 
-    /* ========== フォームのスタイル (★★★修正点★★★) ========== */
+    /* ========== フォームのスタイル ========== */
     #gamerTagForm {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 15px; /* 要素間のスペース */
+        gap: 15px;
     }
     #gamerTagForm input[type="text"] {
         width: 100%; 
-        max-width: 300px; /* 入力欄の幅を調整 */
+        max-width: 300px; 
         padding: 12px;
         font-size: 18px;
         border: 1px solid #ced4da; 
@@ -275,7 +368,7 @@
         background-color: var(--color-success) !important;
         width: 100%;
         max-width: 300px;
-        margin: 0; /* flexで制御するためリセット */
+        margin: 0; 
     }
     .submit-btn[type="submit"]:hover {
         background-color: #1e7e34 !important;
@@ -285,7 +378,7 @@
         background-color: #6c757d !important;
         width: 100%;
         max-width: 300px;
-        margin: 0; /* flexで制御するためリセット */
+        margin: 0; 
     }
     .submit-btn#skipTagBtn:hover {
         background-color: #5a6268 !important;
@@ -327,7 +420,7 @@
         transform: translateY(-1px);
     }
 
-    /* ========== FAQスタイル (★★★再修正点★★★) ========== */
+    /* FAQスタイル */
     .faq-item {
         background-color: #f8f9fa;
         padding: 15px;
@@ -335,7 +428,7 @@
         margin-bottom: 10px;
         border-left: 4px solid var(--color-accent);
         position: relative;
-        padding-left: 15px; /* リセット */
+        padding-left: 15px; 
     }
     body.dark-mode .faq-item {
         background-color: #333333;
@@ -343,29 +436,39 @@
 
     .faq-item strong {
         color: var(--color-accent);
-        display: block; /* Q.を独立行に */
+        display: block; 
         margin-bottom: 8px; 
         font-size: 16px;
-        padding-left: 25px; /* Q.の文字分のスペースを確保 */
-        text-indent: -25px; /* Q.の文字を左に突き出す */
+        padding-left: 25px; 
+        text-indent: -25px; 
     }
     .faq-item strong::before {
         content: "Q. ";
         color: var(--color-error);
         font-weight: 700;
         margin-right: 5px;
+        transition: color 0.3s;
     }
-    .faq-item strong + * { /* 質問の直後のテキスト（回答）にスタイル適用 */
-        display: block; /* 回答を次の行に */
-        padding-left: 25px; /* Q.と同様にインデント */
-        text-indent: -25px; /* A.の文字を左に突き出す */
+    .faq-item strong + * { 
+        display: block; 
+        padding-left: 25px; 
+        text-indent: -25px; 
     }
     .faq-item strong + *::before {
         content: "A. ";
         color: var(--color-success);
         font-weight: 700;
         margin-right: 5px;
+        transition: color 0.3s;
     }
+    
+    body.dark-mode .faq-item strong::before {
+        color: var(--color-error);
+    }
+    body.dark-mode .faq-item strong + *::before {
+        color: var(--color-success);
+    }
+
     /* 最終更新日スタイル */
     .footer-info {
         color: var(--color-text-medium);
@@ -438,7 +541,6 @@
                 <span id="gamerTagToCopy" class="copyable">
                     nantetu5877
                     <i class="fas fa-copy copy-icon"></i>
-                    <span id="copyMsg" class="copy-message"></span>
                 </span>
                 にフレンド申請
             </li>
@@ -513,7 +615,6 @@ function toggleDarkMode() {
 // ページロード時にlocalStorageの設定を読み込む
 (function loadTheme() {
     const savedTheme = localStorage.getItem('theme');
-    // デフォルトはライトモード（何も設定されていなければ）
     if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         enableDarkMode();
     } else {
@@ -555,7 +656,6 @@ function fetchServerStatus() {
                 statusTextElement.textContent = `✅ サーバー起動中！ | プレイヤー数: ${players} / ${maxPlayers} 人`;
                 statusElement.classList.add("status-online");
 
-                // Ping値が取得できた場合のみ表示 (N/A対策)
                 if (data.latency && data.latency !== null) {
                     const ping = Math.round(data.latency);
                     pingTextElement.textContent = `Ping: ${ping} ms`; 
@@ -625,8 +725,8 @@ updateLastModifiedDate();
 // クイズデータ・画面切り替え
 // ====================================================================
 // NOTE: base64データは元のコードからコピーして貼り付けてください。
-const correctSound = new Audio("data:audio/mp3;base64,..."); 
-const wrongSound   = new Audio("data:audio/mp3;base64,..."); 
+// const correctSound = new Audio("data:audio/mp3;base64,..."); 
+// const wrongSound   = new Audio("data:audio/mp3;base64,..."); 
 
 const quizPatterns = [
     [
