@@ -130,7 +130,7 @@ button:not(#darkModeToggle):hover, .submit-btn:hover {
 }
 body.dark-mode .notice, body.dark-mode .important-notice { background-color: #381f1f; color: var(--color-error); }
 
-/* ========== コピー機能 ========== */
+/* ========== コピー機能 (強化) ========== */
 @keyframes bounce {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.05); } 
@@ -263,21 +263,82 @@ body.dark-mode .faq-item strong + *::before {
     </div>
 
     <div id="rules">
-        <h1>なんてつさーばー ルール</h1>
+        <h1>なんてつさーばー ルール：ゆるサバをガチで守るために</h1>
+        <p class="important-notice">
+            このサーバーは「ゆるいサバイバル」がモットーですが、以下のルールは**運営の負担と他のプレイヤーの楽しみを守るための厳格な定義**です。
+            ルール違反は軽重問わず厳しく対処します。
+        </p>
+
+        <h2>🚨 厳禁事項：即時永久BANの対象</h2>
+        <p>以下の行為は、サーバーの根幹と他のプレイヤーの体験を著しく損なうため、警告なしに**即時永久BANの対象**となります。</p>
         <ol>
-            <li>他の人に迷惑をかける行為</li>
-            <li>建築物の破壊・無断使用</li>
-            <li>アイテムの持ち逃げ・盗み</li>
-            <li>他プレイヤーへの敬意のない発言</li>
-            <li>建築主の許可なしの入室</li>
-            <li>不必要な領地の登録</li>
-            <li>チャットでの宣伝・勧誘</li>
-            <li>一方的な攻撃(PvPは合意ありのみ)</li>
-            <li>不具合・バグ利用(見つけたら報告してね！)</li>
-            <li>改造クライアント・チートの使用</li>
+            <li>
+                <strong style="color: var(--color-error);">【破壊・窃盗】</strong><br>
+                他者の**所有物（建築物、保護エリア、チェスト内のアイテム）を無断で破壊・窃盗・改変**する行為。
+                <br><small>※他人の畑からの無断収穫や、管理下にあるMOBの殺傷も含みます。</small>
+            </li>
+            <li>
+                <strong style="color: var(--color-error);">【ハラスメント】</strong><br>
+                暴言、誹謗中傷、差別的発言、過度な煽り、個人情報の詮索など、**他者が明確に不快に感じる言動**。
+            </li>
+            <li>
+                <strong style="color: var(--color-error);">【チート・ツール】</strong><br>
+                **改造クライアント、チートMOD、マクロ、BOT**など、不正に優位性を得る外部ツールの使用。
+            </li>
+            <li>
+                <strong style="color: var(--color-error);">【サーバー負荷行為】</strong><br>
+                過剰なクロック回路、大量のMOB繁殖/放置エンティティ、または意図的なバグ利用による**サーバーダウンや重度のラグを引き起こす**行為。
+            </li>
+            <li>
+                <strong style="color: var(--color-error);">【バグ利用】</strong><br>
+                **ゲーム内の不具合（バグ/グリッチ）を意図的に利用**し、不正に利益を得る行為。発見時は速やかに運営に報告してください。
+            </li>
+            <li>
+                <strong style="color: var(--color-error);">【無断PvP・拘束】</strong><br>
+                **相手プレイヤーの明確な同意（合意）がない**一方的な攻撃（PvP）、またはトラップなどによる長時間拘束。
+            </li>
         </ol>
-        <p class="notice">※サーバールールに違反した場合、それ相応の罰を処します。</p>
-        <button id="agreeBtn">参加方法を見る</button>
+
+        <h2>⚖️ 自由と節度</h2>
+        <p>メインワールド一つで運営しているため、自由なサバイバルを推奨しつつも、**公共の資源と景観**に対する配慮がより重要となります。</p>
+        <ol start="7">
+            <li>
+                <strong style="color: var(--color-accent);">【景観の維持と採掘の修復】</strong><br>
+                メインワールド内での採掘や整地は、**終了後に元の状態（または自然な状態）に完全に修復する**ことを義務付けます。
+                <br><small>※地下のブランチマイニング跡、露天掘りの穴などを放置しないでください。</small>
+            </li>
+            <li>
+                <strong style="color: var(--color-accent);">【公共エリアの維持】</strong><br>
+                スポーン地点や**ネザー/エンドポータル周辺**は公共エリアです。これらの場所での私的な建築、改変、資源の独占は禁止します。
+            </li>
+            <li>
+                <strong style="color: var(--color-accent);">【無許可の入室・干渉】</strong><br>
+                他プレイヤーの保護エリア内や、明らかにプライベートな建築物への**無許可の立ち入り**や、無断での看板設置などの干渉。
+            </li>
+            <li>
+                <strong style="color: var(--color-accent);">【領地と放置物】</strong><br>
+                使用目的のない**不必要な広範囲の領地登録**。また、長期間（例：3ヶ月）放置された建築物や領地は、運営判断で撤去する場合があります。
+            </li>
+            <li>
+                <strong style="color: var(--color-accent);">【宣伝・勧誘】</strong><br>
+                チャットや建築物内での**他のサーバーやコミュニティへの宣伝・勧誘**。
+            </li>
+        </ol>
+
+        <p class="notice">
+            ※ルールに違反した場合、**警告、一時BAN、永久BAN**のいずれかの罰を処します。
+            違反内容によっては、**建築物やアイテムの没収・巻き戻し**も実施します。
+        </p>
+        <button id="agreeBtn">ルール確認クイズに挑戦する</button>
+
+        <p class="notice" style="margin-top: 30px;">
+            ⚠️ クイズが苦手な方、緊急で参加したい方向け 
+            <br>
+            **ルール全文を読み、自己責任で遵守することを誓約いただける場合のみ**、クイズをスキップできます。
+        </p>
+        <button type="button" id="skipQuizBtn" class="submit-btn" style="background-color: #6c757d !important; max-width: 400px; margin-top: 10px;">
+            クイズをスキップして参加方法へ (自己誓約)
+        </button>
     </div>
 
     <div id="quiz" class="hidden">
@@ -306,16 +367,50 @@ body.dark-mode .faq-item strong + *::before {
     
     <div id="howToJoin" class="hidden">
         <h1>参加方法</h1>
+        <p class="important-notice">
+            なんてつサーバーへの参加は、以下の2つの方法から選べます。
+            <br>どちらの方法でも、サーバーのルールが適用されます。
+        </p>
+        
+        <h2>① フレンド招待で参加する (推奨)</h2>
+        <p>最も確実で簡単な方法です。初めての方はまずこちらを試してください。</p>
         <ol>
             <li>
+                フレンドID:
                 <span id="gamerTagToCopy" class="copyable">
                     nantetu5877
                     <i class="fas fa-copy copy-icon"></i>
                 </span>
                 にフレンド申請
             </li>
-            <li>少し待って招待されたら参加！</li>
+            <li>申請後、数秒~1分ほどでサーバーから招待が届きます。</li>
+            <li>招待されたら参加完了です！</li>
         </ol>
+
+        <h2>② IPアドレスで直接接続する</h2>
+        <p>サーバーリストに直接追加して参加できます。招待が届かない場合などにご利用ください。</p>
+        <ol>
+            <li>
+                マイクラの「サーバー」タブを開き、「サーバーを追加」を選択します。
+            </li>
+            <li>
+                サーバーアドレス:
+                <span id="addressToCopy" class="copyable">
+                    nantetu123.f5.si
+                    <i class="fas fa-copy copy-icon"></i>
+                </span>
+            </li>
+            <li>
+                ポート番号:
+                <span id="portToCopy" class="copyable">
+                    5346 
+                    <i class="fas fa-copy copy-icon"></i>
+                </span>
+                <small></small>
+            </li>
+            <li>保存後、サーバーリストからなんてつサーバーに接続します。</li>
+        </ol>
+
         <div class="discord-msg">
             Discordサーバーに入ればお知らせなどを見たりサーバーからチャットを送信ができるようになります！<br>
             <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank"><i class="fab fa-discord"></i> Discordサーバーに参加する</a>
@@ -333,17 +428,33 @@ body.dark-mode .faq-item strong + *::before {
             相手のプレイヤーがPvPを承諾していることを、チャットなどで確認してから攻撃してください。突然の攻撃はルール違反となります。
         </div>
         <div class="faq-item">
+            <strong>⛏️ 資源ワールドがない場合、採掘跡はどうすればいいですか？</strong>
+            メインワールドのみのため、【景観の維持と採掘の修復】ルールに基づき、**採掘後に必ず元の状態に修復してください**。ブランチマイニングでできた穴も、埋め戻すなど景観に配慮してください。
+        </div>
+        <div class="faq-item">
+            <strong>Mobトラップや自動機構（自動装置）はどこまで作っていいですか？</strong>
+            サーバーに重度のラグを発生させる規模のものは【サーバー負荷行為】として禁止です。特に、**動物やMobの過剰繁殖**、**1ブロックに集中した大量のエンティティ**は厳禁です。負荷を避けた設計にご協力ください。
+        </div>
+        <div class="faq-item">
+            <strong>ネザーポータルやエンドポータル付近に家を建ててもいいですか？</strong>
+            ポータル周辺は【公共エリアの維持】ルールに基づき、**公共の場所**として扱い、私的な建築や資源の独占は禁止です。利便性を考慮した一時的な施設に留めてください。
+        </div>
+        <div class="faq-item">
+            <strong>長期間遊んでいない領地や建築物はどうなりますか？</strong>
+            長期間（例：3ヶ月以上）放置されたと運営が判断した場合、【領地と放置物】のルールに基づき**撤去の対象**となる場合があります。撤去の前に、Discord等で最終告知を行います。
+        </div>
+        <div class="faq-item">
             <strong>サーバーが動いていない時はいつ再開しますか？</strong>
             メンテナンス中や負荷が高い時に一時的に停止することがあります。Discordでお知らせしていますが、基本的には数時間~1日以内に再起動されます。
         </div>
         <div class="faq-item">
-            <strong>TPAコマンドはどうやって使えばいいですか？</strong>
+            <strong>TPAコマンドはどうやって使えばいいですか？</strong>
             `/tpa`コマンドで使用することができます。できなかったら`/tpa ＜プレイヤー名＞`で確実に使用することができるはずです。
         </div>
         <div class="faq-item">
             <strong>ログを見たい場合はどうしたらいいですか？</strong>
             `/tigui`で見ることができます。事前に見たい場所の座標をコピーしておく必要があります。
-        </div>
+        </div>
     </div>
 
     <div class="footer-info">
@@ -399,11 +510,12 @@ toggleBtn.addEventListener('click', toggleDarkMode);
 
 
 // ====================================================================
-// サーバー監視設定 (変更なし)
+// サーバー監視設定 
 // ====================================================================
-const SERVER_ADDRESS = "discount-findlaw.gl.at.ply.gg";
-const SERVER_PORT = "5346";
+const SERVER_ADDRESS = "nantetu123.f5.si"; 
+const SERVER_PORT = "5346"; 
 const API_URL = `https://api.mcstatus.io/v2/status/bedrock/${SERVER_ADDRESS}:${SERVER_PORT}`;
+
 const statusElement = document.getElementById("serverStatus");
 const statusTextElement = statusElement.querySelector(".status-text");
 const pingTextElement = document.getElementById("serverPing");
@@ -455,26 +567,31 @@ fetchServerStatus();
 setInterval(fetchServerStatus, 60000); 
 
 // ====================================================================
-// コピー機能の実装 (変更なし)
+// コピー機能の実装 
 // ====================================================================
-document.getElementById('gamerTagToCopy').addEventListener('click', copyGamerTag);
+// フレンドIDのコピー
+document.getElementById('gamerTagToCopy').addEventListener('click', () => copyText('nantetu5877', 'gamerTagToCopy'));
+// サーバーアドレスのコピー
+document.getElementById('addressToCopy').addEventListener('click', () => copyText('nantetu123.f5.si', 'addressToCopy'));
+// ポート番号のコピー
+document.getElementById('portToCopy').addEventListener('click', () => copyText('5346', 'portToCopy'));
 
-function copyGamerTag() {
-    const tagElement = document.getElementById('gamerTagToCopy');
-    const tagText = 'nantetu5877'; 
 
-    navigator.clipboard.writeText(tagText)
+function copyText(textToCopy, elementId) {
+    const element = document.getElementById(elementId);
+
+    navigator.clipboard.writeText(textToCopy)
         .then(() => {
-            tagElement.classList.add('copied');
+            element.classList.add('copied');
             
             setTimeout(() => {
-                tagElement.classList.remove('copied');
+                element.classList.remove('copied');
             }, 1000);
 
         })
         .catch(err => {
             console.error('コピー失敗:', err);
-            alert('コピーに失敗しました。手動でコピーしてください: ' + tagText);
+            alert('コピーに失敗しました。手動でコピーしてください: ' + textToCopy);
         });
 }
 
@@ -499,14 +616,44 @@ updateLastModifiedDate();
 // ====================================================================
 const quizPatterns = [
     [
-        { q: "建築物を勝手に壊したら？", a: ["罰せられる", "ちょっとなら許される"], correct: 0, explanation: "他人の建築を壊すのは禁止です" },
-        { q: "PvPはいつOK？", a: ["合意ありのみ", "常にOK"], correct: 0, explanation: "PvPは相手の同意が必要です" },
-        { q: "バグを見つけたら？", a: ["報告する", "放置する"], correct: 0, explanation: "バグを利用せず報告しましょう" }
+        { 
+            q: "他のプレイヤーのチェストからアイテムを盗みました。罰則は？", 
+            a: ["盗まれたアイテムを返せば許される", "即時永久BANの対象となる"], 
+            correct: 1, 
+            explanation: "【破壊・窃盗】は厳禁事項であり、即時永久BANの対象です。" 
+        },
+        { 
+            q: "PvPを仕掛ける前に必ず必要なことは？", 
+            a: ["相手が攻撃してきたら反撃する", "相手プレイヤーの明確な同意（合意）を得る"], 
+            correct: 1, 
+            explanation: "PvPは【無断PvP・拘束】に該当するため、相手の合意が必須です。" 
+        },
+        { 
+            q: "サーバーが重くなるクロック回路をたくさん作っても良い？", 
+            a: ["はい、自由なサバイバルだから", "いいえ、【サーバー負荷行為】として禁止されます"], 
+            correct: 1, 
+            explanation: "サーバー負荷をかける行為は、他のプレイヤー全員の迷惑になるため禁止です。" 
+        }
     ],
     [
-        { q: "他人のアイテムを盗んだら？", a: ["罰せられる", "少しだけならOK"], correct: 0, explanation: "盗みは禁止です" },
-        { q: "改造クライアントの使用は？", a: ["禁止", "OK"], correct: 0, explanation: "改造クライアントは禁止です" },
-        { q: "宣伝・勧誘は？", a: ["禁止", "OK"], correct: 0, explanation: "チャットでの宣伝は禁止です" }
+        { 
+            q: "メインワールドで山を掘り崩して跡を放置しました。これは違反ですか？", 
+            a: ["はい、【景観の維持】のルールに反する可能性があります", "いいえ、自由に地形を変えてOKです"], 
+            correct: 0, 
+            explanation: "メインワールドでは【景観の維持】のため、ブランチマイニング跡の放置は避けてください。" 
+        },
+        { 
+            q: "ゲーム内の不具合（バグ）を見つけました。どうすべきですか？", 
+            a: ["誰にも言わずに利用して利益を得る", "利用せず、速やかに運営に報告する"], 
+            correct: 1, 
+            explanation: "バグの利用は重大な違反です。見つけたら必ず報告してください。" 
+        },
+        { 
+            q: "長期間遊んでいない領地は、どうなる可能性がありますか？", 
+            a: ["永遠に自分の所有物として残る", "運営判断で撤去される場合がある"], 
+            correct: 1, 
+            explanation: "長期間放置された建築物や領地は、【領地と放置物】のルールに基づき撤去される場合があります。" 
+        }
     ]
 ];
 
@@ -561,7 +708,7 @@ function showQuestion() {
                 explanationDiv.textContent = "不正解！ " + qObj.explanation + " ルールをよく読み直してね！";
                 explanationDiv.style.display = "block";
                 
-                setTimeout(()=>{
+                setTimeout(() => {
                     quizDiv.classList.add("hidden");
                     rulesDiv.classList.remove("hidden");
                     rulesDiv.scrollIntoView({ behavior: 'smooth' }); 
@@ -572,14 +719,27 @@ function showQuestion() {
     });
 }
 
-// === スキップボタンのイベントリスナー (変更なし) ===
+// === スキップボタンのイベントリスナー (クイズスキップ機能) ===
+document.getElementById('skipQuizBtn').addEventListener('click', () => {
+    // 誓約のポップアップを表示
+    alert('【重要】クイズをスキップしたことにより、あなたはなんてつサーバーのルール全文を読み、自己責任で全て遵守することを誓約したものとみなされます。');
+
+    // クイズをスキップし、ゲーマータグ入力画面へ直接遷移
+    rulesDiv.classList.add("hidden");
+    quizDiv.classList.add("hidden"); //念のため非表示
+    gamerTagInputDiv.classList.remove("hidden");
+    gamerTagInputDiv.scrollIntoView({ behavior: 'smooth' });
+});
+
+
+// === スキップボタンのイベントリスナー (ゲーマータグ入力画面のスキップボタン) ===
 document.getElementById('skipTagBtn').addEventListener('click', () => {
     gamerTagInputDiv.classList.add("hidden");
     howToJoinDiv.classList.remove("hidden");
     howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
 });
 
-// === GAS Webアプリへのデータ送信処理 (★最終修正★) ===
+// === GAS Webアプリへのデータ送信処理 (変更なし) ===
 document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
