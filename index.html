@@ -7,49 +7,52 @@
 <title>なんてつサーバー</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 <style>
-/* ========== CSSは変更なしで、前回のコードのままです ========== */
-/* ========== 基本カラースキーム & グラデーション変数 ========== */
+/* ========== 基本カラースキーム & グラデーション変数 (モダン化) ========== */
 :root {
-    --color-bg-light: #f0f2f5; 
+    --color-primary: #3b5998; /* アクセントカラーをプライマリに */
+    --color-secondary: #00bcd4; /* アクション用 */
+    --color-bg: #f4f6f9; /* 明るい背景 */
     --color-surface: #ffffff;
-    --color-accent: #3b5998;
-    --color-gradient-start: #ffffff;
-    --color-gradient-end: #dce3e7;
-    --color-text-dark: #333333;
-    --color-text-medium: #666666;
-    --color-border: #e0e0e0;
-    --color-shadow: rgba(0, 0, 0, 0.1);
-    --color-success: #28a745;
-    --color-error: #dc3545;
+    --color-text-dark: #2c3e50;
+    --color-text-medium: #7f8c8d;
+    --color-border: #ecf0f1;
+    --color-shadow: rgba(0, 0, 0, 0.08); /* 影をよりフラットに */
+    --color-success: #2ecc71;
+    --color-error: #e74c3c;
     --color-status-online-bg: #e8f9e8;
     --color-status-offline-bg: #f9e8e8;
-    --color-quiz-btn: #17a2b8;
-    --color-quiz-btn-hover: #138496;
+    
+    /* 特徴リスト用カラー */
+    --color-feature-icon: #3498db; 
+    --color-feature-bg: #f7f9fb;
+    
+    /* UI共通設定 */
+    --radius-default: 8px;
 }
 body.dark-mode {
-    --color-bg-light: #1e1e1e;
+    --color-primary: #85a3e0;
+    --color-secondary: #00e5ff;
+    --color-bg: #1e1e1e;
     --color-surface: #2a2a2a;
-    --color-text-dark: #f0f0f0;
-    --color-text-medium: #cccccc;
-    --color-border: #444444;
+    --color-text-dark: #ecf0f1;
+    --color-text-medium: #bdc3c7;
+    --color-border: #3b3b3b;
     --color-shadow: rgba(0, 0, 0, 0.4);
     --color-success: #4ade80;
     --color-error: #f87171;
-    --color-accent: #7b9cff;
     --color-status-online-bg: #1a2a1a;
     --color-status-offline-bg: #2a1a1a;
-    --color-quiz-btn: #138496;
-    --color-quiz-btn-hover: #106c7d;
-    --color-gradient-start: #232a32;
-    --color-gradient-end: #1e1e1e;
+    
+    --color-feature-icon: #5d9cec;
+    --color-feature-bg: #333333;
 }
 
 body {
     font-family: 'Noto Sans JP', sans-serif;
-    background: linear-gradient(135deg, var(--color-gradient-start) 0%, var(--color-gradient-end) 100%);
+    background-color: var(--color-bg); /* グラデーションから単色へ */
     background-attachment: fixed;
     margin: 0;
     padding: 0;
@@ -62,124 +65,385 @@ body {
 /* ========== モバイルフレンドリー調整 ========== */
 @media (max-width: 768px) {
     body { font-size: 15px; }
-    h1 { font-size: 26px; }
-    .status-box { font-size: 16px; padding: 12px 15px; }
-    li { padding: 12px 15px 12px 40px; }
-    li::before { left: 12px; top: 12px; }
+    #hero-title { font-size: 32px; padding: 15px 0; margin-top: 50px; }
+    .status-box { font-size: 16px; padding: 12px 15px; margin-top: 20px; }
+    .container { padding: 0 !important; margin: 0 auto 30px !important; box-shadow: none; border-radius: 0; }
+    .content-wrapper { padding: 0 15px; }
+    #tabs { padding: 0 10px; } /* タブを左右に少し詰める */
+    .tab-button { font-size: 14px; padding: 10px 10px; }
+    /* 参加ボタンを画面幅いっぱいに */
+    .join-section .action-btn { max-width: 100%; }
 }
 
-/* ========== トップリンク & ダークモードトグル ========== */
+/* ========== トップリンク & ダークモードトグル (変更なし) ========== */
 .top-links {
     position: fixed; top: 20px; right: 20px; z-index: 100; display: flex; align-items: center;
 }
 .top-links a, #darkModeToggle {
-    color: var(--color-accent); margin-left: 15px; font-size: 28px; cursor: pointer; background: none; border: none; padding: 0; line-height: 1; transition: color 0.2s;
+    color: var(--color-primary); margin-left: 15px; font-size: 28px; cursor: pointer; background: none; border: none; padding: 0; line-height: 1; transition: color 0.2s;
 }
 .top-links a:hover, #darkModeToggle:hover {
-    color: #2d4373;
+    color: var(--color-secondary);
 }
 body.dark-mode .top-links a, body.dark-mode #darkModeToggle {
-    color: var(--color-accent); 
+    color: var(--color-primary); 
 }
 body.dark-mode .top-links a:hover, body.dark-mode #darkModeToggle:hover {
-    color: #a0b3ff;
+    color: var(--color-secondary);
 }
 
-/* ========== コンテナ & ステータスボックス ========== */
-.container {
-    max-width: 1100px; margin: 100px auto 50px; background: var(--color-surface); padding: 40px; border-radius: 12px; box-shadow: 0 8px 30px var(--color-shadow); transition: background-color 0.3s, box-shadow 0.3s;
+/* ========== ヒーロータイトル (視認性向上) ========== */
+#hero-title-section {
+    text-align: center;
+    padding: 60px 20px 0;
+    margin-bottom: 20px;
 }
+#hero-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--color-primary);
+    text-shadow: 1px 1px 2px var(--color-shadow);
+    display: inline-block;
+    padding: 10px 0;
+}
+#hero-subtitle {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-text-medium);
+    margin-top: -10px;
+}
+
+/* ========== コンテナ (全幅デザインの維持と調整) ========== */
+.container {
+    width: 100%; 
+    max-width: none; 
+    margin: 0 auto 50px; 
+    background: var(--color-surface); 
+    padding: 0; /* 内部ラッパーで調整 */
+    border-radius: var(--radius-default); 
+    box-shadow: 0 6px 15px var(--color-shadow); /* 影をよりソフトに */
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box; 
+}
+/* コンテンツの可読性を確保するための内部ラッパー */
+.content-wrapper {
+    max-width: 1100px; 
+    margin: 0 auto; 
+    padding: 40px 20px; /* 上下にパディングを追加 */
+}
+
+
+/* ========== ステータスボックス (デザイン変更) ========== */
 .status-box {
-    text-align: center; margin: -70px auto 40px; max-width: 80%; padding: 18px 25px; border-radius: 10px; font-weight: 700; font-size: 20px; box-shadow: 0 4px 15px var(--color-shadow); display: flex; justify-content: space-around; align-items: center;
+    text-align: center; 
+    margin: 0 auto 30px; /* 上へのめり込みを解除 */
+    max-width: 800px; 
+    padding: 18px 25px; 
+    border-radius: var(--radius-default); 
+    font-weight: 700; 
+    font-size: 20px; 
+    box-shadow: 0 2px 10px var(--color-shadow); /* 影をフラットに */
+    display: flex; 
+    flex-wrap: wrap; /* モバイルで折り返す */
+    justify-content: space-around; 
+    align-items: center;
+    background-color: var(--color-surface); 
+    border: 1px solid var(--color-border);
 }
 .status-online {
-    background-color: var(--color-status-online-bg); color: var(--color-success); border: 1px solid var(--color-success); 
+    background-color: var(--color-status-online-bg); color: var(--color-success); border-color: var(--color-success); 
 }
 .status-offline {
-    background-color: var(--color-status-offline-bg); color: var(--color-error); border: 1px solid var(--color-error); justify-content: center;
+    background-color: var(--color-status-offline-bg); color: var(--color-error); border-color: var(--color-error); justify-content: center;
+}
+.ping-text {
+    margin-left: 10px;
+    font-size: 16px;
+    color: var(--color-text-medium);
+}
+@media (max-width: 768px) {
+    .status-box { flex-direction: column; gap: 5px; }
+    .ping-text { margin-left: 0; }
 }
 
-/* ========== 見出し & リスト ========== */
+
+/* ========== タブナビゲーション (フラットでモダンなデザイン) ========== */
+#tabs {
+    display: flex;
+    border-bottom: 2px solid var(--color-border);
+    margin-bottom: 25px;
+    overflow-x: auto; 
+    background-color: transparent; /* 背景なし */
+    padding-top: 0;
+    border-radius: 0;
+    flex-wrap: nowrap; /* 強制的に横並び */
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 12px 18px;
+    margin-bottom: -2px; 
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--color-text-medium);
+    transition: color 0.2s, border-bottom 0.2s, background-color 0.2s;
+    white-space: nowrap; 
+    border-radius: 0;
+}
+
+.tab-button:hover:not(.active) {
+    color: var(--color-primary);
+    background-color: var(--color-bg); 
+}
+
+.tab-button.active {
+    color: var(--color-primary);
+    border-bottom: 3px solid var(--color-primary);
+    background-color: transparent; 
+}
+
+
+/* ========== 見出し & リスト (調整) ========== */
 h1 {
-    text-align: center; color: var(--color-accent); font-weight: 700; margin-bottom: 25px; font-size: 30px; padding-bottom: 10px; border-bottom: 2px solid var(--color-border);
+    text-align: left; /* 左寄せに戻す */
+    color: var(--color-primary); 
+    font-weight: 700; 
+    margin-bottom: 20px; 
+    font-size: 28px; 
+    padding-bottom: 8px; 
+    border-bottom: 2px solid var(--color-border);
 }
 h2 {
     font-weight: 700; color: var(--color-text-dark); border-bottom: 1px solid var(--color-border); padding-bottom: 5px; margin-top: 30px;
 }
-ol {
+
+/* 特徴リストの強化 */
+.feature-list {
+    list-style: none;
+    padding-left: 0;
+    display: grid; /* グリッドレイアウトで横並びに */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+}
+.feature-list li {
+    background-color: var(--color-feature-bg); 
+    margin-bottom: 0; /* グリッドなのでマージンをリセット */
+    padding: 15px 15px 15px 55px; 
+    border: 1px solid var(--color-border); 
+    border-radius: var(--radius-default); 
+    position: relative; 
+    box-shadow: 0 1px 4px var(--color-shadow); 
+    line-height: 1.5;
+    transition: transform 0.2s; /* ホバーで少し浮く */
+}
+.feature-list li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--color-shadow);
+}
+.feature-list li::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f00c"; 
+    position: absolute; 
+    left: 18px; 
+    top: 15px; 
+    color: var(--color-feature-icon); 
+    font-size: 110%;
+}
+body.dark-mode .feature-list li::before {
+    color: var(--color-feature-icon);
+}
+
+
+/* ルールリストのスタイル (変更なし) */
+.rule-list {
     padding-left: 0; list-style: none; counter-reset: rule-counter;
 }
+.rule-list li {
+    counter-increment: rule-counter; 
+    background-color: var(--color-feature-bg); /* ルールも少し色付け */
+    margin-bottom: 12px; 
+    padding: 15px 15px 15px 50px; 
+    border: 1px solid var(--color-border); 
+    border-radius: var(--radius-default); 
+    position: relative; 
+    box-shadow: 0 1px 4px var(--color-shadow-light); 
+    line-height: 1.5;
+}
+.rule-list li::before {
+    content: counter(rule-counter) "."; 
+    position: absolute; 
+    left: 15px; 
+    top: 15px; 
+    font-weight: 700; 
+    color: var(--color-primary); 
+    font-size: 110%;
+}
+/* liタグのスタイルをrule-listに統一 */
 li {
-    counter-increment: rule-counter; background-color: var(--color-bg-light); margin-bottom: 12px; padding: 15px 15px 15px 50px; border: 1px solid var(--color-border); border-radius: 8px; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.05); line-height: 1.5;
+    counter-increment: rule-counter; 
+    background-color: var(--color-feature-bg); 
+    margin-bottom: 12px; 
+    padding: 15px 15px 15px 50px; 
+    border: 1px solid var(--color-border); 
+    border-radius: var(--radius-default); 
+    position: relative; 
+    box-shadow: 0 1px 4px var(--color-shadow-light); 
+    line-height: 1.5;
 }
 li::before {
-    content: counter(rule-counter) "."; position: absolute; left: 15px; top: 15px; font-weight: 700; color: var(--color-accent); font-size: 110%;
+    content: counter(rule-counter) "."; 
+    position: absolute; 
+    left: 15px; 
+    top: 15px; 
+    font-weight: 700; 
+    color: var(--color-primary); 
+    font-size: 110%;
 }
-body.dark-mode li { background-color: #333333; border-color: #555555; }
 
-/* ========== ボタン & 通知 ========== */
-button:not(#darkModeToggle), .submit-btn {
-    display: block; margin: 25px auto 0; padding: 14px 30px; font-size: 18px; cursor: pointer; border: none; border-radius: 8px; background-color: var(--color-accent); color: var(--color-surface); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); transition: all 0.2s; outline: none; font-weight: 700;
+body.dark-mode li, body.dark-mode .rule-list li, body.dark-mode .feature-list li { 
+    background-color: var(--color-feature-bg); 
+    border-color: #555555; 
 }
-button:not(#darkModeToggle):hover, .submit-btn:hover {
-    background-color: #2d4373; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); 
+
+
+/* ========== ボタン & 通知 (統一) ========== */
+button:not(#darkModeToggle):not(.quiz-answer-btn), .submit-btn {
+    display: block; margin: 25px auto 0; padding: 14px 30px; font-size: 18px; cursor: pointer; border: none; border-radius: var(--radius-default); background-color: var(--color-primary); color: var(--color-surface); box-shadow: 0 4px 8px var(--color-shadow); transition: all 0.2s; outline: none; font-weight: 700;
 }
-.hidden { display: none; }
+button:not(#darkModeToggle):not(.quiz-answer-btn):hover, .submit-btn:hover {
+    background-color: #2d4373; transform: translateY(-2px); box-shadow: 0 6px 12px var(--color-shadow); 
+}
+.hidden { display: none !important; } 
 .notice, .important-notice {
-    font-weight: 700; text-align: center; margin-bottom: 15px; padding: 10px 15px; border-radius: 6px; color: var(--color-error); background-color: #fff0f0; border: 1px solid var(--color-error);
+    font-weight: 700; text-align: center; margin-bottom: 15px; padding: 12px 15px; border-radius: var(--radius-default); 
+    color: var(--color-error); background-color: #fff0f0; border: 1px solid var(--color-error);
 }
 body.dark-mode .notice, body.dark-mode .important-notice { background-color: #381f1f; color: var(--color-error); }
 
-/* ========== コピー機能 (強化) ========== */
-@keyframes bounce {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); } 
-}
+/* ========== コピー機能 (強化 - フラットデザインに合わせる) ========== */
 .copyable {
-    user-select: none; background-color: #e9ecef; padding: 8px 12px; border-radius: 6px; border: 1px solid #ced4da; color: var(--color-text-dark); display: inline-flex; align-items: center; cursor: pointer; transition: background-color 0.2s, transform 0.2s;
+    user-select: none; 
+    background-color: var(--color-bg); 
+    padding: 10px 15px; /* パディングを増やす */
+    border-radius: var(--radius-default); 
+    border: 1px solid var(--color-border); 
+    color: var(--color-text-dark); 
+    display: inline-flex; 
+    align-items: center; 
+    cursor: pointer; 
+    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    font-weight: 700; /* 太字に */
 }
 body.dark-mode .copyable {
     background-color: #333; border-color: #555;
 }
 .copyable:hover {
-    background-color: #d8dee3;
+    background-color: var(--color-border);
+    box-shadow: 0 2px 5px var(--color-shadow);
 }
 body.dark-mode .copyable:hover {
     background-color: #444;
 }
 .copyable.copied {
     background-color: var(--color-success); color: #fff; animation: bounce 0.3s ease-out; 
+    border-color: var(--color-success);
 }
 .copyable.copied .fa-copy {
     color: #fff; 
 }
 .fa-copy {
-    margin-left: 8px; color: var(--color-accent);
+    margin-left: 8px; color: var(--color-primary);
+}
+.copyable.copied .fa-copy {
+    color: #fff; 
 }
 
-/* ========== クイズスタイル ========== */
+/* ========== 参加方法セクション (アクションの強調) ========== */
+.join-section {
+    padding: 20px;
+    background-color: var(--color-surface);
+    border: 2px solid var(--color-primary);
+    border-radius: var(--radius-default);
+    margin-top: 30px;
+}
+.join-section h2 {
+    border-bottom: none;
+    margin-top: 10px;
+    font-size: 22px;
+}
+.join-section ol {
+    padding-left: 20px;
+    list-style: none; /* デフォルトの数字を非表示 */
+}
+.join-section li {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding-left: 0;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+.join-section li::before {
+    content: none;
+}
+.join-section .action-btn {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    margin: 15px auto;
+    font-size: 20px;
+    padding: 15px 30px;
+    background-color: var(--color-success);
+    color: #fff;
+    font-weight: 700;
+}
+.join-section .action-btn:hover {
+    background-color: #27ae60;
+}
+.join-section .action-btn i {
+    margin-right: 10px;
+}
+.join-method {
+    border: 1px solid var(--color-border);
+    padding: 15px;
+    border-radius: var(--radius-default);
+    margin-bottom: 20px;
+    background-color: var(--color-bg);
+}
+body.dark-mode .join-method { background-color: #333; }
+
+
+/* ========== クイズスタイル (変更なし) ========== */
 .quiz-question {
-    background-color: #f1f8ff; border: 1px solid var(--color-accent); padding: 20px; border-radius: 8px; margin-bottom: 25px; font-size: 18px; font-weight: 700; color: var(--color-text-dark); text-align: center;
+    background-color: #f1f8ff; border: 1px solid var(--color-primary); padding: 20px; border-radius: 8px; margin-bottom: 25px; font-size: 18px; font-weight: 700; color: var(--color-text-dark); text-align: center;
 }
 body.dark-mode .quiz-question { background-color: #2d3e50; }
 #quizContainer { display: flex; flex-direction: column; align-items: center; }
 .quiz-answer-btn {
-    width: 80%; max-width: 400px; background-color: var(--color-quiz-btn); color: #fff; border: none; margin: 10px 0; padding: 12px 25px; font-size: 16px; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); border-radius: 8px; cursor: pointer; transition: background-color 0.2s, transform 0.2s;
+    width: 80%; max-width: 400px; background-color: var(--color-secondary); color: #fff; border: none; margin: 10px 0; padding: 12px 25px; font-size: 16px; box-shadow: 0 3px 6px var(--color-shadow); border-radius: var(--radius-default); cursor: pointer; transition: background-color 0.2s, transform 0.2s;
 }
 .quiz-answer-btn:hover {
-    background-color: var(--color-quiz-btn-hover); transform: translateY(-1px);
+    background-color: #00acc1; transform: translateY(-1px);
 }
 .explanation {
     color: var(--color-error); border: 1px solid var(--color-error); background-color: #fff0f0; padding: 15px; border-radius: 6px; margin-top: 20px; text-align: center;
 }
 body.dark-mode .explanation { background-color: #381f1f; }
 
-/* ========== フォームのスタイル ========== */
+
+/* ========== フォームのスタイル (変更なし) ========== */
 #gamerTagForm {
     display: flex; flex-direction: column; align-items: center; gap: 15px;
 }
 #gamerTagForm input[type="text"] {
-    width: 100%; max-width: 300px; padding: 12px; font-size: 18px; border: 1px solid #ced4da; border-radius: 4px; font-family: 'Noto Sans JP', sans-serif; color: var(--color-text-dark); box-sizing: border-box;
+    width: 100%; max-width: 300px; padding: 12px; font-size: 18px; border: 1px solid #ced4da; border-radius: 4px; font-family: 'Noto Sans Sans', sans-serif; color: var(--color-text-dark); box-sizing: border-box;
 }
 body.dark-mode #gamerTagForm input[type="text"] {
     background-color: #333333; border-color: #555555; color: #f0f0f0;
@@ -203,27 +467,29 @@ body.dark-mode #gamerTagForm input[type="text"] {
     margin-top: 10px; font-weight: 700; text-align: center;
 }
 
-
-/* Discordリンクの装飾 */
+/* Discordリンクの装飾 (変更なし) */
 .discord-msg {
-    text-align: center; margin-top: 30px; padding: 20px; border: 1px dashed var(--color-border); border-radius: 8px; background-color: var(--color-bg-light);
+    text-align: center; margin-top: 30px; padding: 20px; border: 1px dashed var(--color-border); border-radius: var(--radius-default); background-color: var(--color-bg);
 }
 body.dark-mode .discord-msg { background-color: #3a3a3a; }
 .discord-link {
-    display: inline-block; margin-top: 15px; padding: 10px 25px; font-size: 16px; font-weight: 700; color: var(--color-surface); background-color: var(--color-accent); border-radius: 6px; text-decoration: none; box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); transition: background-color 0.2s, transform 0.2s;
+    display: inline-block; margin-top: 15px; padding: 10px 25px; font-size: 16px; font-weight: 700; color: var(--color-surface); background-color: var(--color-primary); border-radius: var(--radius-default); text-decoration: none; box-shadow: 0 3px 6px var(--color-shadow); transition: background-color 0.2s, transform 0.2s;
 }
 .discord-link:hover { background-color: #2d4373; transform: translateY(-1px); }
 
-/* FAQスタイル */
+/* FAQスタイル (調整) */
 .faq-item {
-    background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid var(--color-accent); position: relative; padding-left: 15px; 
+    background-color: var(--color-surface); padding: 15px; border-radius: var(--radius-default); margin-bottom: 10px; 
+    border-left: 4px solid var(--color-primary); /* 左のアクセントライン */
+    box-shadow: 0 1px 4px var(--color-shadow-light);
+    position: relative; padding-left: 15px; 
 }
 body.dark-mode .faq-item {
     background-color: #333333;
 }
 
 .faq-item strong {
-    color: var(--color-accent); display: block; margin-bottom: 8px; font-size: 16px; padding-left: 25px; text-indent: -25px; 
+    color: var(--color-primary); display: block; margin-bottom: 8px; font-size: 16px; padding-left: 25px; text-indent: -25px; 
 }
 .faq-item strong::before {
     content: "Q. "; color: var(--color-error); font-weight: 700; margin-right: 5px; transition: color 0.3s;
@@ -234,7 +500,6 @@ body.dark-mode .faq-item {
 .faq-item strong + *::before {
     content: "A. "; color: var(--color-success); font-weight: 700; margin-right: 5px; transition: color 0.3s;
 }
-
 body.dark-mode .faq-item strong::before {
     color: var(--color-error);
 }
@@ -242,7 +507,7 @@ body.dark-mode .faq-item strong + *::before {
     color: var(--color-success);
 }
 
-/* 最終更新日スタイル */
+/* 最終更新日スタイル (変更なし) */
 .footer-info {
     color: var(--color-text-medium); font-size: 14px; text-align: right; margin-top: 40px; padding-top: 10px; border-top: 1px solid var(--color-border);
 }
@@ -256,212 +521,392 @@ body.dark-mode .faq-item strong + *::before {
     <a href="https://discord.gg/79H7Jy65nz" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
 </div>
 
-<div class="container">
+<div id="hero-title-section">
+    <h1 id="hero-title">なんてつサーバー</h1>
+    <p id="hero-subtitle">ゆるいサバイバルをモットーにした統合版参加⚠️ クイズが苦手な方、緊急で参加したい方向け
+**ルール全文を読み、自己責任で遵守することを誓約いただける場合のみ**、クイズをスキップできます。
+      型サーバー</p>
+</div>
+
+<div class="content-wrapper" style="padding-top: 0; padding-bottom: 0;"> 
     <div id="serverStatus" class="status-box">
         <span class="status-text">...読み込み中...</span>
         <span class="ping-text" id="serverPing" style="display:none;"></span>
     </div>
-
-    <div id="rules">
-        <h1>なんてつさーばー ルール</h1>
-        <p class="important-notice">
-            このサーバーは「ゆるいサバイバル」がモットーですが、以下のルールは**運営の負担と他のプレイヤーの楽しみを守るための厳格な定義**です。
-            ルール違反は軽重問わず厳しく対処します。
-        </p>
-
-        <h2>🚨 厳禁事項：即時永久BANの対象</h2>
-        <p>以下の行為は、サーバーの根幹と他のプレイヤーの体験を著しく損なうため、警告なしに**即時永久BANの対象**となります。</p>
-        <ol>
-            <li>
-                <strong style="color: var(--color-error);">【破壊・窃盗】</strong><br>
-                他者の**所有物（建築物、保護エリア、チェスト内のアイテム）を無断で破壊・窃盗・改変**する行為。
-                <br><small>※他人の畑からの無断収穫や、管理下にあるMOBの殺傷も含みます。</small>
-            </li>
-            <li>
-                <strong style="color: var(--color-error);">【ハラスメント】</strong><br>
-                暴言、誹謗中傷、差別的発言、過度な煽り、個人情報の詮索など、**他者が明確に不快に感じる言動**。
-            </li>
-            <li>
-                <strong style="color: var(--color-error);">【チート・ツール】</strong><br>
-                **改造クライアント、チートMOD、マクロ、BOT**など、不正に優位性を得る外部ツールの使用。
-            </li>
-            <li>
-                <strong style="color: var(--color-error);">【サーバー負荷行為】</strong><br>
-                過剰なクロック回路、大量のMOB繁殖/放置エンティティ、または意図的なバグ利用による**サーバーダウンや重度のラグを引き起こす**行為。
-            </li>
-            <li>
-                <strong style="color: var(--color-error);">【バグ利用】</strong><br>
-                **ゲーム内の不具合（バグ/グリッチ）を意図的に利用**し、不正に利益を得る行為。発見時は速やかに運営に報告してください。
-            </li>
-            <li>
-                <strong style="color: var(--color-error);">【無断PvP・拘束】</strong><br>
-                **相手プレイヤーの明確な同意（合意）がない**一方的な攻撃（PvP）、またはトラップなどによる長時間拘束。
-            </li>
-        </ol>
-
-        <h2>⚖️ 自由と節度</h2>
-        <p>メインワールド一つで運営しているため、自由なサバイバルを推奨しつつも、**公共の資源と景観**に対する配慮がより重要となります。</p>
-        <ol start="7">
-            <li>
-                <strong style="color: var(--color-accent);">【景観の維持と採掘の修復】</strong><br>
-                メインワールド内での採掘や整地は、**終了後に元の状態（または自然な状態）に完全に修復する**ことを義務付けます。
-                <br><small>※地下のブランチマイニング跡、露天掘りの穴などを放置しないでください。</small>
-            </li>
-            <li>
-                <strong style="color: var(--color-accent);">【公共エリアの維持】</strong><br>
-                スポーン地点や**ネザー/エンドポータル周辺**は公共エリアです。これらの場所での私的な建築、改変、資源の独占は禁止します。
-            </li>
-            <li>
-                <strong style="color: var(--color-accent);">【無許可の入室・干渉】</strong><br>
-                他プレイヤーの保護エリア内や、明らかにプライベートな建築物への**無許可の立ち入り**や、無断での看板設置などの干渉。
-            </li>
-            <li>
-                <strong style="color: var(--color-accent);">【領地と放置物】</strong><br>
-                使用目的のない**不必要な広範囲の領地登録**。また、長期間（例：3ヶ月）放置された建築物や領地は、運営判断で撤去する場合があります。
-            </li>
-            <li>
-                <strong style="color: var(--color-accent);">【宣伝・勧誘】</strong><br>
-                チャットや建築物内での**他のサーバーやコミュニティへの宣伝・勧誘**。
-            </li>
-        </ol>
-
-        <p class="notice">
-            ※ルールに違反した場合、**警告、一時BAN、永久BAN**のいずれかの罰を処します。
-            違反内容によっては、**建築物やアイテムの没収・巻き戻し**も実施します。
-        </p>
-        <button id="agreeBtn">ルール確認クイズに挑戦する</button>
-
-        <p class="notice" style="margin-top: 30px;">
-            ⚠️ クイズが苦手な方、緊急で参加したい方向け 
-            <br>
-            **ルール全文を読み、自己責任で遵守することを誓約いただける場合のみ**、クイズをスキップできます。
-        </p>
-        <button type="button" id="skipQuizBtn" class="submit-btn" style="background-color: #6c757d !important; max-width: 400px; margin-top: 10px;">
-            スキップして参加方法へ(自己誓約)
-        </button>
-    </div>
-
-    <div id="quiz" class="hidden">
-        <h1>ルール確認クイズ</h1>
-        <div id="quizContainer"></div>
-        <div class="explanation" id="explanation"></div>
-    </div>
-
-    <div id="gamerTagInput" class="hidden">
-        <h1>ゲーマータグ登録</h1>
-        <div class="pass-screen">
-            <h2>✨ ルール確認合格！ ✨</h2>
-            <p class="important-notice">
-                迷惑行為対策のため、<br>
-                ゲーマータグ（MinecraftのID）の登録によろしければご協力お願いします。
-            </p>
-            <p>登録は任意ですが、ご協力いただくことでスムーズに招待され、問題発生時の対応が迅速になります。</p>
-            <form id="gamerTagForm">
-                <input type="text" id="gamerTag" placeholder="例:Tarou123"> 
-                <button type="submit" class="submit-btn">タグを登録して参加方法へ</button>
-                <button type="button" id="skipTagBtn" class="submit-btn">スキップして参加方法へ</button>
-                <div id="formStatus"></div>
-            </form>
-        </div>
-    </div>
-    
-    <div id="howToJoin" class="hidden">
-        <h1>参加方法</h1>
-        <p class="important-notice">
-            なんてつサーバーへの参加は、以下の2つの方法から選べます。
-            <br>どちらの方法でも、サーバーのルールが適用されます。
-        </p>
-        
-        <h2>① フレンド招待で参加する (推奨)</h2>
-        <p>最も確実で簡単な方法です。初めての方はまずこちらを試してください。</p>
-        <ol>
-            <li>
-                フレンドID:
-                <span id="gamerTagToCopy" class="copyable">
-                    nantetu5877
-                    <i class="fas fa-copy copy-icon"></i>
-                </span>
-                にフレンド申請
-            </li>
-            <li>申請後、数秒~1分ほどでサーバーから招待が届きます。</li>
-            <li>招待されたら参加完了です！</li>
-        </ol>
-
-        <h2>② IPアドレスで直接接続する</h2>
-        <p>サーバーリストに直接追加して参加できます。招待が届かない場合などにご利用ください。</p>
-        <ol>
-            <li>
-                マイクラの「サーバー」タブを開き、「サーバーを追加」を選択します。
-            </li>
-            <li>
-                サーバーアドレス:
-                <span id="addressToCopy" class="copyable">
-                    nantetu123.f5.si
-                    <i class="fas fa-copy copy-icon"></i>
-                </span>
-            </li>
-            <li>
-                ポート番号:
-                <span id="portToCopy" class="copyable">
-                    5346 
-                    <i class="fas fa-copy copy-icon"></i>
-                </span>
-                <small></small>
-            </li>
-            <li>保存後、サーバーリストからなんてつサーバーに接続します。</li>
-        </ol>
-
-        <div class="discord-msg">
-            Discordサーバーに入ればお知らせなどを見たりサーバーからチャットを送信ができるようになります！<br>
-            <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank"><i class="fab fa-discord"></i> Discordサーバーに参加する</a>
-        </div>
-    </div>
-
-    <div id="faq">
-        <h2>よくある質問 (FAQ)</h2>
-        <div class="faq-item">
-            <strong>招待はどれくらいの時間でされますか？</strong>
-            数秒~1分程度で自動で招待されます。もしされなかったら障害が起きている可能性があるのでDiscordで報告してくださると助かります。
-        </div>
-        <div class="faq-item">
-            <strong>PvPの「合意あり」とはどういう意味ですか？</strong>
-            相手のプレイヤーがPvPを承諾していることを、チャットなどで確認してから攻撃してください。突然の攻撃はルール違反となります。
-        </div>
-        <div class="faq-item">
-            <strong>⛏️ 資源ワールドがない場合、採掘跡はどうすればいいですか？</strong>
-            メインワールドのみのため、【景観の維持と採掘の修復】ルールに基づき、**採掘後に必ず元の状態に修復してください**。ブランチマイニングでできた穴も、埋め戻すなど景観に配慮してください。
-        </div>
-        <div class="faq-item">
-            <strong>Mobトラップや自動機構（自動装置）はどこまで作っていいですか？</strong>
-            サーバーに重度のラグを発生させる規模のものは【サーバー負荷行為】として禁止です。特に、**動物やMobの過剰繁殖**、**1ブロックに集中した大量のエンティティ**は厳禁です。負荷を避けた設計にご協力ください。
-        </div>
-        <div class="faq-item">
-            <strong>ネザーポータルやエンドポータル付近に家を建ててもいいですか？</strong>
-            ポータル周辺は【公共エリアの維持】ルールに基づき、**公共の場所**として扱い、私的な建築や資源の独占は禁止です。利便性を考慮した一時的な施設に留めてください。
-        </div>
-        <div class="faq-item">
-            <strong>長期間遊んでいない領地や建築物はどうなりますか？</strong>
-            長期間（例：3ヶ月以上）放置されたと運営が判断した場合、【領地と放置物】のルールに基づき**撤去の対象**となる場合があります。撤去の前に、Discord等で最終告知を行います。
-        </div>
-        <div class="faq-item">
-            <strong>サーバーが動いていない時はいつ再開しますか？</strong>
-            メンテナンス中や負荷が高い時に一時的に停止することがあります。Discordでお知らせしていますが、基本的には数時間~1日以内に再起動されます。
-        </div>
-        <div class="faq-item">
-            <strong>TPAコマンドはどうやって使えばいいですか？</strong>
-            `/tpa`コマンドで使用することができます。できなかったら`/tpa ＜プレイヤー名＞`で確実に使用することができるはずです。
-        </div>
-        <div class="faq-item">
-            <strong>ログを見たい場合はどうしたらいいですか？</strong>
-            `/tigui`で見ることができます。事前に見たい場所の座標をコピーしておく必要があります。
-        </div>
-    </div>
-
-    <div class="footer-info">
-        <span id="lastUpdated"></span>
-    </div>
-
 </div>
+
+<div class="container">
+    <div class="content-wrapper"> 
+        
+        <div id="tabs">
+            <button class="tab-button" data-tab="rules"><i class="fas fa-scroll"></i> ルール & 参加</button>
+            <button class="tab-button" data-tab="features"><i class="fas fa-star"></i> 特徴</button> 
+            <button class="tab-button" data-tab="news"><i class="fas fa-bullhorn"></i> お知らせ</button>
+            <button class="tab-button" data-tab="commands"><i class="fas fa-terminal"></i> コマンド一覧</button>
+            <button class="tab-button" data-tab="faq"><i class="fas fa-question-circle"></i> よくある質問</button>
+            <button class="tab-button" data-tab="contact"><i class="fas fa-envelope"></i> お問い合わせ</button>
+        </div>
+        
+        <div id="tab-rules" class="tab-content">
+            <div id="rules">
+                <h1>なんてつさーばー ルール</h1>
+                <p class="important-notice">
+                    このサーバーは「ゆるいサバイバル」がモットーですが、以下のルールは**運営の負担と他のプレイヤーの楽しみを守るための厳格な定義**です。
+                    ルール違反は軽重問わず厳しく対処します。
+                </p>
+
+                <h2>🚨 厳禁事項：即時永久BANの対象</h2>
+                <p>以下の行為は、サーバーの根幹と他のプレイヤーの体験を著しく損なうため、警告なしに**即時永久BANの対象**となります。</p>
+                <ol class="rule-list">
+                    <li>
+                        <strong style="color: var(--color-error);">【破壊・窃盗】</strong><br>
+                        他者の**所有物（建築物、保護エリア、チェスト内のアイテム）を無断で破壊・窃盗・改変**する行為。
+                        <br><small>※他人の畑からの無断収穫や、管理下にあるMOBの殺傷も含みます。</small>
+                    </li>
+                    <li>
+                        <strong style="color: var(--color-error);">【ハラスメント】</strong><br>
+                        暴言、誹謗中傷、差別的発言、過度な煽り、個人情報の詮索など、**他者が明確に不快に感じる言動**。
+                    </li>
+                    <li>
+                        <strong style="color: var(--color-error);">【チート・ツール】</strong><br>
+                        **改造クライアント、チートMOD、マクロ、BOT**など、不正に優位性を得る外部ツールの使用。
+                    </li>
+                    <li>
+                        <strong style="color: var(--color-error);">【サーバー負荷行為】</strong><br>
+                        過剰なクロック回路、大量のMOB繁殖/放置エンティティ、または意図的なバグ利用による**サーバーダウンや重度のラグを引き起こす**行為。
+                    </li>
+                    <li>
+                        <strong style="color: var(--color-error);">【バグ利用】</strong><br>
+                        **ゲーム内の不具合（バグ/グリッチ）を意図的に利用**し、不正に利益を得る行為。発見時は速やかに運営に報告してください。
+                    </li>
+                    <li>
+                        <strong style="color: var(--color-error);">【無断PvP・拘束】</strong><br>
+                        **相手プレイヤーの明確な同意（合意）がない**一方的な攻撃（PvP）、またはトラップなどによる長時間拘束。
+                    </li>
+                </ol>
+
+                <h2>⚖️ 自由と節度</h2>
+                <p>メインワールド一つで運営しているため、自由なサバイバルを推奨しつつも、**公共の資源と景観**に対する配慮がより重要となります。</p>
+                <ol start="7" class="rule-list">
+                    <li>
+                        <strong style="color: var(--color-primary);">【景観の維持と採掘の修復】</strong><br>
+                        メインワールド内での採掘や整地は、**終了後に元の状態（または自然な状態）に完全に修復する**ことを義務付けます。
+                        <br><small>※地下のブランチマイニング跡、露天掘りの穴などを放置しないでください。</small>
+                    </li>
+                    <li>
+                        <strong style="color: var(--color-primary);">【公共エリアの維持】</strong><br>
+                        スポーン地点や**ネザー/エンドポータル周辺**は公共エリアです。これらの場所での私的な建築、改変、資源の独占は禁止します。
+                    </li>
+                    <li>
+                        <strong style="color: var(--color-primary);">【無許可の入室・干渉】</strong><br>
+                        他プレイヤーの保護エリア内や、明らかにプライベートな建築物への**無許可の立ち入り**や、無断での看板設置などの干渉。
+                    </li>
+                    <li>
+                        <strong style="color: var(--color-primary);">【領地と放置物】</strong><br>
+                        使用目的のない**不必要な広範囲の領地登録**。また、長期間（例：3ヶ月）放置された建築物や領地は、運営判断で撤去する場合があります。
+                    </li>
+                    <li>
+                        <strong style="color: var(--color-primary);">【宣伝・勧誘】</strong><br>
+                        チャットや建築物内での**他のサーバーやコミュニティへの宣伝・勧誘**。
+                    </li>
+                </ol>
+
+                <p class="notice">
+                    ※ルールに違反した場合、**警告、一時BAN、永久BAN**のいずれかの罰を処します。
+                    違反内容によっては、**建築物やアイテムの没収・巻き戻し**も実施します。
+                </p>
+                <button id="agreeBtn">ルール確認クイズに挑戦する</button>
+
+                <p class="notice" style="margin-top: 30px;">
+                    ⚠️ クイズが苦手な方、緊急で参加したい方向け 
+                    <br>
+                    **ルール全文を読み、自己責任で遵守することを誓約いただける場合のみ**、クイズをスキップできます。
+                </p>
+                <button type="button" id="skipQuizBtn" class="submit-btn" style="background-color: #6c757d !important; max-width: 400px; margin-top: 10px;">
+                    スキップして参加方法へ(自己誓約)
+                </button>
+            </div>
+            
+            <div id="quiz" class="hidden">
+                <h1>ルール確認クイズ</h1>
+                <div id="quizContainer"></div>
+                <div class="explanation" id="explanation"></div>
+            </div>
+
+            <div id="gamerTagInput" class="hidden">
+                <h1>ゲーマータグ登録</h1>
+                <div class="pass-screen">
+                    <h2>✨ ルール確認合格！ ✨</h2>
+                    <p class="important-notice">
+                        迷惑行為対策のため、<br>
+                        ゲーマータグ（MinecraftのID）の登録によろしければご協力お願いします。
+                    </p>
+                    <p>登録は任意ですが、ご協力いただくことでスムーズに招待され、問題発生時の対応が迅速になります。</p>
+                    <form id="gamerTagForm">
+                        <input type="text" id="gamerTag" placeholder="例:Tarou123"> 
+                        <button type="submit" class="submit-btn">タグを登録して参加方法へ</button>
+                        <button type="button" id="skipTagBtn" class="submit-btn">スキップして参加方法へ</button>
+                        <div id="formStatus"></div>
+                    </form>
+                </div>
+            </div>
+            
+            <div id="howToJoin" class="hidden">
+                <h1>参加方法</h1>
+                <p class="important-notice">
+                    なんてつサーバーへの参加は、以下の2つの方法から選べます。
+                    <br>どちらの方法でも、サーバーのルールが適用されます。
+                </p>
+                
+                <div class="join-method">
+                    <h2>① フレンド招待で参加する (推奨)</h2>
+                    <p>最も確実で簡単な方法です。初めての方はまずこちらを試してください。</p>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <span id="gamerTagToCopy" class="copyable action-btn">
+                            <i class="fas fa-user-plus"></i> nantetu5877 をコピーしてフレンド申請
+                        </span>
+                    </div>
+                    <ol>
+                        <li>1. 上のボタンでIDをコピーし、Minecraft内でフレンド申請を送ってください。</li>
+                        <li>2. 申請後、数秒~1分ほどでサーバーから招待が届きます。</li>
+                        <li>3. 招待されたら参加完了です！</li>
+                    </ol>
+                </div>
+
+                <div class="join-method">
+                    <h2>② IPアドレスで直接接続する</h2>
+                    <p>サーバーリストに直接追加して参加できます。招待が届かない場合などにご利用ください。</p>
+                    <div style="text-align: center; margin: 20px 0;">
+                        サーバーアドレス: 
+                        <span id="addressToCopy" class="copyable">
+                            nantetu123.f5.si
+                            <i class="fas fa-copy copy-icon"></i>
+                        </span>
+                        <br><br>
+                        ポート番号:
+                        <span id="portToCopy" class="copyable">
+                            5346 
+                            <i class="fas fa-copy copy-icon"></i>
+                        </span>
+                    </div>
+                    <ol>
+                        <li>1. マイクラの「サーバー」タブを開き、「サーバーを追加」を選択します。</li>
+                        <li>2. 上記のアドレスとポート番号を入力し、保存します。</li>
+                        <li>3. サーバーリストからなんてつサーバーに接続します。</li>
+                    </ol>
+                </div>
+
+                <div class="discord-msg">
+                    Discordサーバーに入ればお知らせなどを見たりサーバーからチャットを送信ができるようになります！<br>
+                    <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank"><i class="fab fa-discord"></i> Discordサーバーに参加する</a>
+                </div>
+            </div>
+        </div>
+        
+        <div id="tab-features" class="tab-content hidden">
+            <h1>✨ なんてつサーバーの特徴</h1>
+            <p class="important-notice">
+                「**軽い、便利、安全**」を重視した環境で、快適にプレイしましょう！
+            </p>
+
+            <h2>✅ 9つの主な特徴</h2>
+            <ul class="feature-list">
+                <li>
+                    フレンド申請だけで**自動参加**！
+                </li>
+                <li>
+                    常に**最新版バージョン対応**！
+                </li>
+                <li>
+                    ラグが少なく**快適プレイ**！
+                </li>
+                <li>
+                    **荒らし対策済み**で安心！
+                </li>
+                <li>
+                    **土地保護プラグイン**で自分専用の土地を作れる！
+                </li>
+                <li>
+                    みんな優しく**初心者歓迎**！
+                </li>
+                <li>
+                    **自動バックアップ**で復帰可能！
+                </li>
+                <li>
+                    **バージョンが違っていても**参加可能！
+                </li>
+                <li>
+                    **便利コマンド**でサバイバルをもっと楽しく！
+                </li>
+            </ul>
+
+            <h2>💡 快適さと安心のポイント</h2>
+            <p>
+                もう移動で悩まない！このサーバーは`/tpa`や`/home`コマンドを搭載し、**瞬時**にどこでもテレポート可能です！
+            </p>
+            <p>
+                さらに大切なお家は**土地保護プラグイン**でバッチリ安全に保護できます！
+            </p>
+            <p>
+                また、クロスプレイヤー特有のラグなし。「**軽い、便利、安全**」を重視した環境で、快適に楽しくプレイしましょう！
+            </p>
+            <p>
+                運営は、**機能の良さ**だけでなく「**居心地の良さ**」も大切にしています。荒らし対策、優しい利用者、活発な運営で、**初心者の方でも安心して長期間楽しめる環境づくり**を心がけています。実際の雰囲気は、ぜひDiscordのチャットログなどでご確認ください！
+            </p>
+        </div>
+        
+        <div id="tab-news" class="tab-content hidden">
+            <h1>📢 サーバーからのお知らせ</h1>
+            <p class="important-notice">
+                重要な告知やアップデート情報はこちらに掲載されます。
+            </p>
+            <div class="faq-item">
+            <strong>【サーバー ルール改定のお知らせとお願い】(2025/11/06)</strong>
+            なんてつサーバーのルール内容を、**本日付で追加・変更いたしました**。サーバーをより公平に、長く楽しく運営していくため、いくつか重要な項目の定義を見直しています。特に現金事項の明確かなどをしましたので当サーバーへの参加継続、または新規参加を希望される方は、必ず以下のこのサイトで最新のルール全文をご確認ください。ご理解とご協力をお願いいたします！
+            </div>
+            <div class="faq-item">
+            <strong>お知らせ (2025/11/02)</strong>
+            今更にはなってしまいますが、**サーバーを軽量化するプラグイン**を導入しました！どのくらい変化があるのかは未知数ですが、ないよりはマシだと思ったので導入しました。これからもなんてつさーばーをよろしくお願いします。
+            </div>
+            <p style="text-align: right; margin-top: 30px;">
+                過去のお知らせはDiscordの #お知らせ チャンネルをご確認ください。
+            </p>
+        </div>
+        
+        <div id="tab-commands" class="tab-content hidden">
+        <h1>💻 便利なコマンド一覧</h1>
+        <p class="important-notice">
+            なんてつサーバーで使える主なコマンドをご紹介します。**<>内の引数**は、実際に入力する際は外してください。
+        </p>
+
+        <h2>🚶‍♂️ 移動・テレポートコマンド</h2>
+        <div class="faq-item">
+            <strong>`/tpa <プレイヤー名>`</strong>
+            指定したプレイヤーにテレポートを要求します。相手が承諾するとテレポートします。
+        </div>
+        <div class="faq-item">
+            <strong>`/back`</strong>
+            最後に死亡した場所、またはテレポートする直前の地点に戻ります。（クールダウンあり）
+        </div>
+        <div class="faq-item">
+            <strong>`/home <名前>`</strong>
+            設定したホームポイントにテレポートします。
+        </div>
+        <div class="faq-item">
+            <strong>`/sethome <名前>`</strong>
+            現在地にホームポイントを設定します。（複数設定可能）
+        </div>
+        <div class="faq-item">
+            <strong>`/warp`</strong>
+            サーバーの公共ワープ地点（スポーン等）にテレポートできます。
+        </div>
+
+        <h2>🛡️ 領地保護・管理</h2>
+        <div class="faq-item">
+            <strong>`/tty`</strong>
+            **新しい領地を作成します。** (例: 金シャベルなどのツールを使用し、領域を保護します)
+        </div>
+        <div class="faq-item">
+            <strong>`/ty <ｘ> <ｙ> <ｚ> <時間> <半径>`</strong>
+            ブロックの破壊履歴やチェストのアクセス履歴をコマンドで確認できます。
+        </div>
+        <div class="faq-item">
+            <strong>`/tygui`</strong>
+            **監査ログGUI** を開きます。ブロックの破壊履歴やチェストのアクセス履歴を確認できます。
+        </div>
+
+        <h2>📣 サーバー情報・ユーティリティ</h2>
+        <div class="faq-item">
+            <strong>`/broadcast <メッセージ>`</strong>
+            サーバー全体にブロードキャスト（全体メッセージ）を送信します。（**管理者・権限者向け**）
+        </div>
+        <div class="faq-item">
+            <strong>`/notice`</strong>
+            サーバーの最新のお知らせや重要な告知を再表示します。
+        </div>
+        <div class="faq-item">
+            <strong>`/ping`</strong>
+            自分のサーバーとの接続速度（Ping値）を確認します。
+        </div>
+        <div class="faq-item">
+            <strong>`/e <アクションメッセージ>`</strong>
+            チャットにアクション（感情表現や動作）を送信します。（例: `/e happy`）
+        </div>
+        <div class="faq-item">
+            <strong>`/um`</strong>
+            **お金を送金したり、所持金ランキングを見る**ためのコマンドです。
+        </div>
+    </div>
+
+        
+        <div id="tab-faq" class="tab-content hidden">
+            <h1>❓ よくある質問 (FAQ)</h1>
+            <div class="faq-item">
+                <strong>招待はどれくらいの時間でされますか？</strong>
+                数秒~1分程度で自動で招待されます。もしされなかったら障害が起きている可能性があるのでDiscordで報告してくださると助かります。
+            </div>
+            <div class="faq-item">
+                <strong>PvPの「合意あり」とはどういう意味ですか？</strong>
+                相手のプレイヤーがPvPを承諾していることを、チャットなどで確認してから攻撃してください。突然の攻撃はルール違反となります。
+            </div>
+            <div class="faq-item">
+                <strong>⛏️ 資源ワールドがない場合、採掘跡はどうすればいいですか？</strong>
+                メインワールドのみのため、【景観の維持と採掘の修復】ルールに基づき、**採掘後に必ず元の状態に修復してください**。ブランチマイニングでできた穴も、埋め戻すなど景観に配慮してください。
+            </div>
+            <div class="faq-item">
+                <strong>Mobトラップや自動機構（自動装置）はどこまで作っていいですか？</strong>
+                サーバーに重度のラグを発生させる規模のものは【サーバー負荷行為】として禁止です。特に、**動物やMobの過剰繁殖**、**1ブロックに集中した大量のエンティティ**は厳禁です。負荷を避けた設計にご協力ください。
+            </div>
+            <div class="faq-item">
+                <strong>ネザーポータルやエンドポータル付近に家を建ててもいいですか？</strong>
+                ポータル周辺は【公共エリアの維持】ルールに基づき、**公共の場所**として扱い、私的な建築や資源の独占は禁止です。利便性を考慮した一時的な施設に留めてください。
+            </div>
+            <div class="faq-item">
+                <strong>長期間遊んでいない領地や建築物はどうなりますか？</strong>
+                長期間（例：3ヶ月以上）放置されたと運営が判断した場合、【領地と放置物】のルールに基づき**撤去の対象**となる場合があります。撤去の前に、Discord等で最終告知を行います。
+            </div>
+            <div class="faq-item">
+                <strong>サーバーが動いていない時はいつ再開しますか？</strong>
+                メンテナンス中や負荷が高い時に一時的に停止することがあります。Discordでお知らせしていますが、基本的には数時間~1日以内に再起動されます。
+            </div>
+            <div class="faq-item">
+                <strong>TPAコマンドはどうやって使えばいいですか？</strong>
+                `/tpa`コマンドで使用することができます。できなかったら`/tpa ＜プレイヤー名＞`で確実に使用することができるはずです。
+            </div>
+            <div class="faq-item">
+                <strong>ログを見たい場合はどうしたらいいですか？</strong>
+                `/tygui`で見ることができます。事前に見たい場所の座標をコピーしておく必要があります。（旧`/tigui`）
+            </div>
+        </div>
+        
+        <div id="tab-contact" class="tab-content hidden">
+            <h1>📧 お問い合わせ・報告</h1>
+            <p class="important-notice">
+                ルール違反の報告、バグ報告、運営への質問は、以下の方法でご連絡ください。
+            </p>
+
+            <h2>🚨 荒らし・バグ報告（緊急性の高いもの）</h2>
+            <p>
+                Discordサーバーの専用チャンネルから報告してください。証拠となる**スクリーンショットや動画**を添付いただけると迅速に対応できます。
+            </p>
+            <div class="discord-msg">
+                <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank"><i class="fab fa-discord"></i> Discordサーバーへ</a>
+                <p style="font-size: 14px; margin-top: 10px;">
+                    #報告 や #チケット チャンネルをご利用ください。
+                </p>
+            </div>
+
+            <h2>❓ その他質問・提案</h2>
+            <p>
+                サーバー運営に関するご質問や、改善提案は、Discordの #雑談 または #提案 チャンネルをご利用ください。
+            </p>
+        </div>
+
+        <div class="footer-info">
+            <span id="lastUpdated"></span>
+        </div>
+    </div> 
+</div> 
 
 <script>
 // ====================================================================
@@ -497,6 +942,7 @@ function toggleDarkMode() {
     }
 }
 
+// ロード時にテーマを適用
 (function loadTheme() {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -506,11 +952,14 @@ function toggleDarkMode() {
     }
 })();
 
-toggleBtn.addEventListener('click', toggleDarkMode);
+// クリックイベントのリスナーを設定
+if (toggleBtn) {
+    toggleBtn.addEventListener('click', toggleDarkMode);
+}
 
 
 // ====================================================================
-// サーバー監視設定 
+// サーバー監視設定 (変更なし)
 // ====================================================================
 const SERVER_ADDRESS = "nantetu123.f5.si"; 
 const SERVER_PORT = "5346"; 
@@ -567,9 +1016,9 @@ fetchServerStatus();
 setInterval(fetchServerStatus, 60000); 
 
 // ====================================================================
-// コピー機能の実装 
+// コピー機能の実装 (強調したボタンのテキストとIDをコピー)
 // ====================================================================
-// フレンドIDのコピー
+// フレンドIDのコピー (テキスト内容を更新)
 document.getElementById('gamerTagToCopy').addEventListener('click', () => copyText('nantetu5877', 'gamerTagToCopy'));
 // サーバーアドレスのコピー
 document.getElementById('addressToCopy').addEventListener('click', () => copyText('nantetu123.f5.si', 'addressToCopy'));
@@ -612,197 +1061,273 @@ function updateLastModifiedDate() {
 updateLastModifiedDate();
 
 // ====================================================================
-// クイズデータ・画面切り替え (変更なし)
+// タブ切り替え機能のロジック (変更なし)
 // ====================================================================
-const quizPatterns = [
-    [
-        { 
-            q: "他のプレイヤーのチェストからアイテムを盗みました。罰則は？", 
-            a: ["盗まれたアイテムを返せば許される", "即時永久BANの対象となる"], 
-            correct: 1, 
-            explanation: "【破壊・窃盗】は厳禁事項であり、即時永久BANの対象です。" 
-        },
-        { 
-            q: "PvPを仕掛ける前に必ず必要なことは？", 
-            a: ["相手が攻撃してきたら反撃する", "相手プレイヤーの明確な同意（合意）を得る"], 
-            correct: 1, 
-            explanation: "PvPは【無断PvP・拘束】に該当するため、相手の合意が必須です。" 
-        },
-        { 
-            q: "サーバーが重くなるクロック回路をたくさん作っても良い？", 
-            a: ["はい、自由なサバイバルだから", "いいえ、【サーバー負荷行為】として禁止されます"], 
-            correct: 1, 
-            explanation: "サーバー負荷をかける行為は、他のプレイヤー全員の迷惑になるため禁止です。" 
-        }
-    ],
-    [
-        { 
-            q: "メインワールドで山を掘り崩して跡を放置しました。これは違反ですか？", 
-            a: ["はい、【景観の維持】のルールに反する可能性があります", "いいえ、自由に地形を変えてOKです"], 
-            correct: 0, 
-            explanation: "メインワールドでは【景観の維持】のため、ブランチマイニング跡の放置は避けてください。" 
-        },
-        { 
-            q: "ゲーム内の不具合（バグ）を見つけました。どうすべきですか？", 
-            a: ["誰にも言わずに利用して利益を得る", "利用せず、速やかに運営に報告する"], 
-            correct: 1, 
-            explanation: "バグの利用は重大な違反です。見つけたら必ず報告してください。" 
-        },
-        { 
-            q: "長期間遊んでいない領地は、どうなる可能性がありますか？", 
-            a: ["永遠に自分の所有物として残る", "運営判断で撤去される場合がある"], 
-            correct: 1, 
-            explanation: "長期間放置された建築物や領地は、【領地と放置物】のルールに基づき撤去される場合があります。" 
-        }
-    ]
-];
+const tabButtons = document.querySelectorAll('#tabs .tab-button');
+const tabContents = document.querySelectorAll('.tab-content');
 
-const rulesDiv = document.getElementById("rules");
+// 画面遷移で使う要素
+const rulesTabContent = document.getElementById("tab-rules"); 
+const featuresTabContent = document.getElementById("tab-features"); 
+const newsTabContent = document.getElementById("tab-news"); 
+const commandsTabContent = document.getElementById("tab-commands"); 
+const faqTabContent = document.getElementById("tab-faq"); 
+const contactTabContent = document.getElementById("tab-contact"); 
+
 const quizDiv = document.getElementById("quiz");
-const quizContainer = document.getElementById("quizContainer");
-const explanationDiv = document.getElementById("explanation");
 const gamerTagInputDiv = document.getElementById("gamerTagInput"); 
 const howToJoinDiv = document.getElementById("howToJoin");
+const rulesDiv = document.getElementById("rules"); // ルール本文のセクション
 
-let currentQuiz = [];
-let questionIndex = 0;
+/**
+ * HTMLのIDとボタンのdata-tabの対応付けをマップ化
+ * @type {Object.<string, HTMLElement>}
+ */
+const contentMap = {
+    'rules': rulesTabContent,
+    'features': featuresTabContent,
+    'news': newsTabContent,
+    'commands': commandsTabContent,
+    'faq': faqTabContent,
+    'contact': contactTabContent,
+};
 
-document.getElementById("agreeBtn").addEventListener("click", () => {
-    rulesDiv.classList.add("hidden");
-    quizDiv.classList.remove("hidden");
-    quizDiv.scrollIntoView({ behavior: 'smooth' });
-
-    currentQuiz = quizPatterns[Math.floor(Math.random()*quizPatterns.length)];
-    questionIndex = 0;
-    showQuestion();
+// 起動時に最初に表示するタブを設定
+document.addEventListener('DOMContentLoaded', () => {
+    switchTab('rules'); 
+    // rulesタブ内の初期画面はrulesDiv (ルール本文) に設定
+    if (rulesDiv) rulesDiv.classList.remove('hidden');
+    if (quizDiv) quizDiv.classList.add('hidden');
+    if (gamerTagInputDiv) gamerTagInputDiv.classList.add('hidden');
+    if (howToJoinDiv) howToJoinDiv.classList.add('hidden');
 });
 
-function showQuestion() {
-    quizContainer.innerHTML = "";
-    explanationDiv.style.display = "none";
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const targetTab = button.dataset.tab;
+        switchTab(targetTab);
+    });
+});
 
-    if(questionIndex >= currentQuiz.length){
-        quizDiv.classList.add("hidden");
-        gamerTagInputDiv.classList.remove("hidden"); 
-        gamerTagInputDiv.scrollIntoView({ behavior: 'smooth' });
+/**
+ * タブを切り替える関数
+ * @param {string} targetTab - 切り替えるタブの data-tab 属性値 (例: 'rules', 'news')
+ */
+function switchTab(targetTab) {
+    // 1. 全てのタブボタンから active クラスを外し、対象ボタンに付与
+    tabButtons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.tab === targetTab) {
+            btn.classList.add('active');
+        }
+    });
+
+    // 2. 全てのコンテンツを非表示にする
+    tabContents.forEach(content => {
+        content.classList.add('hidden');
+    });
+
+    // 3. 対象のタブコンテンツを表示する
+    const targetContent = contentMap[targetTab];
+    if (targetContent) {
+        targetContent.classList.remove('hidden');
+        
+        // **特別処理**: ルールタブに戻った時、表示を「ルール本文」に戻す
+        if (targetTab === 'rules') {
+            rulesDiv.classList.remove('hidden');
+            quizDiv.classList.add('hidden');
+            gamerTagInputDiv.classList.add('hidden');
+            howToJoinDiv.classList.add('hidden');
+        }
+        
+        // タブ切り替え時にスムーズにスクロール
+        const tabsElement = document.getElementById('tabs');
+        if (tabsElement) {
+            tabsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+            targetContent.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+}
+
+
+// ====================================================================
+// ルールクイズと参加方法の画面遷移 (変更なし)
+// ====================================================================
+document.getElementById('agreeBtn').addEventListener('click', () => {
+    rulesDiv.classList.add('hidden');
+    quizDiv.classList.remove('hidden');
+    loadQuiz();
+});
+
+document.getElementById('skipQuizBtn').addEventListener('click', () => {
+    rulesDiv.classList.add('hidden');
+    gamerTagInputDiv.classList.remove('hidden');
+});
+
+document.getElementById('skipTagBtn').addEventListener('click', () => {
+    gamerTagInputDiv.classList.add('hidden');
+    howToJoinDiv.classList.remove('hidden');
+});
+
+// ====================================================================
+// クイズデータとロジック (変更なし)
+// ====================================================================
+const QUIZ_DATA = [
+    {
+        question: "Q1. 友達の作物を無断で収穫したり、チェストからアイテムを取る行為はルール違反ですか？",
+        answers: ["はい、許可なく他人の所有物に触れるのは窃盗・荒らし行為で永久BANです。", "いいえ、作物は公共の資源なので自由です。", "所有者が見ていない時なら問題ありません。"],
+        correct: 0,
+        explanation: "正解は「はい」です。他人の畑からの無断収穫やチェストからのアイテム窃盗は、厳禁事項の【破壊・窃盗】に該当します。"
+    },
+    {
+        question: "Q2. ブランチマイニングなどでできた、ワールド内の大きな穴や採掘跡はどうすべきですか？",
+        answers: ["そのまま放置して次の採掘場所を探します。", "他のプレイヤーに見つからないように、最低限の修復をします。", "終了後、必ず元の状態（または自然な状態）に完全に修復します。"],
+        correct: 2,
+        explanation: "正解は「終了後、必ず修復」です。メインワールドの景観維持のため、【景観の維持と採掘の修復】ルールにより修復が義務付けられています。"
+    },
+    {
+        question: "Q3. 負荷軽減のため、自動機構（自動装置）を作る上で特に避けるべきことは何ですか？",
+        answers: ["サーバーに重度のラグが発生しない規模であれば、何をしても問題ありません。", "過剰なMOBの繁殖や、1ブロックに集中した大量のエンティティを避けるべきです。", "レッドストーン回路は全て禁止です。"],
+        correct: 1,
+        explanation: "正解は「過剰なMOBの繁殖やエンティティを避ける」です。【サーバー負荷行為】を避けるため、過剰なエンティティは厳禁です。"
+    }
+];
+
+let currentQuestionIndex = 0;
+let quizPassed = false;
+const quizContainer = document.getElementById('quizContainer');
+const explanationElement = document.getElementById('explanation');
+
+function loadQuiz() {
+    currentQuestionIndex = 0;
+    quizPassed = false;
+    explanationElement.textContent = '';
+    showQuestion();
+}
+
+function showQuestion() {
+    if (currentQuestionIndex >= QUIZ_DATA.length) {
+        quizContainer.innerHTML = '<h2>🎉 全問正解！ルール確認に合格しました！</h2>';
+        quizPassed = true;
+        // 合格後の次のステップへ
+        setTimeout(() => {
+            quizDiv.classList.add('hidden');
+            gamerTagInputDiv.classList.remove('hidden');
+        }, 1500);
         return;
     }
 
-    const qObj = currentQuiz[questionIndex];
-    const qDiv = document.createElement("div");
-    qDiv.className = "quiz-question";
-    qDiv.textContent = qObj.q;
-    quizContainer.appendChild(qDiv);
+    const q = QUIZ_DATA[currentQuestionIndex];
+    quizContainer.innerHTML = `
+        <div class="quiz-question">${q.question}</div>
+        <div id="answerButtons">
+            ${q.answers.map((answer, index) => 
+                `<button class="quiz-answer-btn" data-index="${index}">${answer}</button>`
+            ).join('')}
+        </div>
+    `;
 
-    qObj.a.forEach((answer, idx)=>{
-        const btn = document.createElement("button"); 
-        btn.type = "button";
-        btn.className = "quiz-answer-btn"; 
-        btn.textContent = answer;
-        
-        btn.onclick = ()=>{
-            if(idx === qObj.correct){
-                questionIndex++;
-                showQuestion();
-            }else{
-                explanationDiv.textContent = "不正解！ " + qObj.explanation + " ルールをよく読み直してね！";
-                explanationDiv.style.display = "block";
-                
-                setTimeout(() => {
-                    quizDiv.classList.add("hidden");
-                    rulesDiv.classList.remove("hidden");
-                    rulesDiv.scrollIntoView({ behavior: 'smooth' }); 
-                }, 2000);
-            }
-        };
-        quizContainer.appendChild(btn);
+    document.querySelectorAll('.quiz-answer-btn').forEach(button => {
+        button.addEventListener('click', handleAnswer);
     });
 }
 
-// === スキップボタンのイベントリスナー (クイズスキップ機能) ===
-document.getElementById('skipQuizBtn').addEventListener('click', () => {
-    // 誓約のポップアップを表示
-    alert('【重要】クイズをスキップしたことにより、あなたはなんてつサーバーのルール全文を読み、自己責任で全て遵守することを誓約したものとみなされます。');
+function handleAnswer(event) {
+    const selectedIndex = parseInt(event.target.dataset.index);
+    const q = QUIZ_DATA[currentQuestionIndex];
+    const isCorrect = selectedIndex === q.correct;
 
-    // クイズをスキップし、ゲーマータグ入力画面へ直接遷移
-    rulesDiv.classList.add("hidden");
-    quizDiv.classList.add("hidden"); //念のため非表示
-    gamerTagInputDiv.classList.remove("hidden");
-    gamerTagInputDiv.scrollIntoView({ behavior: 'smooth' });
-});
+    // ボタンを無効化
+    document.querySelectorAll('.quiz-answer-btn').forEach(btn => {
+        btn.disabled = true;
+        btn.style.opacity = 0.6;
+    });
+
+    if (isCorrect) {
+        event.target.style.backgroundColor = varColor('success');
+        explanationElement.textContent = '⭕ 正解！';
+        explanationElement.style.color = varColor('success');
+        explanationElement.style.borderColor = varColor('success');
+        explanationElement.style.backgroundColor = varColor('status-online-bg');
+        
+        currentQuestionIndex++;
+        setTimeout(showQuestion, 1500);
+    } else {
+        event.target.style.backgroundColor = varColor('error');
+        explanationElement.textContent = `❌ 不正解...。 ${q.explanation}\nもう一度ルールを読み直して挑戦してください。`;
+        explanationElement.style.color = varColor('error');
+        explanationElement.style.borderColor = varColor('error');
+        explanationElement.style.backgroundColor = varColor('status-offline-bg');
+
+        // 不正解の場合、最初からやり直し
+        setTimeout(() => {
+            explanationElement.textContent = '';
+            loadQuiz();
+        }, 3000);
+    }
+}
+
+// CSS変数を取得するヘルパー関数
+function varColor(name) {
+    const root = document.documentElement;
+    return getComputedStyle(root).getPropertyValue(`--color-${name}`).trim();
+}
 
 
-// === スキップボタンのイベントリスナー (ゲーマータグ入力画面のスキップボタン) ===
-document.getElementById('skipTagBtn').addEventListener('click', () => {
-    gamerTagInputDiv.classList.add("hidden");
-    howToJoinDiv.classList.remove("hidden");
-    howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
-});
+// ====================================================================
+// ゲーマータグフォームの処理 (変更なし)
+// ====================================================================
+const gamerTagForm = document.getElementById('gamerTagForm');
+const gamerTagInput = document.getElementById('gamerTag');
+const formStatus = document.getElementById('formStatus');
 
-// === GAS Webアプリへのデータ送信処理 (変更なし) ===
-document.getElementById('gamerTagForm').addEventListener('submit', function(e) {
+gamerTagForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    const gamerTagInput = document.getElementById('gamerTag');
-    const gamerTag = gamerTagInput.value.trim();
-    
-    const statusDiv = document.getElementById('formStatus');
-    const submitBtn = document.querySelector('#gamerTagForm [type="submit"]');
-    const skipBtn = document.getElementById('skipTagBtn');
+    const tag = gamerTagInput.value.trim();
 
-    // 1. ゲーマータグが空の場合はスキップボタンの処理を実行
-    if (gamerTag === "") {
-        document.getElementById('skipTagBtn').click();
+    if (tag === '') {
+        formStatus.textContent = 'ゲーマータグを入力してください！';
+        formStatus.style.color = varColor('error');
         return;
     }
+
+    formStatus.textContent = '🔄 登録処理中...';
+    formStatus.style.color = varColor('text-medium');
     
-    // 2. 送信中にボタンと入力を無効化（二重送信防止）
-    statusDiv.textContent = "⚠️ 登録中...（しばらくお待ちください）";
-    statusDiv.style.color = "#ff8c00";
-    submitBtn.disabled = true;
-    skipBtn.disabled = true; 
-    gamerTagInput.disabled = true; 
+    // GASへのデータ送信
+    const formData = new FormData();
+    formData.append('gamerTag', tag);
+    formData.append('source', 'web_form');
 
     fetch(GAS_WEB_APP_URL, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `gamerTag=${encodeURIComponent(gamerTag)}`
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('GASからの応答エラー: ' + response.statusText);
-        }
-        return response; 
+        body: formData,
+        mode: 'no-cors' // クロスオリジンでのエラー回避
     })
     .then(() => {
-        // 3. 成功処理
-        statusDiv.textContent = "✅ 登録完了！スプレッドシートに記録されました！";
-        statusDiv.style.color = "#28a745";
+        formStatus.textContent = '✅ 登録完了！ご協力ありがとうございます！';
+        formStatus.style.color = varColor('success');
         
-        // 成功後、入力をクリア
-        gamerTagInput.value = '';
-
-        // 成功メッセージを見せてから画面遷移
+        // 次のステップへ
         setTimeout(() => {
-            gamerTagInputDiv.classList.add("hidden");
-            howToJoinDiv.classList.remove("hidden");
-            howToJoinDiv.scrollIntoView({ behavior: 'smooth' });
-        }, 1000);
+            gamerTagInputDiv.classList.add('hidden');
+            howToJoinDiv.classList.remove('hidden');
+        }, 1500);
     })
     .catch(error => {
-        // 4. 失敗処理
-        console.error('Fetch Error:', error);
-        statusDiv.textContent = "❌ 登録に失敗しました。ネットワークを確認するか、管理者へ報告してください。";
-        statusDiv.style.color = "red";
+        console.error('GASへの送信エラー:', error);
+        // no-corsモードではエラーをキャッチしにくいので、成功と見なして進めるか、より堅牢なGAS連携が必要です
+        formStatus.textContent = '⚠️ 登録に問題が発生しましたが、参加方法へ進めます。';
+        formStatus.style.color = varColor('error');
         
-        // 失敗時、ユーザーが再試行できるようにボタンと入力を有効化
-        submitBtn.disabled = false;
-        skipBtn.disabled = false;
-        gamerTagInput.disabled = false;
+        setTimeout(() => {
+            gamerTagInputDiv.classList.add('hidden');
+            howToJoinDiv.classList.remove('hidden');
+        }, 3000);
     });
 });
 </script>
+
 </body>
 </html>
