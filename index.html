@@ -1,1040 +1,1064 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <link rel="icon" href="/icon.png" type="image/png">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>なんてつサーバー</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<style>
-/* ========== 基本カラースキーム & グラデーション変数 (モダン化) ========== */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>なんてつサーバー 🌈</title>
+	<meta property="og:title" content="なんてつサーバー | 統合版・Java版クロスプレイ対応マイクラサーバー">
+	<meta property="og:description" content="2025年9月開始！ゆるいサバイバルと経済システムが楽しめる、統合版/Java版対応のクロスプレイサーバーです。荒らし対策も万全。">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://youtube.com/@なんてつ"><meta property="og:image" content="https://minecraft-mcworld.com/wp-content/uploads/maxresdefault-1-2b750d65.jpg"><meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="/icon.jpg" type="image/jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+/* ========== カラーと基本設定 (V3) ========== */
 :root {
-    --color-primary: #3b5998; /* アクセントカラーをプライマリに */
-    --color-secondary: #00bcd4; /* アクション用 */
-    --color-bg: #f4f6f9; /* 明るい背景 */
-    --color-surface: #ffffff;
-    --color-text-dark: #2c3e50;
-    --color-text-medium: #7f8c8d;
-    --color-border: #ecf0f1;
-    --color-shadow: rgba(0, 0, 0, 0.08); /* 影をよりフラットに */
-    --color-success: #2ecc71;
-    --color-error: #e74c3c;
-    --color-status-online-bg: #e8f9e8;
-    --color-status-offline-bg: #f9e8e8;
+    --color-primary: #5E35B1;
+    --color-secondary: #FFC107;
     
-    /* 特徴リスト用カラー */
-    --color-feature-icon: #3498db; 
-    --color-feature-bg: #f7f9fb;
+    --color-bg-base: #f8f9fa;
+    --color-bg-alt: #ffffff;
+    --color-text-dark: #212529; /* より濃い黒に */
+    --color-text-medium: #6c757d;
+    --color-border: #dee2e6; /* 境界線を少し濃く */
     
-    /* UI共通設定 */
-    --radius-default: 8px;
+    --color-discord: #5865F2;
+    --color-success: #198754;
+
+    --radius-default: 8px; /* 角丸をシャープに */
+    --shadow-subtle: 0 4px 12px rgba(0,0,0,0.05); /* 影をさらに薄く */
+    --shadow-lift: 0 10px 25px rgba(0,0,0,0.08);
 }
-body.dark-mode {
-    --color-primary: #85a3e0;
-    --color-secondary: #00e5ff;
-    --color-bg: #1e1e1e;
-    --color-surface: #2a2a2a;
-    --color-text-dark: #ecf0f1;
-    --color-text-medium: #bdc3c7;
-    --color-border: #3b3b3b;
-    --color-shadow: rgba(0, 0, 0, 0.4);
-    --color-success: #4ade80;
-    --color-error: #f87171;
-    --color-status-online-bg: #1a2a1a;
-    --color-status-offline-bg: #2a1a1a;
+
+/* ナビゲーションのジャンプをなめらかにする */
+html {
+    scroll-behavior: smooth;
+}
+
+/* キーボード操作時のフォーカスカラーをサイトのメインカラーに統一 */
+a:focus, button:focus, input:focus, textarea:focus, .quiz-option:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* 送信完了メッセージのカスタムスタイル (最終版) */
+.submission-success-message {
+    /* メッセージを親要素の高さに合わせて中央に表示するための設定 */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 垂直方向の中央寄せ */
+    align-items: center;    /* 水平方向の中央寄せ */
+    text-align: center;
     
-    --color-feature-icon: #5d9cec;
-    --color-feature-bg: #333333;
+    /* 🚨 親要素(.contact-card)が持つスタイルは全て削除 */
+    padding: 0; /* パディングをゼロにする */
+    border: none; /* 枠線も削除 */
+    border-radius: none;
+    background-color: transparent; /* 背景も透明にする */
+}
+.submission-success-message h2 {
+    font-size: 28px;
+    font-weight: 700;
 }
 
 body {
     font-family: 'Noto Sans JP', sans-serif;
-    background-color: var(--color-bg); /* グラデーションから単色へ */
-    background-attachment: fixed;
     margin: 0;
-    padding: 0;
-    color: var(--color-text-dark); 
-    font-size: 16px;
-    line-height: 1.7;
-    transition: background-color 0.3s, color 0.3s;
+    background: var(--color-bg-base);
+    color: var(--color-text-dark);
+    line-height: 1.8; /* 行間を再度調整 */
+    overflow-x: hidden;
+    font-size: 17px; /* 本文のフォントサイズを少し大きく */
+    -webkit-font-smoothing: antialiased;
 }
+a { color: var(--color-primary); text-decoration: none; transition: all 0.2s ease; }
+a:hover { color: #4527a0; }
 
-/* ========== モバイルフレンドリー調整 ========== */
-@media (max-width: 768px) {
-    body { font-size: 15px; }
-    #hero-title { font-size: 32px; padding: 15px 0; margin-top: 50px; }
-    .status-box { font-size: 16px; padding: 12px 15px; margin-top: 20px; }
-    .container { padding: 0 !important; margin: 0 auto 30px !important; box-shadow: none; border-radius: 0; }
-    .content-wrapper { padding: 0 15px; }
-    #tabs { padding: 0 10px; } /* タブを左右に少し詰める */
-    .tab-button { font-size: 14px; padding: 10px 10px; }
-    /* 参加ボタンを画面幅いっぱいに */
-    .join-section .action-btn { max-width: 100%; }
-}
-
-/* ========== トップリンク & ダークモードトグル (変更なし) ========== */
-.top-links {
-    position: fixed; top: 20px; right: 20px; z-index: 100; display: flex; align-items: center;
-}
-.top-links a, #darkModeToggle {
-    color: var(--color-primary); margin-left: 15px; font-size: 28px; cursor: pointer; background: none; border: none; padding: 0; line-height: 1; transition: color 0.2s;
-}
-.top-links a:hover, #darkModeToggle:hover {
-    color: var(--color-secondary);
-}
-body.dark-mode .top-links a, body.dark-mode #darkModeToggle {
-    color: var(--color-primary); 
-}
-body.dark-mode .top-links a:hover, body.dark-mode #darkModeToggle:hover {
-    color: var(--color-secondary);
-}
-
-/* ========== ヒーロータイトル (視認性向上) ========== */
-#hero-title-section {
-    text-align: center;
-    padding: 60px 20px 0;
-    margin-bottom: 20px;
-}
-#hero-title {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 48px;
-    font-weight: 900;
-    color: var(--color-primary);
-    text-shadow: 1px 1px 2px var(--color-shadow);
-    display: inline-block;
-    padding: 10px 0;
-}
-#hero-subtitle {
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--color-text-medium);
-    margin-top: -10px;
-}
-
-/* ========== コンテナ (全幅デザインの維持と調整) ========== */
-.container {
-    width: 100%; 
-    max-width: none; 
-    margin: 0 auto 50px; 
-    background: var(--color-surface); 
-    padding: 0; /* 内部ラッパーで調整 */
-    border-radius: var(--radius-default); 
-    box-shadow: 0 6px 15px var(--color-shadow); /* 影をよりソフトに */
-    transition: background-color 0.3s, box-shadow 0.3s;
-    box-sizing: border-box; 
-}
-/* コンテンツの可読性を確保するための内部ラッパー */
-.content-wrapper {
-    max-width: 1100px; 
-    margin: 0 auto; 
-    padding: 40px 20px; /* 上下にパディングを追加 */
-}
-
-
-/* ========== ステータスボックス (デザイン変更) ========== */
-.status-box {
-    text-align: center; 
-    margin: 0 auto 30px; /* 上へのめり込みを解除 */
-    max-width: 800px; 
-    padding: 18px 25px; 
-    border-radius: var(--radius-default); 
-    font-weight: 700; 
-    font-size: 20px; 
-    box-shadow: 0 2px 10px var(--color-shadow); /* 影をフラットに */
-    display: flex; 
-    flex-wrap: wrap; /* モバイルで折り返す */
-    justify-content: space-around; 
-    align-items: center;
-    background-color: var(--color-surface); 
-    border: 1px solid var(--color-border);
-}
-.status-online {
-    background-color: var(--color-status-online-bg); color: var(--color-success); border-color: var(--color-success); 
-}
-.status-offline {
-    background-color: var(--color-status-offline-bg); color: var(--color-error); border-color: var(--color-error); justify-content: center;
-}
-.ping-text {
-    margin-left: 10px;
-    font-size: 16px;
-    color: var(--color-text-medium);
-}
-@media (max-width: 768px) {
-    .status-box { flex-direction: column; gap: 5px; }
-    .ping-text { margin-left: 0; }
-}
-
-
-/* ========== タブナビゲーション (フラットでモダンなデザイン) ========== */
-#tabs {
-    display: flex;
-    border-bottom: 2px solid var(--color-border);
-    margin-bottom: 25px;
-    overflow-x: auto; 
-    background-color: transparent; /* 背景なし */
-    padding-top: 0;
-    border-radius: 0;
-    flex-wrap: nowrap; /* 強制的に横並び */
-    padding-left: 20px;
-    padding-right: 20px;
-    box-sizing: border-box;
-}
-
-.tab-button {
-    background: none;
-    border: none;
-    padding: 12px 18px;
-    margin-bottom: -2px; 
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--color-text-medium);
-    transition: color 0.2s, border-bottom 0.2s, background-color 0.2s;
-    white-space: nowrap; 
-    border-radius: 0;
-}
-
-.tab-button:hover:not(.active) {
-    color: var(--color-primary);
-    background-color: var(--color-bg); 
-}
-
-.tab-button.active {
-    color: var(--color-primary);
-    border-bottom: 3px solid var(--color-primary);
-    background-color: transparent; 
-}
-
-
-/* ========== 見出し & リスト (調整) ========== */
-h1 {
-    text-align: left; /* 左寄せに戻す */
-    color: var(--color-primary); 
-    font-weight: 700; 
-    margin-bottom: 20px; 
-    font-size: 28px; 
-    padding-bottom: 8px; 
-    border-bottom: 2px solid var(--color-border);
-}
-h2 {
-    font-weight: 700; color: var(--color-text-dark); border-bottom: 1px solid var(--color-border); padding-bottom: 5px; margin-top: 30px;
-}
-
-/* 特徴リストの強化 */
-.feature-list {
-    list-style: none;
-    padding-left: 0;
-    display: grid; /* グリッドレイアウトで横並びに */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 15px;
-}
-.feature-list li {
-    background-color: var(--color-feature-bg); 
-    margin-bottom: 0; /* グリッドなのでマージンをリセット */
-    padding: 15px 15px 15px 55px; 
-    border: 1px solid var(--color-border); 
-    border-radius: var(--radius-default); 
-    position: relative; 
-    box-shadow: 0 1px 4px var(--color-shadow); 
-    line-height: 1.5;
-    transition: transform 0.2s; /* ホバーで少し浮く */
-}
-.feature-list li:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px var(--color-shadow);
-}
-.feature-list li::before {
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    content: "\f00c"; 
-    position: absolute; 
-    left: 18px; 
-    top: 15px; 
-    color: var(--color-feature-icon); 
-    font-size: 110%;
-}
-body.dark-mode .feature-list li::before {
-    color: var(--color-feature-icon);
-}
-
-
-/* ルールリストのスタイル (変更なし) */
-.rule-list {
-    padding-left: 0; list-style: none; counter-reset: rule-counter;
-}
-.rule-list li {
-    counter-increment: rule-counter; 
-    background-color: var(--color-feature-bg); /* ルールも少し色付け */
-    margin-bottom: 12px; 
-    padding: 15px 15px 15px 50px; 
-    border: 1px solid var(--color-border); 
-    border-radius: var(--radius-default); 
-    position: relative; 
-    box-shadow: 0 1px 4px var(--color-shadow-light); 
-    line-height: 1.5;
-}
-.rule-list li::before {
-    content: counter(rule-counter) "."; 
-    position: absolute; 
-    left: 15px; 
-    top: 15px; 
-    font-weight: 700; 
-    color: var(--color-primary); 
-    font-size: 110%;
-}
-/* liタグのスタイルをrule-listに統一 */
-li {
-    counter-increment: rule-counter; 
-    background-color: var(--color-feature-bg); 
-    margin-bottom: 12px; 
-    padding: 15px 15px 15px 50px; 
-    border: 1px solid var(--color-border); 
-    border-radius: var(--radius-default); 
-    position: relative; 
-    box-shadow: 0 1px 4px var(--color-shadow-light); 
-    line-height: 1.5;
-}
-li::before {
-    content: counter(rule-counter) "."; 
-    position: absolute; 
-    left: 15px; 
-    top: 15px; 
-    font-weight: 700; 
-    color: var(--color-primary); 
-    font-size: 110%;
-}
-
-body.dark-mode li, body.dark-mode .rule-list li, body.dark-mode .feature-list li { 
-    background-color: var(--color-feature-bg); 
-    border-color: #555555; 
-}
-
-
-/* ========== ボタン & 通知 (統一) ========== */
-button:not(#darkModeToggle):not(.quiz-answer-btn), .submit-btn {
-    display: block; margin: 25px auto 0; padding: 14px 30px; font-size: 18px; cursor: pointer; border: none; border-radius: var(--radius-default); background-color: var(--color-primary); color: var(--color-surface); box-shadow: 0 4px 8px var(--color-shadow); transition: all 0.2s; outline: none; font-weight: 700;
-}
-button:not(#darkModeToggle):not(.quiz-answer-btn):hover, .submit-btn:hover {
-    background-color: #2d4373; transform: translateY(-2px); box-shadow: 0 6px 12px var(--color-shadow); 
-}
-.hidden { display: none !important; } 
-.notice, .important-notice {
-    font-weight: 700; text-align: center; margin-bottom: 15px; padding: 12px 15px; border-radius: var(--radius-default); 
-    color: var(--color-error); background-color: #fff0f0; border: 1px solid var(--color-error);
-}
-body.dark-mode .notice, body.dark-mode .important-notice { background-color: #381f1f; color: var(--color-error); }
-
-/* ========== コピー機能 (強化 - フラットデザインに合わせる) ========== */
-.copyable {
-    user-select: none; 
-    background-color: var(--color-bg); 
-    padding: 10px 15px; /* パディングを増やす */
-    border-radius: var(--radius-default); 
-    border: 1px solid var(--color-border); 
-    color: var(--color-text-dark); 
-    display: inline-flex; 
-    align-items: center; 
-    cursor: pointer; 
-    transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
-    font-weight: 700; /* 太字に */
-}
-body.dark-mode .copyable {
-    background-color: #333; border-color: #555;
-}
-.copyable:hover {
-    background-color: var(--color-border);
-    box-shadow: 0 2px 5px var(--color-shadow);
-}
-body.dark-mode .copyable:hover {
-    background-color: #444;
-}
-.copyable.copied {
-    background-color: var(--color-success); color: #fff; animation: bounce 0.3s ease-out; 
-    border-color: var(--color-success);
-}
-.copyable.copied .fa-copy {
-    color: #fff; 
-}
-.fa-copy {
-    margin-left: 8px; color: var(--color-primary);
-}
-.copyable.copied .fa-copy {
-    color: #fff; 
-}
-
-/* ========== 参加方法セクション (アクションの強調) ========== */
-.join-section {
-    padding: 20px;
-    background-color: var(--color-surface);
-    border: 2px solid var(--color-primary);
-    border-radius: var(--radius-default);
-    margin-top: 30px;
-}
-.join-section h2 {
-    border-bottom: none;
-    margin-top: 10px;
-    font-size: 22px;
-}
-.join-section ol {
-    padding-left: 20px;
-    list-style: none; /* デフォルトの数字を非表示 */
-}
-.join-section li {
-    background-color: transparent;
-    border: none;
+/* ========== ナビゲーションバー (V3) ========== */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    /* 影ではなく、細い境界線で区切る */
     box-shadow: none;
-    padding-left: 0;
-    margin-bottom: 10px;
-    line-height: 1.6;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 40px;
+	.logo-link {
+    text-decoration: none; /* 下線を削除 */
+    color: var(--color-text-dark); /* 文字色を黒に維持 */
+    cursor: pointer;
+    display: flex; /* ロゴが flex item になるため、必要に応じて調整 */
 }
-.join-section li::before {
-    content: none;
+.logo-link:hover {
+    opacity: 0.8; /* マウスオーバーで少し薄くする（反応） */
 }
-.join-section .action-btn {
-    display: block;
-    width: 100%;
-    max-width: 350px;
-    margin: 15px auto;
-    font-size: 20px;
-    padding: 15px 30px;
-    background-color: var(--color-success);
-    color: #fff;
+/* ナビゲーションバー全体のロゴのサイズを再設定（任意） */
+.navbar .logo {
+    font-size: 24px; /* 見栄えの良いサイズに調整 */
     font-weight: 700;
 }
-.join-section .action-btn:hover {
-    background-color: #27ae60;
 }
-.join-section .action-btn i {
-    margin-right: 10px;
+.navbar .logo {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    color: var(--color-primary);
 }
-.join-method {
-    border: 1px solid var(--color-border);
-    padding: 15px;
+.navbar .nav-links a {
+    color: var(--color-text-dark);
+    font-weight: 700;
+    font-size: 15px; /* 少し小さく */
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+.navbar .nav-links a:hover {
+    color: var(--color-primary);
+    background: rgba(94, 53, 177, 0.05);
+}
+.discord-nav-btn {
+    padding: 8px 15px;
+    background: var(--color-discord);
+    color: white !important;
     border-radius: var(--radius-default);
-    margin-bottom: 20px;
+    font-weight: 700 !important;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+.discord-nav-btn:hover {
+    background: #6D77F9;
+    box-shadow: 0 4px 10px rgba(88, 101, 242, 0.2);
+}
+/* ========== クイズセクションのスタイル ========== */
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.quiz-option {
+    padding: 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-default);
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    text-align: left;
+    background-color: #ffffff;
+}
+
+.quiz-option:hover {
     background-color: var(--color-bg);
 }
-body.dark-mode .join-method { background-color: #333; }
 
-
-/* ========== クイズスタイル (変更なし) ========== */
-.quiz-question {
-    background-color: #f1f8ff; border: 1px solid var(--color-primary); padding: 20px; border-radius: 8px; margin-bottom: 25px; font-size: 18px; font-weight: 700; color: var(--color-text-dark); text-align: center;
-}
-body.dark-mode .quiz-question { background-color: #2d3e50; }
-#quizContainer { display: flex; flex-direction: column; align-items: center; }
-.quiz-answer-btn {
-    width: 80%; max-width: 400px; background-color: var(--color-secondary); color: #fff; border: none; margin: 10px 0; padding: 12px 25px; font-size: 16px; box-shadow: 0 3px 6px var(--color-shadow); border-radius: var(--radius-default); cursor: pointer; transition: background-color 0.2s, transform 0.2s;
-}
-.quiz-answer-btn:hover {
-    background-color: #00acc1; transform: translateY(-1px);
-}
-.explanation {
-    color: var(--color-error); border: 1px solid var(--color-error); background-color: #fff0f0; padding: 15px; border-radius: 6px; margin-top: 20px; text-align: center;
-}
-body.dark-mode .explanation { background-color: #381f1f; }
-
-
-/* ========== フォームのスタイル (変更なし) ========== */
-#gamerTagForm {
-    display: flex; flex-direction: column; align-items: center; gap: 15px;
-}
-#gamerTagForm input[type="text"] {
-    width: 100%; max-width: 300px; padding: 12px; font-size: 18px; border: 1px solid #ced4da; border-radius: 4px; font-family: 'Noto Sans Sans', sans-serif; color: var(--color-text-dark); box-sizing: border-box;
-}
-body.dark-mode #gamerTagForm input[type="text"] {
-    background-color: #333333; border-color: #555555; color: #f0f0f0;
+.quiz-option.correct {
+    background-color: #d4edda !important; /* 薄い緑色 */
+    border-color: #28a745 !important; /* 濃い緑色 */
+    color: #155724;
 }
 
-/* 登録ボタン (緑) */
-.submit-btn[type="submit"] {
-    background-color: var(--color-success) !important; width: 100%; max-width: 300px; margin: 0; 
-}
-.submit-btn[type="submit"]:hover {
-    background-color: #1e7e34 !important;
-}
-/* スキップボタン (グレー) */
-.submit-btn#skipTagBtn {
-    background-color: #6c757d !important; width: 100%; max-width: 300px; margin: 0; 
-}
-.submit-btn#skipTagBtn:hover {
-    background-color: #5a6268 !important;
-}
-#formStatus {
-    margin-top: 10px; font-weight: 700; text-align: center;
+.quiz-option.incorrect {
+    background-color: #f8d7da !important; /* 薄い赤色 */
+    border-color: #dc3545 !important; /* 濃い赤色 */
+    color: #721c24;
 }
 
-/* Discordリンクの装飾 (変更なし) */
-.discord-msg {
-    text-align: center; margin-top: 30px; padding: 20px; border: 1px dashed var(--color-border); border-radius: var(--radius-default); background-color: var(--color-bg);
-}
-body.dark-mode .discord-msg { background-color: #3a3a3a; }
-.discord-link {
-    display: inline-block; margin-top: 15px; padding: 10px 25px; font-size: 16px; font-weight: 700; color: var(--color-surface); background-color: var(--color-primary); border-radius: var(--radius-default); text-decoration: none; box-shadow: 0 3px 6px var(--color-shadow); transition: background-color 0.2s, transform 0.2s;
-}
-.discord-link:hover { background-color: #2d4373; transform: translateY(-1px); }
-
-/* FAQスタイル (調整) */
-.faq-item {
-    background-color: var(--color-surface); padding: 15px; border-radius: var(--radius-default); margin-bottom: 10px; 
-    border-left: 4px solid var(--color-primary); /* 左のアクセントライン */
-    box-shadow: 0 1px 4px var(--color-shadow-light);
-    position: relative; padding-left: 15px; 
-}
-body.dark-mode .faq-item {
-    background-color: #333333;
+/* ボタンをプライマリーカラーに統一 */
+#next-quiz-button {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
 }
 
-.faq-item strong {
-    color: var(--color-primary); display: block; margin-bottom: 8px; font-size: 16px; padding-left: 25px; text-indent: -25px; 
+/* ========== ヘッダー (V3) ========== */
+header {
+    position: relative;
+    text-align: center;
+    padding: 100px 20px 100px;
+    /* グラデーションを少し柔らかく */
+    background: linear-gradient(135deg, #673AB7, #512DA8),
+                url('Minecraft.png') no-repeat center center;
+    background-size: cover;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    box-shadow: none;
+    margin-bottom: 0;
+    /* ノーコード感を出す波型を削除 */
 }
-.faq-item strong::before {
-    content: "Q. "; color: var(--color-error); font-weight: 700; margin-right: 5px; transition: color 0.3s;
+header h1 {
+    /* フォントを変更し、読みやすさと品位を向上 */
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900; /* Noto Sansの最も太いウェイト */
+    font-size: 52px;
+    margin: 0;
 }
-.faq-item strong + * { 
-    display: block; padding-left: 25px; text-indent: -25px; 
-}
-.faq-item strong + *::before {
-    content: "A. "; color: var(--color-success); font-weight: 700; margin-right: 5px; transition: color 0.3s;
-}
-body.dark-mode .faq-item strong::before {
-    color: var(--color-error);
-}
-body.dark-mode .faq-item strong + *::before {
-    color: var(--color-success);
+header p {
+    font-size: 20px;
+    opacity: 0.9;
+    margin-bottom: 40px;
+    font-weight: 400;
 }
 
-/* 最終更新日スタイル (変更なし) */
-.footer-info {
-    color: var(--color-text-medium); font-size: 14px; text-align: right; margin-top: 40px; padding-top: 10px; border-top: 1px solid var(--color-border);
+/* ========== CTAボタン (V3) ========== */
+.action-btn, .submit-btn, .join-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--shadow-subtle); /* 影はボタンに限定 */
 }
-</style>
+.join-btn {
+    background: var(--color-secondary);
+    color: var(--color-text-dark);
+}
+.join-btn:hover {
+    background: #FFD550;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+}
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--color-primary);
+    border: 1px solid #fff; /* 白い境界線を追加 */
+    box-shadow: none;
+}
+.secondary-btn:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-subtle);
+}
+
+/* ========== セクションの基本スタイル (V3) ========== */
+section {
+    position: relative;
+    width: 100%;
+    padding: 80px 0;
+    box-sizing: border-box;
+    /* セクションの境界を明確にする */
+    border-bottom: 1px solid var(--color-border);
+}
+section:nth-child(even) { background: var(--color-bg-base); }
+section:nth-child(odd) { background: var(--color-bg-alt); }
+/* ヘッダー後の波型を削除したため、#aboutの調整も削除 */
+#about {
+    padding-top: 80px;
+}
+/* #about::before { ... } ← 波型クリップパスを削除 */
+
+.content-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h2 {
+    /* 見出しフォントをNoto Sans JPに変更 */
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    color: var(--color-text-dark); /* メインカラーから変更 */
+    padding-bottom: 15px;
+    margin-bottom: 50px;
+    font-size: 38px;
+    text-align: center;
+    position: relative;
+}
+/* H2の下線を紫に変更し、主張を抑える */
+h2::after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: var(--color-primary); /* 黄色から紫に変更 */
+    border-radius: 2px;
+    margin: 15px auto 0;
+}
+h3 {
+    /* H3もNoto Sans JPに変更 */
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    color: var(--color-primary);
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+/* ========== ABOUTセクション (レイアウト変更) ========== */
+/* 概要テキストと統計を2カラムにする */
+.about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+.about-text {
+    max-width: 500px;
+    font-size: 18px;
+    text-align: left;
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 統計は2x2のグリッドに */
+    gap: 20px;
+    text-align: center;
+}
+.stat-item {
+    padding: 25px;
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-default);
+    /* 影(shadow)ではなく線(border)で区切る */
+    box-shadow: none;
+    border: 1px solid var(--color-border);
+    transition: all 0.3s;
+}
+.stat-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lift); /* ホバー時だけ影を出す */
+}
+.stat-item .number {
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--color-text-dark); /* 色をシンプルに */
+    line-height: 1.2;
+}
+.stat-item .label {
+    font-size: 15px;
+    color: var(--color-text-medium);
+}
+
+/* ========== サーバー状態 / 参加方法 (V3) ========== */
+.status-box-wrapper {
+    max-width: 650px;
+    margin: 0 auto 40px;
+    padding: 35px;
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-default);
+    /* 派手な枠線をやめ、境界線と控えめな影に変更 */
+    box-shadow: var(--shadow-subtle);
+    border: 1px solid var(--color-border);
+}
+.status-box {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+/* コピー機能 (V3 シンプル化) */
+.copyable {
+    font-family: 'Noto Sans JP', sans-serif;
+    padding: 10px 18px;
+    font-size: 17px;
+    font-weight: 700;
+    border: 2px dashed var(--color-border); /* 破線に変更 */
+    background: var(--color-bg-base); /* 背景色を薄く */
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    color: var(--color-text-medium);
+}
+.copyable:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    background: #fff;
+}
+.copyable i {
+    margin-right: 8px;
+}
+/* Discord用コピーボタンのスタイル調整 */
+#gamerTagToCopy {
+    border-style: solid;
+    border-color: var(--color-discord);
+    background: #f5f6ff;
+    color: var(--color-discord);
+}
+#gamerTagToCopy:hover {
+    background: #fff;
+    border-color: var(--color-discord);
+}
+
+
+/* ========== 特徴 / 連絡先カード (V3) ========== */
+.contact-card, .feature-list li {
+    /* ここも影ではなく線で区切る */
+    box-shadow: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-default);
+    transition: all 0.3s;
+    background: var(--color-bg-alt);
+}
+.contact-card:hover, .feature-list li:hover {
+    box-shadow: var(--shadow-lift); /* ホバー時だけ影を出す */
+    transform: translateY(-3px);
+}
+
+/* ========== アコーディオン（V3のスタイルに合わせる） ========== */
+.accordion-header {
+    background: var(--color-primary);
+    color: white;
+    padding: 15px 20px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: var(--radius-default);
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+.accordion-header:hover {
+    background: #4527a0;
+}
+.accordion-header.open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.accordion-header i {
+    transition: transform 0.3s;
+}
+.accordion-header.open i {
+    transform: rotate(180deg);
+}
+/* ガイドライン用のグレーヘッダー */
+.accordion-header[data-target="freedom-rules"] {
+    background: #6c757d;
+}
+.accordion-header[data-target="freedom-rules"]:hover {
+    background: #5a6268;
+}
+
+.accordion-content {
+    max-height: 0; /* これが初期状態でコンテンツを非表示にする役割 */
+    overflow: hidden;
+    transition: all 0.4s ease-in-out;
+    background: var(--color-bg-alt);
+    border: 1px solid var(--color-border);
+    border-top: none;
+    border-bottom-left-radius: var(--radius-default);
+    border-bottom-right-radius: var(--radius-default);
+    padding: 0 25px; /* 閉じている時はpaddingを0にする */
+}
+/* JSで .open クラスが追加された時のスタイル */
+.accordion-content.open {
+    padding: 25px 25px; 
+    /* max-heightの再計算はJavaScriptで行われます */
+}
+/* ヘッダーが開いている状態 */
+.accordion-header.open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+/* 矢印の回転 */
+.accordion-header i {
+    transition: transform 0.3s;
+}
+.accordion-header.open i {
+    transform: rotate(180deg);
+}
+
+/* ========== ニュース (V3) ========== */
+.news-item {
+    transition: background-color 0.2s;
+    border-bottom: 1px solid var(--color-border);
+}
+.news-item:hover {
+    background: var(--color-bg-alt);
+}
+.news-item h3 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0;
+}
+.news-item h3 a {
+    color: var(--color-text-dark);
+    display: block;
+    padding: 15px;
+}
+.news-item h3 a:hover {
+    color: var(--color-primary);
+}
+.news-item .date {
+    font-size: 13px;
+    color: var(--color-text-medium);
+    display: block;
+    margin-bottom: 5px;
+    padding: 15px 15px 0;
+}
+/* news-item内のh3 aのパディングを調整 */
+.news-item h3 a { padding: 5px 15px 15px 15px; }
+
+
+/* ========== お問い合わせ (V3) ========== */
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+.contact-form input,
+.contact-form textarea {
+    width: 100%; 
+    padding: 14px; 
+    margin-bottom: 15px; 
+    border: 1px solid var(--color-border); 
+    border-radius: var(--radius-default); 
+    box-sizing: border-box; 
+    font-family: inherit; 
+    font-size: 16px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(94, 53, 177, 0.1);
+}
+
+/* ========== フッター (V3) ========== */
+footer {
+    text-align: center; 
+    padding: 40px 0; 
+    background: var(--color-bg-base); 
+    color: var(--color-text-medium); 
+    font-size: 14px;
+    border-top: 1px solid var(--color-border);
+}
+.social-links a {
+    margin: 0 15px;
+    font-size: 24px;
+    color: var(--color-text-medium);
+}
+.social-links a:hover {
+    color: var(--color-primary);
+}
+@media (max-width: 768px) {
+    .navbar { padding: 12px 15px; }
+    .content-wrapper { padding: 40px 15px 80px; }
+    h1 { font-size: 30px; }
+    h2 { font-size: 24px; }
+}
+
+/* ========== モバイル対応 (V3) ========== */
+@media (max-width: 768px) {
+    body { font-size: 16px; }
+    .navbar { padding: 12px 15px; }
+    
+    header { padding: 80px 15px 80px; }
+    header h1 { font-size: 36px; }
+    header p { font-size: 17px; }
+    
+    section { padding: 60px 0; }
+    .content-wrapper { padding: 0 15px; }
+    h2 { font-size: 30px; }
+    
+    /* Aboutレイアウトを縦積みに戻す */
+    .about-layout { grid-template-columns: 1fr; }
+    .about-text { text-align: left; margin-bottom: 30px; } /* 左揃えに変更 */
+    .stats-grid { gap: 15px; }
+    .stat-item .number { font-size: 30px; }
+    
+    .status-box-wrapper { padding: 25px; }
+    .status-box { font-size: 18px; }
+    
+    .copyable { display: block; margin-bottom: 10px; text-align: center; }
+
+    .contact-grid { grid-template-columns: 1fr; }
+    
+    .feature-list { grid-template-columns: 1fr; }
+}
+/* ========== ルールのアコーディオン機能を回復させるための修正 ========== */
+
+/* 1. アコーディオンヘッダーを強制的に最前面に配置 */
+/* これで、クリックイベントが確実にキャッチされるようにする */
+.accordion-header {
+    position: relative !important; /* z-indexを有効化 */
+    z-index: 1002 !important;     /* 最高のz-indexを設定し、他の要素による遮断を防ぐ */
+    cursor: pointer;              /* カーソルがポインターであることを確認 */
+}
+
+/* 2. ルールセクション全体も前面に（念押し）*/
+#rules-accordion {
+    position: relative !important;
+    z-index: 1000 !important;
+}
+
+/* 3. コンテンツのカード自体も念のため最前面に */
+.accordion-item {
+    position: relative !important;
+    z-index: 1001 !important;
+}
+
+    </style>
 </head>
-<body oncontextmenu="return false;">
+<body>
+<nav class="navbar">
+    <a href="#top" class="logo-link">
+        <div class="logo">なんてつサーバー</div>
+    </a>
+    <div class="nav-links">
+            <a href="#about"><i class="fas fa-info-circle"></i> 概要</a>
+			<a href="terms.html">利用規約</a>
+			<a href="#rules-accordion"><i class="fas fa-scroll"></i> ルール</a>
+            <a href="#join"><i class="fas fa-puzzle-piece"></i> 参加方法</a>
+            <a href="#features"><i class="fas fa-star"></i> 特徴</a>
+			<a href="command.html" class="command-link">コマンド一覧</a>
+            <a href="#contact" class="discord-nav-btn"><i class="fas fa-headset"></i> お問い合わせ</a>
+			<a href="https://discord.gg/79H7Jy65nz" target="_blank" title="Discord" class="discord-nav-btn" ><i class="fab fa-discord fa-lg"></i>Discordサーバー</a>
+    </nav>
 
-<div class="top-links">
-    <button id="darkModeToggle" title="ダークモード切り替え"><i class="fas fa-moon"></i></button>
-    <a href="https://youtube.com/@なんてつ" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-    <a href="https://discord.gg/79H7Jy65nz" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
-</div>
-
-<div id="hero-title-section">
-    <h1 id="hero-title">なんてつサーバー</h1>
-    <p id="hero-subtitle">ゆるいサバイバルをモットーにした統合版参加型サーバー</p>
-</div>
-
-<div class="content-wrapper" style="padding-top: 0; padding-bottom: 0;"> 
-    <div id="serverStatus" class="status-box">
-        <span class="status-text">...読み込み中...</span>
-        <span class="ping-text" id="serverPing" style="display:none;"></span>
-    </div>
-</div>
-
-<div class="container">
-    <div class="content-wrapper"> 
+    <header id="top">
+        <h1>長く続く、ゆるいコミュニティ。</h1>
+        <p>マインクラフトを通じて、みんなが楽しめる「場」を提供する</p>
         
-        <div id="tabs">
-            <button class="tab-button" data-tab="rules"><i class="fas fa-scroll"></i> ルール & 参加</button>
-            <button class="tab-button" data-tab="features"><i class="fas fa-star"></i> 特徴</button> 
-            <button class="tab-button" data-tab="news"><i class="fas fa-bullhorn"></i> お知らせ</button>
-            <button class="tab-button" data-tab="commands"><i class="fas fa-terminal"></i> コマンド一覧</button>
-            <button class="tab-button" data-tab="faq"><i class="fas fa-question-circle"></i> よくある質問</button>
-            <button class="tab-button" data-tab="contact"><i class="fas fa-envelope"></i> お問い合わせ</button>
+        <div class="cta-button-block">
+            <a href="#join" class="action-btn join-btn"><i class="fas fa-user-plus"></i> 今すぐ参加する</a>
+            <a href="#rules-accordion" class="action-btn secondary-btn"><i class="fas fa-book"></i> まずルールを読む</a>
         </div>
-        
-        <div id="tab-rules" class="tab-content">
-            <div id="rules">
-                <h1>なんてつさーばー ルール</h1>
-                <p class="important-notice">
-                    このサーバーは「ゆるいサバイバル」がモットーですが、以下のルールは**運営の負担と他のプレイヤーの楽しみを守るための厳格な定義**です。
-                    ルール違反は軽重問わず厳しく対処します。
-                </p>
+    </header>
 
-                <h2>🚨 厳禁事項：即時永久BANの対象</h2>
-                <p>以下の行為は、サーバーの根幹と他のプレイヤーの体験を著しく損なうため、警告なしに**即時永久BANの対象**となります。</p>
-                <ol class="rule-list">
-                    <li>
-                        <strong style="color: var(--color-error);">【破壊・窃盗】</strong><br>
-                        他者の**所有物（建築物、保護エリア、チェスト内のアイテム）を無断で破壊・窃盗・改変**する行為。
-                        <br><small>※他人の畑からの無断収穫や、管理下にあるMOBの殺傷も含みます。</small>
-                    </li>
-                    <li>
-                        <strong style="color: var(--color-error);">【ハラスメント】</strong><br>
-                        暴言、誹謗中傷、差別的発言、過度な煽り、個人情報の詮索など、**他者が明確に不快に感じる言動**。
-                    </li>
-                    <li>
-                        <strong style="color: var(--color-error);">【チート・ツール】</strong><br>
-                        **改造クライアント、チートMOD、マクロ、BOT**など、不正に優位性を得る外部ツールの使用。
-                    </li>
-                    <li>
-                        <strong style="color: var(--color-error);">【サーバー負荷行為】</strong><br>
-                        過剰なクロック回路、大量のMOB繁殖/放置エンティティ、または意図的なバグ利用による**サーバーダウンや重度のラグを引き起こす**行為。
-                    </li>
-                    <li>
-                        <strong style="color: var(--color-error);">【バグ利用】</strong><br>
-                        **ゲーム内の不具合（バグ/グリッチ）を意図的に利用**し、不正に利益を得る行為。発見時は速やかに運営に報告してください。
-                    </li>
-                    <li>
-                        <strong style="color: var(--color-error);">【無断PvP・拘束】</strong><br>
-                        **相手プレイヤーの明確な同意（合意）がない**一方的な攻撃（PvP）、またはトラップなどによる長時間拘束。
-                    </li>
-                </ol>
+    <section id="about">
+        <div class="content-wrapper">
+            <h2><i class="fas fa-info-circle"></i> なんてつサーバーの概要</h2>
 
-                <h2>⚖️ 自由と節度</h2>
-                <p>メインワールド一つで運営しているため、自由なサバイバルを推奨しつつも、**公共の資源と景観**に対する配慮がより重要となります。</p>
-                <ol start="7" class="rule-list">
-                    <li>
-                        <strong style="color: var(--color-primary);">【景観の維持と採掘の修復】</strong><br>
-                        メインワールド内での採掘や整地は、**終了後に元の状態（または自然な状態）に完全に修復する**ことを義務付けます。
-                        <br><small>※地下のブランチマイニング跡、露天掘りの穴などを放置しないでください。</small>
-                    </li>
-                    <li>
-                        <strong style="color: var(--color-primary);">【公共エリアの維持】</strong><br>
-                        スポーン地点や**ネザー/エンドポータル周辺**は公共エリアです。これらの場所での私的な建築、改変、資源の独占は禁止します。
-                    </li>
-                    <li>
-                        <strong style="color: var(--color-primary);">【無許可の入室・干渉】</strong><br>
-                        他プレイヤーの保護エリア内や、明らかにプライベートな建築物への**無許可の立ち入り**や、無断での看板設置などの干渉。
-                    </li>
-                    <li>
-                        <strong style="color: var(--color-primary);">【領地と放置物】</strong><br>
-                        使用目的のない**不必要な広範囲の領地登録**。また、長期間（例：3ヶ月）放置された建築物や領地は、運営判断で撤去する場合があります。
-                    </li>
-                    <li>
-                        <strong style="color: var(--color-primary);">【宣伝・勧誘】</strong><br>
-                        チャットや建築物内での**他のサーバーやコミュニティへの宣伝・勧誘**。
-                    </li>
-                </ol>
-
-                <p class="notice">
-                    ※ルールに違反した場合、**警告、一時BAN、永久BAN**のいずれかの罰を処します。
-                    違反内容によっては、**建築物やアイテムの没収・巻き戻し**も実施します。
-                </p>
-                <button id="agreeBtn">ルール確認クイズに挑戦する</button>
-
-                <p class="notice" style="margin-top: 30px;">
-                    ⚠️ クイズが苦手な方、緊急で参加したい方向け 
-                    <br>
-                    **ルール全文を読み、自己責任で遵守することを誓約いただける場合のみ**、クイズをスキップできます。
-                </p>
-                <button type="button" id="skipQuizBtn" class="submit-btn" style="background-color: #6c757d !important; max-width: 400px; margin-top: 10px;">
-                    スキップして参加方法へ(自己誓約)
-                </button>
-            </div>
-            
-            <div id="quiz" class="hidden">
-                <h1>ルール確認クイズ</h1>
-                <div id="quizContainer"></div>
-                <div class="explanation" id="explanation"></div>
-            </div>
-
-            <div id="gamerTagInput" class="hidden">
-                <h1>ゲーマータグ登録</h1>
-                <div class="pass-screen">
-                    <h2>✨ ルール確認合格！ ✨</h2>
-                    <p class="important-notice">
-                        迷惑行為対策のため、<br>
-                        ゲーマータグ（MinecraftのID）の登録によろしければご協力お願いします。
-                    </p>
-                    <p>登録は任意ですが、ご協力いただくことでスムーズに招待され、問題発生時の対応が迅速になります。</p>
-                    <form id="gamerTagForm">
-                        <input type="text" id="gamerTag" placeholder="例:Tarou123"> 
-                        <button type="submit" class="submit-btn">タグを登録して参加方法へ</button>
-                        <button type="button" id="skipTagBtn" class="submit-btn">スキップして参加方法へ</button>
-                        <div id="formStatus"></div>
-                    </form>
-                </div>
-            </div>
-            
-            <div id="howToJoin" class="hidden">
-                <h1>参加方法</h1>
-                <p class="important-notice">
-                    なんてつサーバーへの参加は、以下の2つの方法から選べます。
-                    <br>どちらの方法でも、サーバーのルールが適用されます。
-                </p>
+            <div class="about-layout">
                 
-                <div class="join-method">
-                    <h2>① フレンド招待で参加する (推奨)</h2>
-                    <p>最も確実で簡単な方法です。初めての方はまずこちらを試してください。</p>
-                    <div style="text-align: center; margin: 20px 0;">
-                        <span id="gamerTagToCopy" class="copyable action-btn">
-                            <i class="fas fa-user-plus"></i> nantetu5877 をコピーしてフレンド申請
-                        </span>
+                <div class="about-text">
+                    <p style="margin: 0;">
+                        なんてつサーバーは、2025年9月に始まった、**統合版マイクラ**のゆるいサバイバルサーバーです。ただゲームを遊ぶだけでなく、**「マインクラフトを通じてコミュニティの場を提供する」**ことをモットーに運営されています。プレイヤー間の交流と秩序を大切に、安全で快適な環境を目指しています。
+                    </p>
+                </div>
+                
+                <div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="number">100+</div>
+                            <div class="label">累計参加者数</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="number">10+</div>
+                            <div class="label">最高同時接続数</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="number">2</div>
+                            <div class="label">安定稼働月数</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="number">99.9%</div>
+                            <div class="label">サーバー稼働率</div>
+                        </div>
                     </div>
-                    <ol>
-                        <li>1. 上のボタンでIDをコピーし、Minecraft内でフレンド申請を送ってください。</li>
-                        <li>2. 申請後、数秒~1分ほどでサーバーから招待が届きます。</li>
-                        <li>3. 招待されたら参加完了です！</li>
-                    </ol>
                 </div>
+            </div> </div>
+    </section>
+    <section id="join" style="padding-top: 30px; background: var(--color-bg-base);">
+        <div class="content-wrapper">
+            <h2><i class="fas fa-plug"></i> サーバー接続情報と参加方法</h2>
+			<p style="text-align: center; margin-top: -10px; margin-bottom: 20px;">
+    サーバーに参加する前に、<a href="#rules-accordion" class="rule-check-link">ルールを確認しましょう！</a>
+</p>
+            
+            <div class="status-box-wrapper">
+                <div id="serverStatus" class="status-box status-online">
+                    <span class="status-text">...読み込み中...</span>
+                    <span class="ping-text" id="serverPing" style="display:none;"></span>
+                </div>
+                <div id="playerList" style="margin-top: 10px; font-size: 14px; color: var(--color-text-medium);"></div>
+                
+                <h3 style="margin-top: 30px;">🎮 IPアドレスで直接接続</h3>
+                <span id="addressToCopy" class="copyable">
+                    <i class="fas fa-desktop"></i> nantetu123.f5.si
+                </span>
+                <span id="portToCopy" class="copyable">
+                    <i class="fas fa-hashtag"></i> 5346 
+                </span>
 
-                <div class="join-method">
-                    <h2>② IPアドレスで直接接続する</h2>
-                    <p>サーバーリストに直接追加して参加できます。招待が届かない場合などにご利用ください。</p>
-                    <div style="text-align: center; margin: 20px 0;">
-                        サーバーアドレス: 
-                        <span id="addressToCopy" class="copyable">
-                            nantetu123.f5.si
-                            <i class="fas fa-copy copy-icon"></i>
-                        </span>
-                        <br><br>
-                        ポート番号:
-                        <span id="portToCopy" class="copyable">
-                            5346 
-                            <i class="fas fa-copy copy-icon"></i>
-                        </span>
-                    </div>
-                    <ol>
-                        <li>1. マイクラの「サーバー」タブを開き、「サーバーを追加」を選択します。</li>
-                        <li>2. 上記のアドレスとポート番号を入力し、保存します。</li>
-                        <li>3. サーバーリストからなんてつサーバーに接続します。</li>
-                    </ol>
-                </div>
-
-                <div class="discord-msg">
-                    Discordサーバーに入ればお知らせなどを見たりサーバーからチャットを送信ができるようになります！<br>
-                    <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank"><i class="fab fa-discord"></i> Discordサーバーに参加する</a>
-                </div>
+                <h3 style="margin-top: 30px;">🎁 フレンド招待で参加 (最速・推奨)</h3>
+                <span id="gamerTagToCopy" class="copyable">
+                    <i class="fas fa-user-plus"></i> nantetu5877 をコピー
+                </span>
+                <p style="font-size: 14px; color: var(--color-text-medium);">IDをコピーしてフレンド申請を送ると、自動で招待が届きます。</p>
             </div>
         </div>
-        
-        <div id="tab-features" class="tab-content hidden">
-            <h1>✨ なんてつサーバーの特徴</h1>
-            <p class="important-notice">
-                「**軽い、便利、安全**」を重視した環境で、快適にプレイしましょう！
-            </p>
+    </section>
 
-            <h2>✅ 9つの主な特徴</h2>
-            <ul class="feature-list">
-                <li>
-                    フレンド申請だけで**自動参加**！
-                </li>
-                <li>
-                    常に**最新版バージョン対応**！
-                </li>
-                <li>
-                    ラグが少なく**快適プレイ**！
-                </li>
-                <li>
-                    **荒らし対策済み**で安心！
-                </li>
-                <li>
-                    **土地保護プラグイン**で自分専用の土地を作れる！
-                </li>
-                <li>
-                    みんな優しく**初心者歓迎**！
-                </li>
-                <li>
-                    **自動バックアップ**で復帰可能！
-                </li>
-                <li>
-                    **バージョンが違っていても**参加可能！
-                </li>
-                <li>
-                    **便利コマンド**でサバイバルをもっと楽しく！
-                </li>
-            </ul>
-
-            <h2>💡 快適さと安心のポイント</h2>
-            <p>
-                もう移動で悩まない！このサーバーは`/tpa`や`/home`コマンドを搭載し、**瞬時**にどこでもテレポート可能です！
-            </p>
-            <p>
-                さらに大切なお家は**土地保護プラグイン**でバッチリ安全に保護できます！
-            </p>
-            <p>
-                また、クロスプレイヤー特有のラグなし。「**軽い、便利、安全**」を重視した環境で、快適に楽しくプレイしましょう！
-            </p>
-            <p>
-                運営は、**機能の良さ**だけでなく「**居心地の良さ**」も大切にしています。荒らし対策、優しい利用者、活発な運営で、**初心者の方でも安心して長期間楽しめる環境づくり**を心がけています。実際の雰囲気は、ぜひDiscordのチャットログなどでご確認ください！
-            </p>
-        </div>
-        
-        <div id="tab-news" class="tab-content hidden">
-            <h1>📢 サーバーからのお知らせ</h1>
-            <p class="important-notice">
-                重要な告知やアップデート情報はこちらに掲載されます。
-            </p>
-            <div class="faq-item">
-            <strong>【サーバー ルール改定のお知らせとお願い】(2025/11/06)</strong>
-            なんてつサーバーのルール内容を、**本日付で追加・変更いたしました**。サーバーをより公平に、長く楽しく運営していくため、いくつか重要な項目の定義を見直しています。特に現金事項の明確かなどをしましたので当サーバーへの参加継続、または新規参加を希望される方は、必ず以下のこのサイトで最新のルール全文をご確認ください。ご理解とご協力をお願いいたします！
-            </div>
-            <div class="faq-item">
-            <strong>お知らせ (2025/11/02)</strong>
-            今更にはなってしまいますが、**サーバーを軽量化するプラグイン**を導入しました！どのくらい変化があるのかは未知数ですが、ないよりはマシだと思ったので導入しました。これからもなんてつさーばーをよろしくお願いします。
-            </div>
-            <p style="text-align: right; margin-top: 30px;">
-                過去のお知らせはDiscordの #お知らせ チャンネルをご確認ください。
-            </p>
-        </div>
-        
-        <div id="tab-commands" class="tab-content hidden">
-        <h1>💻 便利なコマンド一覧</h1>
-        <p class="important-notice">
-            なんてつサーバーで使える主なコマンドをご紹介します。**<>内の引数**は、実際に入力する際は外してください。
-        </p>
-
-        <h2>🚶‍♂️ 移動・テレポートコマンド</h2>
-        <div class="faq-item">
-            <strong>`/tpa <プレイヤー名>`</strong>
-            指定したプレイヤーにテレポートを要求します。相手が承諾するとテレポートします。
-        </div>
-        <div class="faq-item">
-            <strong>`/back`</strong>
-            最後に死亡した場所、またはテレポートする直前の地点に戻ります。（クールダウンあり）
-        </div>
-        <div class="faq-item">
-            <strong>`/home <名前>`</strong>
-            設定したホームポイントにテレポートします。
-        </div>
-        <div class="faq-item">
-            <strong>`/sethome <名前>`</strong>
-            現在地にホームポイントを設定します。（複数設定可能）
-        </div>
-        <div class="faq-item">
-            <strong>`/warp`</strong>
-            サーバーの公共ワープ地点（スポーン等）にテレポートできます。
-        </div>
-
-        <h2>🛡️ 領地保護・管理</h2>
-        <div class="faq-item">
-            <strong>`/tty`</strong>
-            **新しい領地を作成します。** (例: 金シャベルなどのツールを使用し、領域を保護します)
-        </div>
-        <div class="faq-item">
-            <strong>`/ty <ｘ> <ｙ> <ｚ> <時間> <半径>`</strong>
-            ブロックの破壊履歴やチェストのアクセス履歴をコマンドで確認できます。
-        </div>
-        <div class="faq-item">
-            <strong>`/tygui`</strong>
-            **監査ログGUI** を開きます。ブロックの破壊履歴やチェストのアクセス履歴を確認できます。
-        </div>
-
-        <h2>📣 サーバー情報・ユーティリティ</h2>
-        <div class="faq-item">
-            <strong>`/broadcast <メッセージ>`</strong>
-            サーバー全体にブロードキャスト（全体メッセージ）を送信します。（**管理者・権限者向け**）
-        </div>
-        <div class="faq-item">
-            <strong>`/notice`</strong>
-            サーバーの最新のお知らせや重要な告知を再表示します。
-        </div>
-        <div class="faq-item">
-            <strong>`/ping`</strong>
-            自分のサーバーとの接続速度（Ping値）を確認します。
-        </div>
-        <div class="faq-item">
-            <strong>`/e <アクションメッセージ>`</strong>
-            チャットにアクション（感情表現や動作）を送信します。（例: `/e happy`）
-        </div>
-        <div class="faq-item">
-            <strong>`/um`</strong>
-            **お金を送金したり、所持金ランキングを見る**ためのコマンドです。
-        </div>
+<section id="features" style="background: linear-gradient(135deg, #f3e5f5, #e1bee7); padding: 100px 0;">
+    <div class="content-wrapper">
+        <h2 style="font-size: 42px; color: #5E35B1;"><i class="fas fa-star"></i> プレイ環境の特徴</h2>
+        <ul class="feature-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; list-style: none; padding: 0; text-align: center;">
+            <li class="contact-card" style="padding: 30px; background: #fff3e0; border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s;">
+                <i class="fas fa-shield-alt" style="font-size: 40px; color: #FF9800; margin-bottom: 15px;"></i>
+                <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">強力な荒らし対策</h3>
+                <p>土地保護、監査ログ、ロールバック機能完備。大切な建築は100%守られます。</p>
+            </li>
+            <li class="contact-card" style="padding: 30px; background: #e0f7fa; border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s;">
+                <i class="fas fa-plane" style="font-size: 40px; color: #00ACC1; margin-bottom: 15px;"></i>
+                <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">便利なテレポート機能</h3>
+                <p>`/tpa`、`/home` などの生活系コマンドで長距離移動のストレスを解消。</p>
+            </li>
+            <li class="contact-card" style="padding: 30px; background: #f1f8e9; border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s;">
+                <i class="fas fa-link" style="font-size: 40px; color: #7CB342; margin-bottom: 15px;"></i>
+                <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">Java/統合版クロスプレイ</h3>
+                <p>PC、Switch、スマホなど、あらゆるデバイスから同じサーバーで遊べます。</p>
+            </li>
+            <li class="contact-card" style="padding: 30px; background: #fffde7; border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s;">
+                <i class="fas fa-money-bill-wave" style="font-size: 40px; color: #FDD835; margin-bottom: 15px;"></i>
+                <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">シンプルな経済システム</h3>
+                <p>通貨プラグインを導入。経済要素はありますが、バニラの楽しさを重視。</p>
+            </li>
+            <li class="contact-card" style="padding: 30px; background: #e8f5e9; border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s;">
+                <i class="fas fa-tachometer-alt" style="font-size: 40px; color: #43A047; margin-bottom: 15px;"></i>
+                <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">超低遅延</h3>
+                <p>快適サーバーでストレスフリー。も建築もスムーズに楽しめます。</p>
+            </li>
+            <li class="contact-card" style="padding: 30px; background: #fff0f5; border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s;">
+                <i class="fas fa-hands-helping" style="font-size: 40px; color: #EC407A; margin-bottom: 15px;"></i>
+                <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">初心者歓迎</h3>
+                <p>サーバー内は優しい人ばかりで初めてでも安心。質問も気軽にどうぞ。</p>
+            </li>
+        </ul>
     </div>
+</section>
 
+
+
+    <section id="rules-accordion" style="background: var(--color-bg-base);">
+        <div class="content-wrapper">
+            <h2><i class="fas fa-scroll"></i> サーバーの厳守ルール</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-weight: 700;">
+                参加前に必ず内容をご確認ください。ルールを知らない状態での違反も処罰の対象となります。
+            </p>
+            
+            <div style="text-align: center; margin-bottom: 30px;">
+                <button id="startQuizBtn" class="action-btn join-btn" style="animation: none;"><i class="fas fa-brain"></i> ルール確認クイズに挑戦する</button>
+            </div>
+			
+<section id="rule-quiz" class="container py-5" style="display: none;">
+    <h2 class="text-center mb-4">📝 ルール確認クイズ</h2>
+    <div class="quiz-box" style="max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid var(--color-border); border-radius: var(--radius-default); background-color: var(--color-bg-alt);">
         
-        <div id="tab-faq" class="tab-content hidden">
-            <h1>❓ よくある質問 (FAQ)</h1>
-            <div class="faq-item">
-                <strong>招待はどれくらいの時間でされますか？</strong>
-                数秒~1分程度で自動で招待されます。もしされなかったら障害が起きている可能性があるのでDiscordで報告してくださると助かります。
-            </div>
-            <div class="faq-item">
-                <strong>PvPの「合意あり」とはどういう意味ですか？</strong>
-                相手のプレイヤーがPvPを承諾していることを、チャットなどで確認してから攻撃してください。突然の攻撃はルール違反となります。
-            </div>
-            <div class="faq-item">
-                <strong>⛏️ 資源ワールドがない場合、採掘跡はどうすればいいですか？</strong>
-                メインワールドのみのため、【景観の維持と採掘の修復】ルールに基づき、**採掘後に必ず元の状態に修復してください**。ブランチマイニングでできた穴も、埋め戻すなど景観に配慮してください。
-            </div>
-            <div class="faq-item">
-                <strong>Mobトラップや自動機構（自動装置）はどこまで作っていいですか？</strong>
-                サーバーに重度のラグを発生させる規模のものは【サーバー負荷行為】として禁止です。特に、**動物やMobの過剰繁殖**、**1ブロックに集中した大量のエンティティ**は厳禁です。負荷を避けた設計にご協力ください。
-            </div>
-            <div class="faq-item">
-                <strong>ネザーポータルやエンドポータル付近に家を建ててもいいですか？</strong>
-                ポータル周辺は【公共エリアの維持】ルールに基づき、**公共の場所**として扱い、私的な建築や資源の独占は禁止です。利便性を考慮した一時的な施設に留めてください。
-            </div>
-            <div class="faq-item">
-                <strong>長期間遊んでいない領地や建築物はどうなりますか？</strong>
-                長期間（例：3ヶ月以上）放置されたと運営が判断した場合、【領地と放置物】のルールに基づき**撤去の対象**となる場合があります。撤去の前に、Discord等で最終告知を行います。
-            </div>
-            <div class="faq-item">
-                <strong>サーバーが動いていない時はいつ再開しますか？</strong>
-                メンテナンス中や負荷が高い時に一時的に停止することがあります。Discordでお知らせしていますが、基本的には数時間~1日以内に再起動されます。
-            </div>
-            <div class="faq-item">
-                <strong>TPAコマンドはどうやって使えばいいですか？</strong>
-                `/tpa`コマンドで使用することができます。できなかったら`/tpa ＜プレイヤー名＞`で確実に使用することができるはずです。
-            </div>
-            <div class="faq-item">
-                <strong>ログを見たい場合はどうしたらいいですか？</strong>
-                `/tygui`で見ることができます。事前に見たい場所の座標をコピーしておく必要があります。（旧`/tigui`）
-            </div>
-        </div>
+        <p id="quiz-question-text" style="font-size: 1.1em; font-weight: 700; margin-bottom: 20px;"></p>
         
-        <div id="tab-contact" class="tab-content hidden">
-            <h1>📧 お問い合わせ・報告</h1>
-            <p class="important-notice">
-                ルール違反の報告、バグ報告、運営への質問は、以下の方法でご連絡ください。
-            </p>
-
-            <h2>🚨 荒らし・バグ報告（緊急性の高いもの）</h2>
-            <p>
-                Discordサーバーの専用チャンネルから報告してください。証拠となる**スクリーンショットや動画**を添付いただけると迅速に対応できます。
-            </p>
-            <div class="discord-msg">
-                <a class="discord-link" href="https://discord.gg/79H7Jy65nz" target="_blank"><i class="fab fa-discord"></i> Discordサーバーへ</a>
-                <p style="font-size: 14px; margin-top: 10px;">
-                    #報告 や #チケット チャンネルをご利用ください。
-                </p>
+        <div id="quiz-options-container" class="quiz-options">
             </div>
 
-            <h2>❓ その他質問・提案</h2>
-            <p>
-                サーバー運営に関するご質問や、改善提案は、Discordの #雑談 または #提案 チャンネルをご利用ください。
+        <p id="quiz-result" style="margin-top: 15px; font-weight: 700; min-height: 20px;"></p>
+        
+        <button id="next-quiz-button" class="action-btn submit-btn" disabled style="width: 100%; margin-top: 20px; padding: 12px;">
+            次の問題へ
+        </button>
+        </div>
+</section>
+			
+            
+<div class="accordion-container" style="max-width: 800px; margin: 0 auto;">
+                
+                <div class="accordion-header" data-target="forbidden-rules">
+                    🚨 厳禁事項：即時永久BANの対象
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="forbidden-rules" class="accordion-content">
+                    <p>以下の行為は、**即時永久BANの対象**となる、最も重い規約違反です。</p>
+                    <ol class="rule-list forbidden-rules" style="list-style: decimal; padding-left: 20px;">
+                        <li><strong style="color: var(--color-primary);">【ハラスメント行為】</strong> 
+                            暴言、誹謗中傷、差別的な発言など、他者が不快に感じる敬意のない言動。
+                        </li>
+                        <li><strong style="color: var(--color-primary);">【破壊・窃盗行為】</strong> 
+                            他者の建築物の破壊・無断改変、アイテムの持ち逃げ、チェストからの盗み。
+                        </li>
+                        <li><strong style="color: var(--color-primary);">【不正行為・バグの悪用】</strong> 
+                            改造クライアント、チート、マクロなどの不正ツールの使用。また、ゲーム内の不具合やバグを意図的に利用する行為。（※バグを発見した場合は速やかに運営に報告してください）
+                        </li>
+                        <li><strong style="color: var(--color-primary);">【無断PvP・拘束】</strong> 
+                            相手の**明確な同意がない**一方的な攻撃（PvP）。トラップ等によるプレイヤーの長時間拘束や、ゲームプレイを妨害する行為。
+                        </li>
+                    </ol>
+                </div>
+
+                <div class="accordion-header" data-target="freedom-rules">
+                    ⚖️ 自由と節度：コミュニティガイドライン
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="freedom-rules" class="accordion-content">
+                    <p>円滑で快適なコミュニティ運営のため、節度を守ってプレイしてください。</p>
+                    <ol start="5" class="rule-list" style="list-style: decimal; padding-left: 20px;">
+                        <li><strong style="color: var(--color-primary);">【プライベートエリアへの無断立ち入り】</strong> 
+                            建築主の許可がない保護エリアやプライベートな建物（家、倉庫など）への立ち入りは禁止です。
+                        </li>
+                        <li><strong style="color: var(--color-primary);">【景観と負荷の維持】</strong> 
+                            採掘跡や露天掘りの穴は必ず修復し、景観を損なわないようにしてください。また、サーバーに重度の負荷をかける大規模な装置や行為は禁止します。
+                        </li>
+                        <li><strong style="color: var(--color-primary);">【宣伝・勧誘の禁止】</strong> 
+                            チャットやサインボードを利用した、他サーバーやコミュニティへの宣伝行為、または勧誘を禁止します。
+                        </li>
+                    </ol>
+                </div>
+            </div>
+    
+    <section id="news" style="background: var(--color-bg-alt);">
+        <div class="content-wrapper">
+            <h2><i class="fas fa-bullhorn"></i> サーバーニュース & アップデート</h2>
+            <p style="text-align: center; margin-bottom: 30px;">
+                サーバーの最新情報はDiscordまたはYouTubeで随時公開しています。
             </p>
+            
+            <div class="news-list" style="max-width: 700px; margin: 0 auto; border: 1px solid var(--color-border); border-radius: var(--radius-default); background: #fff;">
+                <div class="news-item">
+                    <span class="date">2025年11月7日</span>
+                    <h3><a href="#" target="_blank"><i class="fas fa-feather-alt" style="color: var(--color-secondary);"></i> 🚀 ウェブサイト超大型アップデートのお知らせ！</a></h3>
+                </div>
+                <div class="news-item">
+                    <span class="date">2025年11月06日</span>
+                    <h3><a href="#" target="_blank"><i class="fab fa-discord" style="color: var(--color-discord);"></i> 📢【サーバー ルール改定のお知らせとお願い】📢</a></h3>
+                </div>
+                <div class="news-item" style="border-bottom: none;">
+                    <span class="date">2025年11月02日</span>
+                    <h3><a href="#" target="_blank"><i class="fas fa-tools" style="color: var(--color-primary);"></i> 【参加方法について】 </a></h3>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://discord.gg/79H7Jy65nz" target="_blank" class="action-btn" style="background: var(--color-discord); color: white;"><i class="fab fa-discord"></i> Discordで全てのニュースを見る</a>
+            </div>
         </div>
-
-        <div class="footer-info">
-            <span id="lastUpdated"></span>
+    </section>
+    
+    <section id="contact" style="background: var(--color-bg-base);">
+        <div class="content-wrapper">
+            <h2><i class="fas fa-headset"></i> お問い合わせ・サポート</h2>
+            
+            <div class="contact-grid">
+<div class="contact-card" style="padding: 30px;">
+    <h3 style="margin-top: 0; padding-bottom: 10px;">フォームでのお問い合わせ (Discordアカウント必須)</h3>
+    
+    <form id="contactFormId" class="contact-form" action="https://script.google.com/macros/s/AKfycbzeZO5MgKgoQ7jILKaIa0sYZqnkGCaZ8O0fVIbcXFhsFNtUor2CVMpEkvl9hOiQVUPREw/exec" method="post"> 
+        <input type="text" placeholder="お名前 / プレイヤー名" name="player_name" required> 
+        <input type="text" placeholder="Discord Tag (例: nantetsu#1234)" name="discord_tag" required> 
+        <textarea placeholder="お問い合わせ内容の詳細" rows="6" name="message" required></textarea> 
+        <button type="submit" class="action-btn submit-btn" style="width: 100%; background: var(--color-primary); color: white; padding: 15px;"><i class="fas fa-paper-plane"></i> 送信する</button>
+    </form>
+    </div>
+                
+                <div class="contact-card" style="padding: 30px;">
+                    <h3 style="margin-top: 0; border-bottom: 2px solid var(--color-secondary); padding-bottom: 10px;">迅速なサポート・報告</h3>
+                    <p>
+                        荒らし報告、バグ報告、緊急の質問は、**Discord**の専用チャンネルからご連絡いただくのが最も迅速です。
+                    </p>
+                    <a class="discord-link action-btn" href="https://discord.gg/79H7Jy65nz" target="_blank" style="background: var(--color-discord); color: white; margin-top: 15px; width: 100%; box-sizing: border-box;">
+                        <i class="fab fa-discord"></i> Discordサポートチャンネル
+                    </a>
+                    <hr style="margin: 20px 0; border: 0; border-top: 1px dashed var(--color-border);">
+                    <p style="font-size: 14px;">
+                        一般的なご質問や運営への提案は、メールアドレスもご利用いただけます。
+                    </p>
+                    <p style="font-size: 14px; margin-top: 10px;">
+                        <i class="fas fa-envelope"></i> nantetu2@gmail.com
+                    </p>
+                </div>
+            </div>
         </div>
-    </div> 
-</div> 
+    </section>
 
+    <footer>
+        <div class="social-links" style="margin-bottom: 10px;">
+            <a href="https://youtube.com/@なんてつ" target="_blank" title="YouTube"><i class="fab fa-youtube" style="color: #FF0000;"></i></a>
+            <a href="https://x.com/nantetu123" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter" style="color: #000000;"></i></a>
+        </div>
+        <a href="privacy.html" class="footer-link">プライバシーポリシー</a> | Not an official Minecraft server. | © 2025 なんてつサーバー
+    </footer>
+	
 <script>
-// ====================================================================
-//  [要設定] Google Apps Script (GAS) のウェブアプリURL
-// ====================================================================
-const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxBNxsN0_SBsZKck27BLCHoAmaTEBLwygFNIzzDVJp4UiNEErdNkBcY6TbPQEQgKQsVQg/exec"; 
+
 
 // ====================================================================
-// ダークモード切り替え機能 (変更なし)
+// 1. グローバル変数とクイズデータ
 // ====================================================================
-const body = document.body;
-const toggleBtn = document.getElementById('darkModeToggle');
 
-function enableDarkMode() {
-    body.classList.add('dark-mode');
-    toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-    toggleBtn.title = 'ライトモードに切り替え';
-    localStorage.setItem('theme', 'dark');
-}
-
-function disableDarkMode() {
-    body.classList.remove('dark-mode');
-    toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
-    toggleBtn.title = 'ダークモードに切り替え';
-    localStorage.setItem('theme', 'light');
-}
-
-function toggleDarkMode() {
-    if (body.classList.contains('dark-mode')) {
-        disableDarkMode();
-    } else {
-        enableDarkMode();
+// クイズデータ
+const quizData = [
+    {
+        question: "以下のうち、即時永久BANの対象となる行為はどれですか？",
+        options: [
+            "プレイヤー同士の会話で絵文字を使うこと。",
+            "相手の明確な同意がない一方的な攻撃（無断PvP）。",
+            "夜間に採掘した跡をそのままにしておくこと。",
+            "プライベートな建物に入る前にDiscordで許可を取ること。"
+        ],
+        answerIndex: 1, 
+        explanation: "無断PvPや拘束は、他者のゲーム体験を著しく損なうため、即時永久BANの対象です。"
+    },
+    {
+        question: "景観とサーバー負荷に関する正しいルールはどれですか？",
+        options: [
+            "景観を損なう建物を作っても、保護エリア内なら問題ない。",
+            "採掘跡は埋めなくてもよいが、サーバーに負荷がかかる装置は作らない。",
+            "採掘跡や露天掘りの穴は修復し、サーバーに重度の負荷をかける大規模装置は作らない。",
+            "広範囲の領地登録は自由に行ってもよい。"
+        ],
+        answerIndex: 2,
+        explanation: "景観維持のため採掘跡の修復が求められ、またサーバーの安定のため負荷装置は禁止されています。"
+    },
+    {
+        question: "他プレイヤーとの関わり方として最も適切でない行為は？",
+        options: [
+            "取引を持ちかける際、チャットで丁寧に話しかける。",
+            "運営に許可を得ていない他サーバーへの宣伝・勧誘を行う。",
+            "他プレイヤーが作った公開マーケットでアイテムを購入する。",
+            "バグや不具合を見つけた際に、運営へ報告する。"
+        ],
+        answerIndex: 1,
+        explanation: "他サーバーへの宣伝・勧誘は、コミュニティの秩序を乱すため禁止されています。"
     }
-}
+];
+let currentQuizIndex = 0;
+let isAnswered = false;
 
-// ロード時にテーマを適用
-(function loadTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        enableDarkMode();
-    } else {
-        disableDarkMode();
-    }
-})();
+// HTML要素の取得（クイズ用）
+const questionText = document.getElementById('quiz-question-text');
+const optionsContainer = document.getElementById('quiz-options-container');
+const resultDiv = document.getElementById('quiz-result');
+const nextButton = document.getElementById('next-quiz-button');
+const startButton = document.getElementById('startQuizBtn');
+const quizSection = document.getElementById('rule-quiz');
 
-// クリックイベントのリスナーを設定
-if (toggleBtn) {
-    toggleBtn.addEventListener('click', toggleDarkMode);
-}
-
-
-// ====================================================================
-// サーバー監視設定 (変更なし)
-// ====================================================================
+// HTML要素の取得（サーバー監視用）
 const SERVER_ADDRESS = "nantetu123.f5.si"; 
 const SERVER_PORT = "5346"; 
 const API_URL = `https://api.mcstatus.io/v2/status/bedrock/${SERVER_ADDRESS}:${SERVER_PORT}`;
-
 const statusElement = document.getElementById("serverStatus");
-const statusTextElement = statusElement.querySelector(".status-text");
+const statusTextElement = statusElement ? statusElement.querySelector(".status-text") : null;
 const pingTextElement = document.getElementById("serverPing");
+const playerListElement = document.getElementById("playerList");
 
+// HTML要素の取得（お問い合わせフォーム用）
+const contactForm = document.getElementById('contactFormId');
+const contactSection = document.getElementById('contact'); // お問い合わせセクション全体を取得
+const submitButton = contactForm ? contactForm.querySelector('button[type="submit"]') : null;
+
+// 🚨 修正1: copyElements をここで定義
+const copyElements = [
+    { text: SERVER_ADDRESS, id: "addressToCopy" },
+    { text: SERVER_PORT, id: "portToCopy" },
+    { text: "nantetu5877", id: "gamerTagToCopy" }
+];
+
+// ====================================================================
+// 2. ルールのアコーディオン機能の定義 (安定版コード)
+// ====================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    // クラス名が 'accordion-header' の要素すべてを選択
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+    accordionHeaders.forEach(header => {
+        // 各ヘッダーにクリックイベントリスナーを設定
+        header.addEventListener('click', () => {
+            // クリックされたヘッダーの次の要素 (通常は content) を取得
+            const content = header.nextElementSibling;
+            
+            // contentのクラスリストに 'open' クラスをトグルする
+            content.classList.toggle('open');
+            
+            // ヘッダーのアイコン（矢印）を回転させるクラスをトグルする
+            header.classList.toggle('active');
+
+            // 矢印アイコンのクラスを取得して回転させる（見栄えの改善）
+            const icon = header.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            }
+
+            // 展開時にスムーズにスクロール
+            if (content.classList.contains('open')) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            } else {
+                content.style.maxHeight = null;
+            }
+        });
+    });
+});
+
+
+// ... 既存の他の JavaScriptコード（コピー機能、フォーム送信、クイズ機能など）は残してください。
+//     このブロックは、既存の「ルールのアコーディオン機能」の定義部分と入れ替えてください。
+
+// ====================================================================
+// 2. 関数定義
+// ====================================================================
+
+// サーバー監視用のヘルパー関数
+function varColor(name) {
+    const root = document.documentElement;
+    // CSS変数が定義されていない場合のフォールバックを追加
+    return getComputedStyle(root).getPropertyValue(`--color-${name}`).trim() || ''; 
+}
 
 function fetchServerStatus() {
+    if (!statusElement) return;
     statusElement.classList.remove("status-online", "status-offline");
     statusTextElement.textContent = "🔄 サーバー状態を読み込み中...";
     pingTextElement.style.display = 'none';
+    playerListElement.textContent = '';
 
     fetch(API_URL)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('APIの応答エラー: ' + response.statusText);
-            }
-            return response.json();
-        })
+        .then(response => response.ok ? response.json() : Promise.reject('API Error'))
         .then(data => {
-            if (data.online) {
-                const players = data.players.online || 0;
-                const maxPlayers = data.players.max || 0;
-                
+            const players = data.players.online || 0;
+            const maxPlayers = data.players.max || 0;
+            const online = data.online;
+
+            if (online) {
                 statusTextElement.textContent = `✅ サーバー起動中！ | プレイヤー数: ${players} / ${maxPlayers} 人`;
                 statusElement.classList.add("status-online");
-
-                if (data.latency && data.latency !== null) {
-                    const ping = Math.round(data.latency);
-                    pingTextElement.textContent = `Ping: ${ping} ms`; 
-                    pingTextElement.style.display = 'block'; 
-                } else {
-                    pingTextElement.style.display = 'none';
-                }
-                
+                if (data.latency) { pingTextElement.textContent = `Ping: ${Math.round(data.latency)} ms`; pingTextElement.style.display = 'block'; }
+                playerListElement.textContent = players > 0 ? `オンライン: (${players}名のプレイヤー)` : `現在プレイヤーはいません。一番乗りで参加しよう！`;
             } else {
                 statusTextElement.textContent = "❌ サーバーは停止中です。";
-                pingTextElement.style.display = 'none';
                 statusElement.classList.add("status-offline");
+                playerListElement.textContent = 'サーバーは現在停止中のため、接続できません。';
             }
         })
         .catch(error => {
             console.error('サーバー状態の取得エラー:', error);
             statusTextElement.textContent = "⚠️ サーバー状態の取得に失敗しました。";
-            pingTextElement.style.display = 'none';
             statusElement.classList.add("status-offline");
+            playerListElement.textContent = 'エラーにより情報が取得できません。';
         });
 }
-
-fetchServerStatus();
-setInterval(fetchServerStatus, 60000); 
-
-// ====================================================================
-// コピー機能の実装 (強調したボタンのテキストとIDをコピー)
-// ====================================================================
-// フレンドIDのコピー (テキスト内容を更新)
-document.getElementById('gamerTagToCopy').addEventListener('click', () => copyText('nantetu5877', 'gamerTagToCopy'));
-// サーバーアドレスのコピー
-document.getElementById('addressToCopy').addEventListener('click', () => copyText('nantetu123.f5.si', 'addressToCopy'));
-// ポート番号のコピー
-document.getElementById('portToCopy').addEventListener('click', () => copyText('5346', 'portToCopy'));
 
 
 function copyText(textToCopy, elementId) {
     const element = document.getElementById(elementId);
+    if (!element) return;
 
     navigator.clipboard.writeText(textToCopy)
         .then(() => {
-            element.classList.add('copied');
+            // コピー成功時のUIフィードバック
+            const originalHTML = element.innerHTML;
+            const originalClass = element.className;
+            
+            // UIを一時的に変更
+            element.innerHTML = '<i class="fas fa-check"></i> コピー完了!';
+            element.className = 'copyable copied';
+            
+            element.style.background = varColor('success');
+            element.style.color = 'white';
+            element.style.borderColor = varColor('success');
+            element.style.borderStyle = 'solid';
             
             setTimeout(() => {
-                element.classList.remove('copied');
-            }, 1000);
-
+                // 1.5秒後に元に戻す
+                element.innerHTML = originalHTML;
+                element.className = originalClass;
+                element.removeAttribute('style'); // スタイルをクリア
+            }, 1500);
         })
         .catch(err => {
             console.error('コピー失敗:', err);
@@ -1042,290 +1066,178 @@ function copyText(textToCopy, elementId) {
         });
 }
 
-// ====================================================================
-// 最終更新日の自動書き込み (変更なし)
-// ====================================================================
-function updateLastModifiedDate() {
-    const lastModified = document.lastModified;
-    const date = new Date(lastModified);
-    
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    
-    document.getElementById('lastUpdated').textContent = `最終更新日: ${year}/${month}/${day}`;
-}
 
-updateLastModifiedDate();
-
-// ====================================================================
-// タブ切り替え機能のロジック (変更なし)
-// ====================================================================
-const tabButtons = document.querySelectorAll('#tabs .tab-button');
-const tabContents = document.querySelectorAll('.tab-content');
-
-// 画面遷移で使う要素
-const rulesTabContent = document.getElementById("tab-rules"); 
-const featuresTabContent = document.getElementById("tab-features"); 
-const newsTabContent = document.getElementById("tab-news"); 
-const commandsTabContent = document.getElementById("tab-commands"); 
-const faqTabContent = document.getElementById("tab-faq"); 
-const contactTabContent = document.getElementById("tab-contact"); 
-
-const quizDiv = document.getElementById("quiz");
-const gamerTagInputDiv = document.getElementById("gamerTagInput"); 
-const howToJoinDiv = document.getElementById("howToJoin");
-const rulesDiv = document.getElementById("rules"); // ルール本文のセクション
-
-/**
- * HTMLのIDとボタンのdata-tabの対応付けをマップ化
- * @type {Object.<string, HTMLElement>}
- */
-const contentMap = {
-    'rules': rulesTabContent,
-    'features': featuresTabContent,
-    'news': newsTabContent,
-    'commands': commandsTabContent,
-    'faq': faqTabContent,
-    'contact': contactTabContent,
-};
-
-// 起動時に最初に表示するタブを設定
-document.addEventListener('DOMContentLoaded', () => {
-    switchTab('rules'); 
-    // rulesタブ内の初期画面はrulesDiv (ルール本文) に設定
-    if (rulesDiv) rulesDiv.classList.remove('hidden');
-    if (quizDiv) quizDiv.classList.add('hidden');
-    if (gamerTagInputDiv) gamerTagInputDiv.classList.add('hidden');
-    if (howToJoinDiv) howToJoinDiv.classList.add('hidden');
-});
-
-tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const targetTab = button.dataset.tab;
-        switchTab(targetTab);
-    });
-});
-
-/**
- * タブを切り替える関数
- * @param {string} targetTab - 切り替えるタブの data-tab 属性値 (例: 'rules', 'news')
- */
-function switchTab(targetTab) {
-    // 1. 全てのタブボタンから active クラスを外し、対象ボタンに付与
-    tabButtons.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.tab === targetTab) {
-            btn.classList.add('active');
-        }
-    });
-
-    // 2. 全てのコンテンツを非表示にする
-    tabContents.forEach(content => {
-        content.classList.add('hidden');
-    });
-
-    // 3. 対象のタブコンテンツを表示する
-    const targetContent = contentMap[targetTab];
-    if (targetContent) {
-        targetContent.classList.remove('hidden');
-        
-        // **特別処理**: ルールタブに戻った時、表示を「ルール本文」に戻す
-        if (targetTab === 'rules') {
-            rulesDiv.classList.remove('hidden');
-            quizDiv.classList.add('hidden');
-            gamerTagInputDiv.classList.add('hidden');
-            howToJoinDiv.classList.add('hidden');
-        }
-        
-        // タブ切り替え時にスムーズにスクロール
-        const tabsElement = document.getElementById('tabs');
-        if (tabsElement) {
-            tabsElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-            targetContent.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-}
-
-
-// ====================================================================
-// ルールクイズと参加方法の画面遷移 (変更なし)
-// ====================================================================
-document.getElementById('agreeBtn').addEventListener('click', () => {
-    rulesDiv.classList.add('hidden');
-    quizDiv.classList.remove('hidden');
-    loadQuiz();
-});
-
-document.getElementById('skipQuizBtn').addEventListener('click', () => {
-    rulesDiv.classList.add('hidden');
-    gamerTagInputDiv.classList.remove('hidden');
-});
-
-document.getElementById('skipTagBtn').addEventListener('click', () => {
-    gamerTagInputDiv.classList.add('hidden');
-    howToJoinDiv.classList.remove('hidden');
-});
-
-// ====================================================================
-// クイズデータとロジック (変更なし)
-// ====================================================================
-const QUIZ_DATA = [
-    {
-        question: "Q1. 友達の作物を無断で収穫したり、チェストからアイテムを取る行為はルール違反ですか？",
-        answers: ["はい、許可なく他人の所有物に触れるのは窃盗・荒らし行為で永久BANです。", "いいえ、作物は公共の資源なので自由です。", "所有者が見ていない時なら問題ありません。"],
-        correct: 0,
-        explanation: "正解は「はい」です。他人の畑からの無断収穫やチェストからのアイテム窃盗は、厳禁事項の【破壊・窃盗】に該当します。"
-    },
-    {
-        question: "Q2. ブランチマイニングなどでできた、ワールド内の大きな穴や採掘跡はどうすべきですか？",
-        answers: ["そのまま放置して次の採掘場所を探します。", "他のプレイヤーに見つからないように、最低限の修復をします。", "終了後、必ず元の状態（または自然な状態）に完全に修復します。"],
-        correct: 2,
-        explanation: "正解は「終了後、必ず修復」です。メインワールドの景観維持のため、【景観の維持と採掘の修復】ルールにより修復が義務付けられています。"
-    },
-    {
-        question: "Q3. 負荷軽減のため、自動機構（自動装置）を作る上で特に避けるべきことは何ですか？",
-        answers: ["サーバーに重度のラグが発生しない規模であれば、何をしても問題ありません。", "過剰なMOBの繁殖や、1ブロックに集中した大量のエンティティを避けるべきです。", "レッドストーン回路は全て禁止です。"],
-        correct: 1,
-        explanation: "正解は「過剰なMOBの繁殖やエンティティを避ける」です。【サーバー負荷行為】を避けるため、過剰なエンティティは厳禁です。"
-    }
-];
-
-let currentQuestionIndex = 0;
-let quizPassed = false;
-const quizContainer = document.getElementById('quizContainer');
-const explanationElement = document.getElementById('explanation');
-
+// クイズ表示
 function loadQuiz() {
-    currentQuestionIndex = 0;
-    quizPassed = false;
-    explanationElement.textContent = '';
-    showQuestion();
-}
-
-function showQuestion() {
-    if (currentQuestionIndex >= QUIZ_DATA.length) {
-        quizContainer.innerHTML = '<h2>🎉 全問正解！ルール確認に合格しました！</h2>';
-        quizPassed = true;
-        // 合格後の次のステップへ
-        setTimeout(() => {
-            quizDiv.classList.add('hidden');
-            gamerTagInputDiv.classList.remove('hidden');
-        }, 1500);
-        return;
-    }
-
-    const q = QUIZ_DATA[currentQuestionIndex];
-    quizContainer.innerHTML = `
-        <div class="quiz-question">${q.question}</div>
-        <div id="answerButtons">
-            ${q.answers.map((answer, index) => 
-                `<button class="quiz-answer-btn" data-index="${index}">${answer}</button>`
-            ).join('')}
-        </div>
-    `;
-
-    document.querySelectorAll('.quiz-answer-btn').forEach(button => {
-        button.addEventListener('click', handleAnswer);
-    });
-}
-
-function handleAnswer(event) {
-    const selectedIndex = parseInt(event.target.dataset.index);
-    const q = QUIZ_DATA[currentQuestionIndex];
-    const isCorrect = selectedIndex === q.correct;
-
-    // ボタンを無効化
-    document.querySelectorAll('.quiz-answer-btn').forEach(btn => {
-        btn.disabled = true;
-        btn.style.opacity = 0.6;
-    });
-
-    if (isCorrect) {
-        event.target.style.backgroundColor = varColor('success');
-        explanationElement.textContent = '⭕ 正解！';
-        explanationElement.style.color = varColor('success');
-        explanationElement.style.borderColor = varColor('success');
-        explanationElement.style.backgroundColor = varColor('status-online-bg');
-        
-        currentQuestionIndex++;
-        setTimeout(showQuestion, 1500);
-    } else {
-        event.target.style.backgroundColor = varColor('error');
-        explanationElement.textContent = `❌ 不正解...。 ${q.explanation}\nもう一度ルールを読み直して挑戦してください。`;
-        explanationElement.style.color = varColor('error');
-        explanationElement.style.borderColor = varColor('error');
-        explanationElement.style.backgroundColor = varColor('status-offline-bg');
-
-        // 不正解の場合、最初からやり直し
-        setTimeout(() => {
-            explanationElement.textContent = '';
-            loadQuiz();
-        }, 3000);
-    }
-}
-
-// CSS変数を取得するヘルパー関数
-function varColor(name) {
-    const root = document.documentElement;
-    return getComputedStyle(root).getPropertyValue(`--color-${name}`).trim();
-}
-
-
-// ====================================================================
-// ゲーマータグフォームの処理 (変更なし)
-// ====================================================================
-const gamerTagForm = document.getElementById('gamerTagForm');
-const gamerTagInput = document.getElementById('gamerTag');
-const formStatus = document.getElementById('formStatus');
-
-gamerTagForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const tag = gamerTagInput.value.trim();
-
-    if (tag === '') {
-        formStatus.textContent = 'ゲーマータグを入力してください！';
-        formStatus.style.color = varColor('error');
-        return;
-    }
-
-    formStatus.textContent = '🔄 登録処理中...';
-    formStatus.style.color = varColor('text-medium');
+    isAnswered = false;
+    resultDiv.textContent = '';
+    optionsContainer.innerHTML = '';
+    nextButton.disabled = true;
+    nextButton.textContent = '次の問題へ';
     
-    // GASへのデータ送信
-    const formData = new FormData();
-    formData.append('gamerTag', tag);
-    formData.append('source', 'web_form');
+    const currentQuiz = quizData[currentQuizIndex];
+    questionText.textContent = `Q${currentQuizIndex + 1}. ${currentQuiz.question}`;
 
-    fetch(GAS_WEB_APP_URL, {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors' // クロスオリジンでのエラー回避
-    })
-    .then(() => {
-        formStatus.textContent = '✅ 登録完了！ご協力ありがとうございます！';
-        formStatus.style.color = varColor('success');
+    currentQuiz.options.forEach((option, index) => {
+        const optionDiv = document.createElement('div');
+        optionDiv.classList.add('quiz-option');
+        optionDiv.textContent = option;
+        optionDiv.setAttribute('data-index', index);
         
-        // 次のステップへ
-        setTimeout(() => {
-            gamerTagInputDiv.classList.add('hidden');
-            howToJoinDiv.classList.remove('hidden');
-        }, 1500);
-    })
-    .catch(error => {
-        console.error('GASへの送信エラー:', error);
-        // no-corsモードではエラーをキャッチしにくいので、成功と見なして進めるか、より堅牢なGAS連携が必要です
-        formStatus.textContent = '⚠️ 登録に問題が発生しましたが、参加方法へ進めます。';
-        formStatus.style.color = varColor('error');
-        
-        setTimeout(() => {
-            gamerTagInputDiv.classList.add('hidden');
-            howToJoinDiv.classList.remove('hidden');
-        }, 3000);
+        // クリックイベントの追加
+        optionDiv.addEventListener('click', () => checkAnswer(optionDiv, index, currentQuiz));
+        optionsContainer.appendChild(optionDiv);
     });
-});
-</script>
+}
 
+// 回答チェック
+function checkAnswer(selectedDiv, selectedIndex, currentQuiz) {
+    if (isAnswered) return;
+    isAnswered = true;
+    
+    optionsContainer.querySelectorAll('.quiz-option').forEach(option => {
+        option.style.pointerEvents = 'none';
+        const index = parseInt(option.getAttribute('data-index'));
+
+        if (index === currentQuiz.answerIndex) {
+            option.classList.add('correct');
+        } else if (index === selectedIndex) {
+            option.classList.add('incorrect');
+        }
+    });
+
+    if (selectedIndex === currentQuiz.answerIndex) {
+        resultDiv.textContent = '✅ 正解です！';
+        resultDiv.style.color = '#28a745';
+    } else {
+        resultDiv.textContent = `❌ 不正解。正解は「${currentQuiz.options[currentQuiz.answerIndex]}」です。`;
+        resultDiv.style.color = '#dc3545';
+    }
+    
+    // 解説を追加
+    const explanationP = document.createElement('p');
+    explanationP.textContent = `【解説】 ${currentQuiz.explanation}`;
+    explanationP.style.marginTop = '10px';
+    resultDiv.appendChild(explanationP);
+
+    nextButton.disabled = false;
+}
+
+
+// ====================================================================
+// 3. イベントリスナー（フォームAJAX送信）
+// ====================================================================
+
+if (contactForm && submitButton && contactSection) {
+    const gasUrl = contactForm.getAttribute('action');
+
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault(); 
+
+        if (!gasUrl || gasUrl.length < 10) {
+            alert('フォームの action 属性に GAS の URL が設定されていません。');
+            return;
+        }
+
+        const formData = new FormData(contactForm); 
+        
+        submitButton.textContent = '送信中...';
+        submitButton.disabled = true;
+
+        fetch(gasUrl, {
+            method: 'POST',
+            body: formData 
+        })
+        .then(response => {
+            // サーバーから正常なHTTPステータスが返ってこなければエラー
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text || 'サーバーエラー'); });
+            }
+            
+            // 応答ボディをJSONとして読み取る（パースエラーが発生しても成功とみなす処理）
+            return response.json().catch(error => {
+                console.warn('JSONパースに失敗しましたが、HTTPステータスはOKでした。成功とみなします。', error);
+                return { status: 'success' }; // 成功の代替オブジェクトを返す
+            });
+        })
+.then(data => {
+            if (data.status === 'success') {
+                
+                // 1. 成功メッセージのHTMLを作成
+                const messageHtml = `
+                    <div class="submission-success-message">
+                        <h2 style="color: var(--color-success);">✅ 送信完了！</h2>
+                        <p>お問い合わせありがとうございました。Discordにて順次対応いたします。</p>
+                        <button onclick="location.reload()" class="action-btn join-btn" style="margin-top: 20px; padding: 10px 20px;">ページをリロード</button>
+                    </div>
+                `;
+                
+                // 2. フォームの親要素（.contact-card）全体をメッセージに置き換える
+                // これでメッセージがカードのデザイン枠内に収まります
+                contactForm.closest('.contact-card').innerHTML = messageHtml;
+
+            } else {
+                 throw new Error('フォーム処理に失敗しました。GASからの応答: ' + JSON.stringify(data));
+            }
+        })
+        .catch(error => {
+            console.error('致命的な送信エラー:', error);
+            
+            alert('通信エラーが発生しました。時間を置いて再度お試しください。');
+
+            submitButton.textContent = '送信する';
+            submitButton.disabled = false;
+        });
+    });
+}
+
+
+// ====================================================================
+// 4. イベントリスナー（その他）
+// ====================================================================
+
+// コピー機能のイベントリスナー
+copyElements.forEach(item => {
+    const element = document.getElementById(item.id);
+    if (element) {
+        element.addEventListener('click', () => copyText(item.text, item.id));
+    }
+});
+
+
+// クイズ開始ボタンのイベントリスナー
+if (startButton && quizSection) {
+    startButton.addEventListener('click', () => {
+        quizSection.style.display = 'block';
+        startButton.style.display = 'none';
+        loadQuiz(); 
+        quizSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+}
+
+// 次へボタンのイベントリスナー
+if (nextButton) {
+    nextButton.addEventListener('click', () => {
+        currentQuizIndex++;
+        if (currentQuizIndex < quizData.length) {
+            loadQuiz();
+        } else {
+            // クイズ終了
+            questionText.textContent = "🥳 クイズ終了！お疲れ様でした。";
+            optionsContainer.innerHTML = '';
+            resultDiv.textContent = 'すべてのルールを確認できましたね！';
+            resultDiv.style.color = 'var(--color-primary)';
+            nextButton.style.display = 'none';
+        }
+    });
+}
+
+
+
+// サーバー状態の初期ロードとポーリング
+fetchServerStatus();
+setInterval(fetchServerStatus, 60000); // 60秒ごとに更新
+
+    </script>
 </body>
 </html>
