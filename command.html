@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コマンド一覧 | なんてつサーバー 🌈</title>
+    <link rel="icon" href="/icon.jpg" type="image/jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+/* ========== 既存のカラーと基本設定を流用 ========== */
+:root {
+    --color-primary: #5E35B1;
+    --color-secondary: #FFC107;
+    
+    --color-bg-base: #f8f9fa;
+    --color-bg-alt: #ffffff;
+    --color-text-dark: #212529; 
+    --color-text-medium: #6c757d;
+    --color-border: #dee2e6; 
+
+    --radius-default: 10px;
+    --shadow-default: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+    --color-success: #28a745;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--color-bg-base);
+    color: var(--color-text-dark);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ========== ヘッダー (ナビゲーション) ========== */
+header {
+    background-color: var(--color-bg-alt);
+    box-shadow: var(--shadow-default);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    color: var(--color-primary);
+}
+nav a {
+    text-decoration: none;
+    color: var(--color-text-dark);
+    font-weight: 700;
+    margin-left: 25px;
+    padding: 5px 0;
+    transition: color 0.2s;
+}
+nav a:hover {
+    color: var(--color-primary);
+}
+.back-link {
+    color: var(--color-primary) !important;
+    font-size: 16px;
+}
+
+/* ========== メインコンテンツ ========== */
+.command-list-section {
+    padding: 60px 0 80px;
+}
+.section-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: var(--color-text-dark);
+    position: relative;
+}
+.command-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+.command-card {
+    background-color: var(--color-bg-alt);
+    padding: 25px;
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-default);
+    transition: transform 0.2s;
+}
+.command-card:hover {
+    transform: translateY(-3px);
+}
+.command-card h3 {
+    margin-top: 0;
+    font-size: 20px;
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+.command-card p {
+    font-size: 16px;
+    line-height: 1.6;
+}
+.command-card code {
+    background-color: #e9ecef;
+    color: var(--color-text-dark);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-weight: 700;
+}
+.admin-badge {
+    display: inline-block;
+    background-color: var(--color-secondary);
+    color: var(--color-text-dark);
+    font-weight: 900;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+/* ========== フッター ========== */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: var(--color-text-dark);
+    color: #cccccc;
+    font-size: 14px;
+}
+footer a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+/* ========== レスポンシブ対応 ========== */
+@media (max-width: 768px) {
+    nav {
+        display: none;
+    }
+    header .container {
+        justify-content: center;
+    }
+    .back-link-container {
+        display: flex;
+        justify-content: center;
+        padding-top: 15px;
+    }
+    .command-list-section {
+        padding: 40px 0;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <a href="index.html" class="logo">なんてつサーバー</a>
+            </div>
+    </header>
+
+    <div class="back-link-container container">
+
+    </div>
+
+    <section class="command-list-section">
+        <div class="container">
+            <h2 class="section-title">コマンド一覧 (便利機能)</h2>
+			<p style="text-align: center; font-size: 1.1em; margin-top: -30px; margin-bottom: 50px; color: var(--color-text-medium);">
+    コマンドを使えば、サバイバル生活をより便利にすることができます。
+</p>
+
+            <div class="command-grid">
+                
+                <div class="command-card">
+                    <h3>テレポート・移動系コマンド</h3>
+                    <ul>
+                        <li><code>/tpa &lt;プレイヤー名&gt;</code>: 指定したプレイヤーにテレポートを**リクエスト**します。相手の承認が必要です。</li>
+                        <li><code>/back</code>: 最後にテレポートした場所、または死んだ場所に**戻る**ことができます。</li>
+                        <li><code>/home</code>: 設定した家に移動します。</li>
+                        <li><code>/sethome</code>: 現在いる場所をあなたの家として設定します。（初期設定：1箇所まで）</li>
+                        <li><code>/warp &lt;場所名&gt;</code>: 運営が設定した公共の場所（スポーン地点、マーケットなど）にワープします。</li>
+                    </ul>
+                </div>
+
+                <div class="command-card">
+                    <h3>領地・保護・ログ系コマンド</h3>
+                    <ul>
+                        <li><code>/ty</code>: 新しい領地を作成します。（Territory Yesの略）</li>
+                        <li><code>/ty x y z &lt;時間&gt; &lt;半径&gt;</code>: 指定した座標・時間・半径の範囲で**監査ログ**を確認します。（上級者向け）</li>
+                        <li><code>/tygui</code>: 監査ログを**GUI（画面操作）**で確認します。（直感的でオススメ）</li>
+                        </ul>
+                </div>
+                
+                <div class="command-card">
+                    <h3>経済・コミュニケーション系コマンド</h3>
+                    <ul>
+                        <li><code>/e &lt;アクション&gt;</code>: チャットにアクションメッセージを送信します。（例: <code>/e happy</code>で「〇〇は楽しそうです」）</li>
+                        <li><code>/um pay &lt;プレイヤー名&gt; &lt;金額&gt;</code>: プレイヤーにお金を送金します。</li>
+                        <li><code>/um rank</code>: 所持金のランキングを確認します。</li>
+                        <li><code>/notice</code>: サーバーのお知らせ（イベント情報など）を確認します。</li>
+                        <li><code>/ping</code>: 自分のサーバーとのPing値を確認します。（遅延チェック）</li>
+                    </ul>
+                </div>
+                
+                <div class="command-card">
+                    <h3>管理者向けコマンド <span class="admin-badge">ADMIN</span></h3>
+                    <ul>
+                        <li><code>/broadcast &lt;メッセージ&gt;</code>: サーバー全体にブロードキャスト（全体通知）を送信します。</li>
+                        </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="index.html#contact">お問い合わせ</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
