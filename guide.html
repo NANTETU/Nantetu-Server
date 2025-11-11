@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>なんてつサーバー 🌈 | ガイド＆FAQ</title>
+	<meta property="og:title" content="なんてつサーバー | ガイド＆FAQ">
+	<meta property="og:description" content="なんてつサーバーでの生活を始めるためのガイドと、よくある質問（FAQ）を掲載しています。">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://youtube.com/@なんてつ"><meta property="og:image" content="https://minecraft-mcworld.com/wp-content/uploads/maxresdefault-1-2b750d65.jpg"><meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="/icon.jpg" type="image/jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+/* ========== カラーと基本設定 (V3) ========== */
+:root {
+    --color-primary: #5E35B1;
+    --color-secondary: #FFC107;
+    
+    --color-bg-base: #f8f9fa;
+    --color-bg-alt: #ffffff;
+    --color-text-dark: #212529;
+    --color-text-medium: #6c757d;
+    --color-border: #dee2e6;
+    
+    --color-discord: #5865F2;
+    --color-success: #198754;
+    --color-error: #dc3545; /* エラーカラーを追加 */
+
+    --radius-default: 8px;
+    --shadow-subtle: 0 4px 12px rgba(0,0,0,0.05);
+    --shadow-lift: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* ナビゲーションのジャンプをなめらかにする */
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* キーボード操作時のフォーカスカラーをサイトのメインカラーに統一 */
+a:focus, button:focus, input:focus, textarea:focus, .quiz-option:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* hiddenクラスの定義を追記 */
+.hidden {
+    display: none !important;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    margin: 0;
+    background: var(--color-bg-base);
+    color: var(--color-text-dark);
+    line-height: 1.8;
+    overflow-x: hidden;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+}
+a { color: var(--color-primary); text-decoration: none; transition: all 0.2s ease; }
+a:hover { color: #4527a0; }
+
+/* ========== ナビゲーションバー (V3) ========== */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    box-shadow: none;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 40px;
+}
+.navbar .logo-link {
+    text-decoration: none;
+    color: var(--color-text-dark);
+    cursor: pointer;
+    display: flex;
+}
+.navbar .logo-link:hover {
+    opacity: 0.8;
+}
+.navbar .logo {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    font-size: 26px;
+    color: var(--color-primary);
+}
+.navbar .nav-links a {
+    color: var(--color-text-dark);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+.navbar .nav-links a:hover {
+    color: var(--color-primary);
+    background: rgba(94, 53, 177, 0.05);
+}
+.discord-nav-btn {
+    padding: 8px 15px;
+    background: var(--color-discord);
+    color: white !important;
+    border-radius: var(--radius-default);
+    font-weight: 700 !important;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+.discord-nav-btn:hover {
+    background: #6D77F9;
+    box-shadow: 0 4px 10px rgba(88, 101, 242, 0.2);
+}
+
+/* モバイルメニューのトグルボタン */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--color-primary);
+    cursor: pointer;
+    padding: 0;
+    z-index: 1006; /* ボタンが最前面にくるように */
+}
+
+
+/* ========== ヘッダー (V4 - 画像実装) ========== */
+header {
+    position: relative;
+    text-align: center;
+    padding: 100px 20px 100px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
+                url('banner.jpg') no-repeat center center;
+    background-size: cover;
+    background-position: center top; /* 上端を基準に画像を配置 */
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* 文字を見やすく */
+    box-shadow: none;
+    margin-bottom: 0;
+}
+header h1 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    font-size: 58px; 
+    margin: 0;
+}
+header p {
+    font-size: 20px;
+    opacity: 0.9;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+/* ========== CTAボタン (V3) ========== */
+.action-btn, .submit-btn, .join-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--shadow-subtle);
+}
+.join-btn {
+    background: var(--color-secondary);
+    color: var(--color-text-dark);
+}
+.join-btn:hover {
+    background: #FFD550;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+}
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--color-primary);
+    border: 1px solid #fff;
+    box-shadow: none;
+    border-radius: var(--radius-default); /* ボタンの角を丸くする */
+    padding: 12px 25px; /* サイズ調整 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.secondary-btn:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-subtle);
+}
+
+/* ========== セクションの基本スタイル (V3) ========== */
+section {
+    position: relative;
+    width: 100%;
+    padding: 80px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--color-border);
+}
+section:nth-child(even) { background: var(--color-bg-base); }
+section:nth-child(odd) { background: var(--color-bg-alt); }
+
+.content-wrapper { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+h2 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    color: var(--color-text-dark);
+    padding-bottom: 15px;
+    margin-bottom: 50px;
+    font-size: 38px;
+    text-align: center;
+    position: relative;
+}
+h2::after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: var(--color-primary);
+    border-radius: 2px;
+    margin: 15px auto 0;
+}
+h3 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    color: var(--color-primary);
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+/* ========== 手順リストのスタイル (画像挿入のため修正) ========== */
+.step-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* 間隔を少し広げる */
+}
+.step-item {
+    background-color: var(--color-bg-alt);
+    padding: 30px;
+    border-left: 5px solid var(--color-secondary);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-subtle);
+    display: flex; /* Flexboxで内容と画像を横並びにする */
+    align-items: flex-start;
+}
+.step-item:nth-child(even) {
+    flex-direction: row-reverse; /* 偶数番目は画像とテキストを逆順にする */
+}
+
+.step-item-content {
+    flex-basis: 60%; /* テキストエリアの幅 */
+    padding-right: 20px;
+}
+.step-item:nth-child(even) .step-item-content {
+    padding-right: 0;
+    padding-left: 20px;
+    text-align: right;
+}
+.step-item h3 {
+    margin-top: 0;
+    color: var(--color-text-dark);
+    font-size: 22px;
+}
+.step-item h3 span {
+    color: var(--color-secondary);
+    font-size: 30px;
+    font-weight: 900;
+    margin-right: 15px;
+}
+
+.step-image {
+    flex-basis: 40%; /* 画像エリアの幅 */
+    min-width: 200px;
+    text-align: center;
+}
+.step-image img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: var(--radius-default);
+    object-fit: cover;
+    box-shadow: var(--shadow-lift);
+}
+
+/* ========== 新しい特徴カードレイアウト (既存) ========== */
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+.feature-card {
+    background-color: var(--color-bg-alt);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-subtle);
+    padding: 30px;
+    text-align: center;
+    border-top: 5px solid var(--color-primary);
+}
+.feature-card i {
+    font-size: 40px;
+    color: var(--color-secondary);
+    margin-bottom: 15px;
+}
+.feature-card h3 {
+    margin: 0;
+    font-size: 20px;
+    color: var(--color-text-dark);
+    padding-bottom: 10px;
+}
+.feature-card p {
+    font-size: 16px;
+    color: var(--color-text-medium);
+}
+.feature-card code {
+    background-color: #e9ecef;
+    color: var(--color-text-dark);
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-weight: 700;
+    font-size: 0.9em;
+}
+
+/* FAQアコーディオンのスタイル (既存) */
+.accordion-item {
+    margin-bottom: 15px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-default);
+    background-color: var(--color-bg-alt);
+    overflow: hidden;
+}
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--color-primary);
+    color: white;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 18px;
+    transition: background-color 0.2s;
+    position: relative !important;
+    z-index: 1002 !important;
+}
+.accordion-header:hover {
+    background-color: #4527a0;
+}
+.accordion-header i {
+    transition: transform 0.3s ease;
+}
+.accordion-header.active i {
+    transform: rotate(180deg);
+}
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+    padding: 0 20px;
+    background-color: var(--color-bg-alt);
+}
+.accordion-content.open {
+    max-height: 1000px;
+    padding: 20px;
+    border-top: none;
+}
+.accordion-content ul {
+    padding-left: 20px;
+}
+.accordion-content li {
+    margin-bottom: 10px;
+}
+
+/* ========== フッター ========== */
+footer {
+    text-align: center;
+    padding: 30px 0;
+    background-color: var(--color-text-dark);
+    color: #cccccc;
+    font-size: 14px;
+}
+footer a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+/* ========== モバイルCSS (768px以下) ========== */
+@media (max-width: 768px) {
+    .navbar .content-wrapper { padding: 0 15px; }
+    .navbar .logo { font-size: 22px; }
+    
+    .menu-toggle { display: block; }
+    .navbar .nav-links { display: none !important; }
+
+    /* モバイルメニューのスタイル */
+    nav#main-nav {
+        display: none;
+        position: fixed;
+        top: 60px; 
+        right: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-bg-alt);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        padding: 10px 0;
+        transition: transform 0.3s ease-out; 
+        transform: translateY(-100%);
+        z-index: 1005; /* 最前面 */
+    }
+    nav#main-nav.open {
+        display: flex;
+        transform: translateY(0);
+    }
+    nav#main-nav a {
+        padding: 12px 20px;
+        text-align: left;
+        width: 100%;
+        border-bottom: 1px solid var(--color-border);
+    }
+    nav#main-nav a:last-child { border-bottom: none; }
+    
+    header { padding: 80px 20px 80px; }
+    header h1 { font-size: 38px; }
+    header p { font-size: 16px; }
+
+    h2 { font-size: 32px; margin-bottom: 30px; }
+    
+    /* モバイルでの手順と画像のレイアウト変更 */
+    .step-item {
+        flex-direction: column !important; /* モバイルでは縦並びに戻す */
+    }
+    .step-item-content {
+        flex-basis: auto;
+        padding: 0;
+        text-align: left !important;
+    }
+    .step-item h3 {
+        text-align: left;
+    }
+    .step-item-content p {
+        /* モバイルでのテキストの右寄せを解除 */
+        text-align: left !important;
+    }
+    .step-image {
+        flex-basis: auto;
+        padding-top: 20px;
+    }
+}
+
+/* 🚨 z-index調整を統合 */
+.content-section, .accordion-header {
+    position: relative;
+    z-index: 1000;
+}
+
+    </style>
+</head>
+<body id="top">
+
+    <nav class="navbar">
+        <div class="content-wrapper" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+            <a href="index.html" class="logo-link">
+                <div class="logo">なんてつサーバー 🌈</div>
+            </a>
+            
+            <button class="menu-toggle" id="menu-toggle" aria-label="メニューを開く">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <nav id="main-nav" class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> トップ</a>
+                <a href="#getting-started">はじめに</a>
+                <a href="command.html">コマンド一覧</a>
+                <a href="#faq">FAQ</a>
+                <a href="terms.html">利用規約</a>
+                <a href="index.html#contact">お問い合わせ</a>
+                <a href="https://discord.gg/79H7Jy65nz" class="discord-nav-btn">Discordに参加</a>
+            </nav>
+        </div>
+    </nav>
+
+    <header id="hero">
+        <div class="content-wrapper">
+            <h1>サーバーガイド＆よくある質問</h1>
+            <p>なんてつサーバーでの生活をスムーズに始めるための手順と、知っておきたい情報。</p>
+            <a href="#getting-started" class="action-btn join-btn">ガイドを読み始める</a>
+        </div>
+    </header>
+
+    <section id="getting-started" class="content-section">
+        <div class="content-wrapper">
+            <h2>🎉 サーバー生活のはじめ方</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 50px;">サーバーに参加したら、まずは以下のステップで安全かつ快適な生活基盤を整えましょう。</p>
+            <ul class="step-list">
+                <li class="step-item">
+                    <div class="step-item-content">
+                        <h3><span>1.</span> スポーン地点から移動する</h3>
+                        <p>サーバーに参加すると、**集合地点（スポーン）**に到着します。周囲の看板を読んでサーバーの雰囲気を理解したら、**安全な場所**に移動しましょう。建築はワールドの「オーバーワールド」で行ってください。</p>
+                        <p>コマンド <code>/warp</code> で、様々な公共施設への移動も可能です。</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="step_spawn.jpg" alt="サーバーのスポーン地点の様子" loading="lazy">
+                    </div>
+                </li>
+                <li class="step-item">
+                    <div class="step-item-content">
+                        <h3><span>2.</span> 自分の拠点を見つける</h3>
+                        <p>**他のプレイヤーの拠点から最低50ブロック離れた場所**を見つけ、自分の拠点を決めます。この時、チャットで「近くに誰かいますか？」と確認すると親切です。</p>
+                        <p>拠点には、**家とチェスト**を早めに設置しましょう。</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="step_base.jpg" alt="プレイヤーが安全な場所を探している様子" loading="lazy">
+                    </div>
+                </li>
+                <li class="step-item">
+                    <div class="step-item-content">
+                        <h3><span>3.</span> 土地保護（ホーム設定）を行う</h3>
+                        <p>建築物が完成したら、荒らし対策のため**必ず自分のホーム（テレポート地点）を設定**しましょう。</p>
+                        <p>コマンド: **<code>/sethome [ホーム名]</code>** で設定できます。設定後、<code>/home [ホーム名]</code> でいつでも帰宅できます。</p>
+                        <p>🚨 **注意: なんてつサーバーの土地保護は基本的にホーム設定と連動しています。**</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="step_sethome.jpg" alt="" loading="lazy">
+                    </div>
+                </li>
+                <li class="step-item">
+                    <div class="step-item-content">
+                        <h3><span>4.</span> Discordに参加し、ルールを再確認</h3>
+                        <p>Discordに参加して、コミュニティと交流を深めましょう。また、**もう一度<a href="terms.html">サーバーのルールと利用規約</a>**を確認し、違反がないかチェックすることが大切です。</p>
+                        <p class="secondary-btn" style="border: none; margin-top: 15px; background: var(--color-discord);"><a href="https://discord.gg/79H7Jy65nz" style="color: white !important;">Discordに参加する <i class="fab fa-discord"></i></a></p>
+                    </div>
+					                    <div class="step-image">
+                        <img src="discord.jpg" alt="" loading="lazy">
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="faq" class="content-section">
+        <div class="content-wrapper">
+            <h2>❓ よくある質問 (FAQ)</h2>
+            <div class="accordion-container">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Q1: 土地保護はどうなっていますか？</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>A: 土地保護は、**<code>/tty</code> コマンドで設定します**。この設定により、自動的に指定した座標内が保護されます。</p>
+                        <p>保護範囲内では、他のプレイヤーによる破壊やチェストの操作はできません。保護範囲を確認するには、<code>/tty</code> で見てください（詳細は<a href="command.html">コマンド一覧</a>を参照）。</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Q2: お金（通貨）は何に使えますか？</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>A: 現状使い道はないですが、将来的に機能を追加する可能性はあります。</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Q3: `/tpa` や `/warp` などのテレポートコマンドは使えますか？</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>A: はい、使用可能です。長い移動のストレスを軽減するため、便利なテレポート機能を用意しています。</p>
+                        <ul>
+                            <li><code>/tpa [プレイヤー名]</code>: 他のプレイヤーにテレポートを要求します。</li>
+                            <li><code>/warp</code>: 運営が設定した主要な場所へ移動します。</li>
+                            <li><code>/home</code>: 自分で設定した拠点に帰宅します。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Q4: 荒らし行為があった場合、どうすればいいですか？</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>A: 荒らし行為を発見した場合、**証拠（スクリーンショットや動画）を確保**し、Discord、またはゲーム内で運営に連絡してください。</p>
+                        <p>運営はログを確認し、**ロールバック機能**で被害を修復します。被害に遭ってもすぐに諦めず、必ず報告してください。</p>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <span>Q5: 資源ワールドはいつリセットされますか？</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>A: 資源ワールドはこのサーバーにはございません。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="important-notes" class="content-section">
+        <div class="content-wrapper">
+            <h2>⚠️ 重要な注意事項</h2>
+            <div class="contact-card" style="padding: 40px; background: var(--color-bg-alt); border-radius: var(--radius-default); box-shadow: var(--shadow-subtle);">
+                <h3 style="color: var(--color-error); margin-top: 0;"><i class="fas fa-exclamation-triangle"></i> サーバーの基本方針</h3>
+                <ul style="list-style: disc; padding-left: 25px;">
+                    <li>**サーバーは統合版（Bedrock Edition）専用です。** Java版からは参加できません。</li>
+                    <li>**チャットでの過度な暴言や煽り行為は厳禁です。** 健全な交流を心がけてください。</li>
+                    <li>**オフライン時の放置（AFK）は負荷軽減のためご遠慮ください。** 長時間の放置はキック対象となる場合があります。</li>
+                    <li>**運営は常にプレイヤーのログをチェックしています。** 悪質な行為が判明した場合は即座に厳正な対処を行います。</li>
+                </ul>
+                <p style="margin-top: 30px;">ご不明な点は、Discordで質問いただくか、<a href="index.html#contact">お問い合わせフォーム</a>からご連絡ください。</p>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="content-wrapper">
+            <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="index.html#contact">お問い合わせ</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="terms.html">利用規約</a></p>
+        </div>
+    </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // ====================================================================
+    // 0. グローバル変数とユーティリティ
+    // ====================================================================
+    
+    // モバイルメニューの開閉機能
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainNav = document.getElementById('main-nav');
+
+    if (menuToggle && mainNav) {
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('open');
+            const icon = menuToggle.querySelector('i');
+            if (mainNav.classList.contains('open')) {
+                icon.classList.replace('fa-bars', 'fa-times');
+            } else {
+                icon.classList.replace('fa-times', 'fa-bars');
+            }
+        });
+
+        // メニューを開いた状態でリンクをクリックしたら閉じる (スムーズスクロールと連携)
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                // 画面幅がモバイルサイズ（768px以下）の場合のみ閉じる
+                if (window.innerWidth <= 768) { 
+                    mainNav.classList.remove('open');
+                    menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+                }
+            });
+        });
+    }
+
+    // ====================================================================
+    // 1. FAQのアコーディオン機能の定義
+    // ====================================================================
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('i');
+            
+            // 閉じる処理
+            if (content.classList.contains('open')) {
+                content.style.maxHeight = null;
+                content.classList.remove('open');
+                header.classList.remove('active');
+                if (icon) {
+                    icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                }
+            } else {
+                // 開く処理
+                // 他のすべてのアコーディオンを閉じる
+                document.querySelectorAll('.accordion-content.open').forEach(openContent => {
+                    openContent.style.maxHeight = null;
+                    openContent.classList.remove('open');
+                    openContent.previousElementSibling.classList.remove('active');
+                    const openIcon = openContent.previousElementSibling.querySelector('i');
+                    if (openIcon) {
+                        openIcon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                    }
+                });
+
+
+                content.classList.add('open');
+                content.style.maxHeight = content.scrollHeight + 'px';
+                header.classList.add('active');
+                if (icon) {
+                    icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                }
+            }
+        });
+    });
+
+});
+    </script>
+
+</body>
+</html>
