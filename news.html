@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>利用規約 | なんてつサーバー 🌈</title>
-	<meta property="og:title" content="なんてつサーバー | 利用規約">
-	<meta property="og:description" content="なんてつサーバーの利用規約（ルール）です。参加する前に必ずお読みください。">
+    <title>なんてつサーバー 🌈 | ニュース</title>
+	<meta property="og:title" content="なんてつサーバー | ニュース">
+	<meta property="og:description" content="サーバーの最新ニュース、アップデート、イベント情報をお知らせします。">
     <meta property="og:type" content="website">
 	<meta property="og:url" content="https://youtube.com/@なんてつ"><meta property="og:image" content="https://minecraft-mcworld.com/wp-content/uploads/maxresdefault-1-2b750d65.jpg"><meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="/icon.jpg" type="image/jpg">
@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display.swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
     <style>
 /* ========== カラーと基本設定 (V3) ========== */
 :root {
@@ -123,6 +124,11 @@ a:hover { color: #4527a0; }
     color: var(--color-primary);
     background: rgba(94, 53, 177, 0.05);
 }
+/* ▼ news.html で 'ニュース' をアクティブにするスタイル */
+.navbar .nav-links a[href="news.html"] {
+    color: var(--color-primary);
+    background: rgba(94, 53, 177, 0.05);
+}
 .discord-nav-btn {
     padding: 8px 15px;
     background: var(--color-discord);
@@ -222,17 +228,18 @@ section {
     box-sizing: border-box;
     border-bottom: 1px solid var(--color-border);
 }
-/* ▼ 規約ページは白背景で統一 */
-section:nth-child(even) { background: var(--color-bg-alt); }
+/* ▼ ニュースページは背景色を交互にする */
+section:nth-child(even) { background: var(--color-bg-base); }
 section:nth-child(odd) { background: var(--color-bg-alt); }
+
 
 .content-wrapper { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-/* ▼ 規約ページ用に max-width を調整 */
-.policy-wrapper {
-    max-width: 900px; 
-    margin: 0 auto; 
-    padding: 0 20px; 
+/* ▼ ニュースリスト用に幅を狭めるコンテナ */
+.news-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 h2 {
@@ -259,34 +266,53 @@ h3 {
     font-weight: 700;
     color: var(--color-primary);
     font-size: 24px;
-    margin-top: 40px; /* h3の上下マージン調整 */
-    margin-bottom: 15px;
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 5px;
+    margin-top: 30px;
 }
-/* ========== テキストコンテンツ用のスタイル ========== */
-.policy-content {
-    background: var(--color-bg-alt);
-    padding: 30px 40px;
-    border-radius: var(--radius-default);
+        
+/* ========== ▼ ニュースページ専用のスタイル (indexデザインに統合) ========== */
+.news-item {
+    background-color: var(--color-bg-alt);
+    padding: 25px 30px;
+    border-radius: 12px; /* 角丸を少し大きく */
+    margin-bottom: 25px;
+    border-left: 5px solid var(--color-secondary);
     box-shadow: var(--shadow-subtle);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
-.policy-content p, .policy-content li, .policy-content ol li {
-    font-size: 16px;
-    line-height: 2.0; /* 行間を広めに */
-    margin-bottom: 15px;
+.news-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
 }
-.policy-content ul, .policy-content ol {
-    padding-left: 25px;
+.news-item h3 {
+    color: var(--color-text-dark);
+    font-size: 22px;
+    margin-top: 0;
+    margin-bottom: 5px;
 }
-.update-date {
+.news-item .news-date {
+    display: block;
+    color: var(--color-text-medium);
+    font-size: 14px;
+    margin-bottom: 15px; /* 日付と本文の間隔を空ける */
+}
+.news-item p {
+    line-height: 1.8; /* 標準の行間に合わせる */
+    color: var(--color-text-dark);
+    white-space: pre-wrap; /* 改行を反映 */
+    margin-bottom: 0; /* pタグの最後のマージンを削除 */
+}
+/* ▼ エラー表示用のスタイル */
+.news-item.error-item {
+    border-left-color: var(--color-error);
+    background-color: #fef2f2;
+}
+.news-item.loading-item {
     text-align: center;
     color: var(--color-text-medium);
-    margin-top: -30px; /* h2との間隔を詰める */
-    margin-bottom: 40px;
-    font-size: 14px;
+    border-left-color: var(--color-border);
+    box-shadow: none;
 }
-
+/* ========== ▲ ニュースページ専用のスタイル ========== */
 
 /* ========== フッター ========== */
 footer {
@@ -344,13 +370,13 @@ footer a {
 
     h2 { font-size: 32px; margin-bottom: 30px; }
     h3 { font-size: 20px; }
-
-    .policy-content {
+    
+    .news-item {
         padding: 20px;
     }
 }
     </style>
-    </head>
+</head>
 <body id="top">
 
     <nav class="navbar">
@@ -360,7 +386,7 @@ footer a {
             </a>
             
             <button class="menu-toggle" id="menu-toggle" aria-label="メニューを開く">
-                <i class="fas fa="bars"></i>
+                <i class="fas fa-bars"></i>
             </button>
 
             <nav id="main-nav" class="nav-links">
@@ -370,97 +396,21 @@ footer a {
                 <a href="command.html">コマンド一覧</a>
 				<a href="guide.html">ガイド</a>
 				<a href="news.html"><i class="fas fa-bullhorn"></i> お知らせ</a>
-                <a href="terms.html">利用規約</a>
                 <a href="index.html#contact">お問い合わせ</a>
                 <a href="https://discord.gg/79H7Jy65nz" class="discord-nav-btn">Discordに参加</a>
             </nav>
-        </div>
+            </div>
     </nav>
-    <header id="hero" style="padding-top: 80px; padding-bottom: 80px;">
+    <header id="hero" style="padding-top: 80px; padding-bottom: 80px; background: linear-gradient(135deg, rgba(94, 53, 177, 0.7), rgba(0, 0, 0, 0.5)), url('banner.jpg') no-repeat center center; background-size: cover;">
         <div class="content-wrapper">
-            <h1 style="font-size: 42px;">利用規約</h1>
-            <p style="margin-bottom: 0;">サーバーのルールと規約</p>
+            <h1 style="font-size: 42px;"><i class="fas fa-bullhorn"></i> サーバーニュース</h1>
+            <p style="margin-bottom: 0;">最新のお知らせを自動で表示しています。</p>
         </div>
     </header>
-    <section id="terms-main" class="content-section">
-        <div class="policy-wrapper">
-
-            <p class="update-date">制定日: 2025年11月10日 / 最終改定日: 2025年11月10日</p>
-            
-            <div class="policy-content">
-
-                <h3>第1章 総則</h3>
-                <p><strong>第1条 (本規約の適用)</strong></p>
-                <ol>
-                    <li>本規約は、なんてつサーバーが提供するすべてのサービス（Minecraftサーバー、Discordコミュニティおよび関連ウェブサービスを含む。以下「本サービス」）の利用に関わる一切の事項に適用されるものとします。</li>
-                    <li>ユーザーは、本サービスの利用をもって、本規約のすべての内容に完全に同意したものとみなされます。</li>
-                </ol>
-
-                <p><strong>第2条 (定義)</strong></p>
-                <ul>
-                    <li>「ユーザー」：本サービスを利用するすべての個人。</li>
-                    <li>「コンテンツ」：ユーザーが本サービスを通じて作成、投稿、公開したすべてのデータ（建築物、チャットログ、画像等）。</li>
-                </ul>
-
-                <h3>第2章 利用登録とユーザーの義務</h3>
-                <p><strong>第3条 (利用登録)</strong></p>
-                <p>本サービスの利用を希望する者は、別途運営が定める方法に従い、本規約に同意の上で利用登録を行うものとします。未成年者は、親権者または法定代理人の同意を得た上で登録するものとします。</p>
-
-                <p><strong>第4条 (アカウント情報の管理)</strong></p>
-                <p>ユーザーは、自身のMinecraftアカウント、Discordアカウント、その他本サービスに関連するアカウント情報を自己の責任において厳重に管理するものとし、第三者への貸与、譲渡を禁止します。アカウント情報の不正利用により生じた損害は、すべてユーザーの責任とします。</p>
-                
-                <h3>第3章 禁止事項と利用停止</h3>
-                <p><strong>第5条 (禁止事項)</strong></p>
-                <p>ユーザーは、本サービスの利用にあたり、以下の各号に定める行為を行ってはなりません。</p>
-                <ul>
-                    <li>法令、公序良俗に反する行為、またはそれに結びつく行為。</li>
-                    <li>他のユーザーまたは運営の知的財産権、プライバシー権、肖像権、その他の権利を侵害する行為。</li>
-                    <li>ハラスメント、誹謗中傷、差別的言動、暴力的な表現、わいせつな表現を含むコンテンツを投稿・送信する行為。</li>
-                    <li>盗難または不正な手段によって取得されたアカウント、あるいは利用権のないアカウントを使用して本サービスを利用する行為。</li>
-                    <li>チート、バグの悪用、不正なツール、マクロ、改造クライアント等を使用する行為。</li>
-                    <li>BOT、またはこれに準ずる自動操作により、サーバーに過度な負荷を与える行為。</li>
-                    <li>他のユーザーのゲームプレイを意図的に妨害する行為（無断PvP、長時間拘束、進行妨害など）。</li>
-                    <li>本サービスの運営を妨害する行為、または運営の信用を毀損する行為。</li>
-                    <li>本サービス内において、運営の許可なく商業活動や宗教活動、他サーバーへの勧誘等を行う行為。</li>
-                </ul>
-                                
-                <p><strong>第6条 (利用停止およびアカウント削除)</strong></p>
-                <p>運営は、ユーザーが前条の禁止事項に違反した場合、またはその他運営が不適切と判断した場合、ユーザーに事前に通知することなく、直ちに以下の措置の全部または一部を講じることができるものとします。</p>
-                <ul>
-                    <li>本サービスの全部または一部の利用停止（一時的または永久的なBAN）。</li>
-                    <li>ユーザーが投稿したコンテンツの削除、または公開範囲の変更。</li>
-                    <li>ユーザーアカウントの削除。</li>
-                </ul>
-
-                <h3>第4章 コンテンツと知的財産権</h3>
-                <p><strong>第7条 (コンテンツの権利)</strong></p>
-                <p>本サービスを通じてユーザーが作成・公開したコンテンツの著作権は、当該コンテンツを作成したユーザー本人に帰属します。</p>
-                
-                <p><strong>第8条 (運営によるコンテンツの利用)</strong></p>
-                <p>ユーザーは、運営に対し、本サービスの提供、維持、改善、プロモーション（ウェブサイト、SNS等での紹介を含む）のために、ユーザーコンテンツを無償かつ非独占的に利用（複製、公衆送信、改変、その他の利用）する権利を許諾するものとします。</p>
-
-                <h3>第5章 免責事項および損害賠償</h3>
-                <p><strong>第9条 (免責事項)</strong></p>
-                <ol>
-                    <li>運営は、本サービスの内容の正確性、完全性、信頼性、および特定の目的への適合性について、いかなる保証も行いません。</li>
-                    <li>運営は、本サービスの停止、変更、終了、または利用不能によってユーザーに生じた一切の損害について、責任を負いません。</li>
-                    <li>サーバー内でのデータ消失、ロールバック、アカウント停止による不利益等について、運営に故意または重大な過失がない限り、一切の責任を負いません。</li>
-                </ol>
-
-                <p><strong>第10条 (損害賠償)</strong></p>
-                <p>ユーザーが本規約に違反し、運営または第三者に損害を与えた場合、当該ユーザーは、その損害を賠償する義務を負います。</p>
-                
-                <h3>第6章 その他</h3>
-                <p><strong>第11条 (準拠法および合意管轄)</strong></p>
-                <p>本規約の解釈にあたっては、日本法を準拠法とします。本サービスに関するすべての紛争については、運営者の住所地を管轄する裁判所を第一審の専属的合意管轄裁判所とします。</p>
-
-                <p><strong>第12条 (規約の変更)</strong></p>
-                <p>運営は、必要と判断した場合、ユーザーに事前に通知することなく、いつでも本規約を変更できるものとします。変更後の規約は、本ウェブサイト上に掲載した時点より効力を生じるものとし、ユーザーは変更後も本サービスの利用を継続した場合、変更後の規約に同意したものとみなされます。</p>
-                
-                <div style="margin-top: 50px; text-align: right; color: var(--color-text-dark); font-weight: 700;">
-                    なんてつサーバー 運営
-                </div>
-
+    <section id="news-content" class="content-section">
+        <div class="news-wrapper" id="news-list">
+            <div class="news-item loading-item">
+                <p><i class="fas fa-spinner fa-spin"></i> ニュースを読み込み中...</p>
             </div>
         </div>
     </section>
@@ -470,10 +420,113 @@ footer a {
         </div>
     </footer>
     <script>
+        // ★★★ 【重要】ここにPart 2でデプロイしたあなたのGAS WebアプリのURLを貼り付けてください ★★★
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxtUxOya_ekYBptUNncsW9Wz7B2j-Rjqj0boAuUotMWn0paoEpxPtCNC6cX35W7E9qywQ/exec '; 
+
+        const newsListContainer = document.getElementById('news-list');
+
+        function formatDiscordContent(content) {
+            // スプレッドシートの内容にDiscordマークダウンが含まれていると想定して変換
+            let formatted = content;
+            // HTMLタグをエスケープ (XSS対策)
+            formatted = formatted.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+            
+            formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // 太字
+            formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>'); // 斜体
+            formatted = formatted.replace(/^(#+)\s*(.*)/gm, (match, hashes, text) => `<h${hashes.length + 3}>${text}</h${hashes.length + 3}>`); // 見出し
+            formatted = formatted.replace(/```([\s\S]*?)```/gs, (match, code) => `<pre style="background: #eee; padding: 10px; border-radius: 5px; white-space: pre-wrap; word-break: break-all;">${code}</pre>`); // コードブロック
+
+            return formatted;
+        }
+        
+        function formatNewsDate(timestamp) {
+            // スプレッドシートから取得したタイムスタンプを整形
+            const date = new Date(timestamp);
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Tokyo' };
+            return date.toLocaleDateString('ja-JP', options);
+        }
+
+        async function fetchAndRenderNews() {
+            // URLが設定されていない場合は処理を中断
+            if (GAS_WEB_APP_URL.includes('【あなたのGAS WebアプリURLを貼り付け】')) {
+                 newsListContainer.innerHTML = `
+                    <div class="news-item error-item">
+                        <h3>設定エラー</h3>
+                        <p>GAS_WEB_APP_URLが正しく設定されていません。コード内のURLを置き換えてください。</p>
+                    </div>
+                `;
+                return;
+            }
+
+            try {
+                const response = await fetch(GAS_WEB_APP_URL);
+                const newsData = await response.json();
+
+                // 読み込み中のメッセージを削除
+                newsListContainer.innerHTML = ''; 
+
+                if (newsData.error) {
+                    // GAS側でエラーが発生した場合
+                    newsListContainer.innerHTML = `
+                        <div class="news-item error-item">
+                            <h3>データ取得エラー</h3>
+                            <p>${newsData.error} (${newsData.status || ''})</p>
+                            <p>GASのデプロイ設定やスプレッドシートのIDを確認してください。</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                if (newsData.length === 0) {
+                    newsListContainer.innerHTML = `
+                        <div class="news-item">
+                            <h3>現在新しいお知らせはありません</h3>
+                            <p>新しいアップデートやイベント情報は、Googleフォームから投稿してください。</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // ニュースアイテムをHTMLに変換して挿入
+                newsData.forEach(item => {
+                    const newsItemDiv = document.createElement('div');
+                    newsItemDiv.className = 'news-item';
+                    
+                    // スプレッドシートの {title, content, author} を取得
+                    const title = item.title || 'タイトルなし'; 
+                    const formattedContent = formatDiscordContent(item.content || ''); // contentがnullの場合も考慮
+                    const author = item.author || '運営'; // ⬅️ 投稿者名
+                    const formattedDate = formatNewsDate(item.timestamp);
+                    
+                    newsItemDiv.innerHTML = `
+                        <h3>${title}</h3> 
+                        <span class="news-date">投稿者: ${author} | ${formattedDate}</span>
+                        <p>${formattedContent}</p>
+                        `;
+                    newsListContainer.appendChild(newsItemDiv);
+                });
+
+            } catch (error) {
+                console.error('ニュース取得エラー:', error);
+                newsListContainer.innerHTML = `
+                    <div class="news-item error-item">
+                        <h3>接続エラー</h3>
+                        <p>ニュースの自動取得に失敗しました。GASのURLが正しいか、またはネットワーク接続を確認してください。</p>
+                        <p><small>${error}</small></p>
+                    </div>
+                `;
+            }
+        }
+
     document.addEventListener('DOMContentLoaded', function() {
+        
+        // ページロード時にニュースの取得を開始
+        fetchAndRenderNews();
+
         // モバイルメニューの開閉機能
         const menuToggle = document.getElementById('menu-toggle');
         const mainNav = document.getElementById('main-nav');
+
         if (menuToggle && mainNav) {
             menuToggle.addEventListener('click', () => {
                 mainNav.classList.toggle('open');
@@ -484,10 +537,12 @@ footer a {
                     icon.classList.replace('fa-times', 'fa-bars');
                 }
             });
-            // メニューリンククリックで閉じる
+
+            // メニューを開いた状態でリンクをクリックしたら閉じる (スムーズスクロールと連携)
             mainNav.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
-                    if (window.innerWidth <= 768) {
+                    // 画面幅がモバイルサイズ（768px以下）の場合のみ閉じる
+                    if (window.innerWidth <= 768) { 
                         mainNav.classList.remove('open');
                         menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
                     }
@@ -496,5 +551,5 @@ footer a {
         }
     });
     </script>
-    </body>
+</body>
 </html>
