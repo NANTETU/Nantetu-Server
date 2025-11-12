@@ -4,107 +4,294 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>利用規約 | なんてつサーバー 🌈</title>
+	<meta property="og:title" content="なんてつサーバー | 利用規約">
+	<meta property="og:description" content="なんてつサーバーの利用規約（ルール）です。参加する前に必ずお読みください。">
+    <meta property="og:type" content="website">
+	<meta property="og:url" content="https://youtube.com/@なんてつ"><meta property="og:image" content="https://minecraft-mcworld.com/wp-content/uploads/maxresdefault-1-2b750d65.jpg"><meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="/icon.jpg" type="image/jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display.swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-/* ========== 既存のカラースタイルを流用 ========== */
+/* ========== カラーと基本設定 (V3) ========== */
 :root {
     --color-primary: #5E35B1;
     --color-secondary: #FFC107;
+    
     --color-bg-base: #f8f9fa;
     --color-bg-alt: #ffffff;
-    --color-text-dark: #212529; 
+    --color-text-dark: #212529;
     --color-text-medium: #6c757d;
-    --color-border: #dee2e6; 
-    --radius-default: 10px;
-    --shadow-default: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --color-border: #dee2e6;
+    
+    --color-discord: #5865F2;
+    --color-success: #198754;
+    --color-error: #dc3545; /* エラーカラーを追加 */
+
+    --radius-default: 8px;
+    --shadow-subtle: 0 4px 12px rgba(0,0,0,0.05);
+    --shadow-lift: 0 10px 25px rgba(0,0,0,0.08);
 }
+
+/* ナビゲーションのジャンプをなめらかにする */
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* キーボード操作時のフォーカスカラーをサイトのメインカラーに統一 */
+a:focus, button:focus, input:focus, textarea:focus, .quiz-option:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* 送信完了メッセージのカスタムスタイル (最終版) */
+.submission-success-message {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    border: none;
+    border-radius: none;
+    background-color: transparent;
+}
+.submission-success-message h2 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* hiddenクラスの定義を追記 */
+.hidden {
+    display: none !important;
+}
+
 body {
     font-family: 'Noto Sans JP', sans-serif;
     margin: 0;
-    padding: 0;
-    background-color: var(--color-bg-base);
+    background: var(--color-bg-base);
     color: var(--color-text-dark);
+    line-height: 1.8;
+    overflow-x: hidden;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
 }
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-header {
-    background-color: var(--color-bg-alt);
-    box-shadow: var(--shadow-default);
-    padding: 15px 0;
-}
-header .container {
+a { color: var(--color-primary); text-decoration: none; transition: all 0.2s ease; }
+a:hover { color: #4527a0; }
+
+/* ========== ナビゲーションバー (V3) ========== */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    box-shadow: none;
+    border-bottom: 1px solid var(--color-border);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 14px 40px;
 }
-.logo {
+.navbar .logo-link {
+    text-decoration: none;
+    color: var(--color-text-dark);
+    cursor: pointer;
+    display: flex;
+}
+.navbar .logo-link:hover {
+    opacity: 0.8;
+}
+.navbar .logo {
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 900;
     font-size: 26px;
     color: var(--color-primary);
 }
-.back-link-container {
-    padding: 15px 0 0;
-}
-.back-link {
-    color: var(--color-primary) !important;
-    font-size: 16px;
-    text-decoration: none;
-    transition: color 0.2s;
-}
-.terms-section {
-    padding: 40px 0 80px;
-}
-.section-title {
-    font-family: 'Noto Sans JP', sans-serif;
-    text-align: center;
-    font-size: 32px;
-    margin-bottom: 20px;
+.navbar .nav-links a {
     color: var(--color-text-dark);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+.navbar .nav-links a:hover {
+    color: var(--color-primary);
+    background: rgba(94, 53, 177, 0.05);
+}
+.discord-nav-btn {
+    padding: 8px 15px;
+    background: var(--color-discord);
+    color: white !important;
+    border-radius: var(--radius-default);
+    font-weight: 700 !important;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+.discord-nav-btn:hover {
+    background: #6D77F9;
+    box-shadow: 0 4px 10px rgba(88, 101, 242, 0.2);
+}
+
+/* モバイルメニューのトグルボタン */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--color-primary);
+    cursor: pointer;
+    padding: 0;
+    z-index: 1006; /* ボタンが最前面にくるように */
+}
+
+/* ========== ヘッダー (V4 - 画像実装) ========== */
+header {
+    position: relative;
+    text-align: center;
+    padding: 100px 20px 100px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
+                url('banner.jpg') no-repeat center center;
+    background-size: cover;
+    background-position: center top; /* 上端を基準に画像を配置 */
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* 文字を見やすく */
+    box-shadow: none;
+    margin-bottom: 0;
+}
+header h1 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    font-size: 58px; 
+    margin: 0;
+}
+header p {
+    font-size: 20px;
+    opacity: 0.9;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+/* ========== CTAボタン (V3) ========== */
+.action-btn, .submit-btn, .join-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--shadow-subtle);
+}
+.join-btn {
+    background: var(--color-secondary);
+    color: var(--color-text-dark);
+}
+.join-btn:hover {
+    background: #FFD550;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+}
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--color-primary);
+    border: 1px solid #fff;
+    box-shadow: none;
+    border-radius: var(--radius-default); /* ボタンの角を丸くする */
+    padding: 12px 25px; /* サイズ調整 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.secondary-btn:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-subtle);
+}
+
+/* ========== セクションの基本スタイル (V3) ========== */
+section {
+    position: relative;
+    width: 100%;
+    padding: 80px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--color-border);
+}
+/* ▼ 規約ページは白背景で統一 */
+section:nth-child(even) { background: var(--color-bg-alt); }
+section:nth-child(odd) { background: var(--color-bg-alt); }
+
+.content-wrapper { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* ▼ 規約ページ用に max-width を調整 */
+.policy-wrapper {
+    max-width: 900px; 
+    margin: 0 auto; 
+    padding: 0 20px; 
+}
+
+h2 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    color: var(--color-text-dark);
+    padding-bottom: 15px;
+    margin-bottom: 50px;
+    font-size: 38px;
+    text-align: center;
+    position: relative;
+}
+h2::after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: var(--color-primary);
+    border-radius: 2px;
+    margin: 15px auto 0;
+}
+h3 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    color: var(--color-primary);
+    font-size: 24px;
+    margin-top: 40px; /* h3の上下マージン調整 */
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 5px;
+}
+/* ========== テキストコンテンツ用のスタイル ========== */
+.policy-content {
+    background: var(--color-bg-alt);
+    padding: 30px 40px;
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-subtle);
+}
+.policy-content p, .policy-content li, .policy-content ol li {
+    font-size: 16px;
+    line-height: 2.0; /* 行間を広めに */
+    margin-bottom: 15px;
+}
+.policy-content ul, .policy-content ol {
+    padding-left: 25px;
 }
 .update-date {
     text-align: center;
     color: var(--color-text-medium);
+    margin-top: -30px; /* h2との間隔を詰める */
     margin-bottom: 40px;
     font-size: 14px;
 }
-.terms-content {
-    background-color: var(--color-bg-alt);
-    padding: 40px;
-    border-radius: var(--radius-default);
-    box-shadow: var(--shadow-default);
-}
-.terms-content h3 {
-    color: var(--color-primary);
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 8px;
-    margin-top: 30px;
-    margin-bottom: 15px;
-    font-size: 20px;
-}
-.terms-content p, .terms-content li {
-    line-height: 1.8;
-    margin-bottom: 15px;
-    font-size: 15px;
-}
-.terms-content ul {
-    list-style-type: disc;
-    padding-left: 20px;
-}
-.terms-content li {
-    margin-bottom: 8px;
-}
-/* フッター */
+
+
+/* ========== フッター ========== */
 footer {
     text-align: center;
-    padding: 20px 0;
+    padding: 30px 0;
     background-color: var(--color-text-dark);
     color: #cccccc;
     font-size: 14px;
@@ -114,26 +301,92 @@ footer a {
     text-decoration: none;
     margin: 0 10px;
 }
-    </style>
-</head>
-<body>
 
-    <header>
-        <div class="container">
-            <a href="index.html" class="logo">なんてつサーバー</a>
+/* ========== モバイルCSS (768px以下) ========== */
+@media (max-width: 768px) {
+    .navbar .content-wrapper { padding: 0 15px; }
+    .navbar .logo { font-size: 22px; }
+    
+    .menu-toggle { display: block; } /* モバイルメニューボタンを表示 */
+    .navbar .nav-links { display: none !important; }
+
+    /* モバイルメニューのスタイル */
+    nav#main-nav {
+        display: none;
+        position: fixed;
+        top: 60px; 
+        right: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-bg-alt);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        padding: 10px 0;
+        transition: transform 0.3s ease-out; 
+        transform: translateY(-100%);
+        z-index: 1005; /* 最前面 */
+    }
+    nav#main-nav.open {
+        display: flex;
+        transform: translateY(0);
+    }
+    nav#main-nav a {
+        padding: 12px 20px;
+        text-align: left;
+        width: 100%;
+        border-bottom: 1px solid var(--color-border);
+    }
+    nav#main-nav a:last-child { border-bottom: none; }
+    
+    header { padding: 80px 20px 80px; }
+    header h1 { font-size: 38px; }
+    header p { font-size: 16px; }
+
+    h2 { font-size: 32px; margin-bottom: 30px; }
+    h3 { font-size: 20px; }
+
+    .policy-content {
+        padding: 20px;
+    }
+}
+    </style>
+    </head>
+<body id="top">
+
+    <nav class="navbar">
+        <div class="content-wrapper" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+            <a href="index.html" class="logo-link">
+                <div class="logo">なんてつサーバー</div>
+            </a>
+            
+            <button class="menu-toggle" id="menu-toggle" aria-label="メニューを開く">
+                <i class="fas fa="bars"></i>
+            </button>
+
+            <nav id="main-nav" class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> トップ</a>
+                <a href="index.html#about"><i class="fas fa-info-circle"></i> 概要</a>
+                <a href="index.html#rules-accordion">ルール</a>
+                <a href="command.html">コマンド一覧</a>
+				<a href="guide.html">FAQ</a>
+                <a href="terms.html">利用規約</a>
+                <a href="index.html#contact">お問い合わせ</a>
+                <a href="https://discord.gg/79H7Jy65nz" class="discord-nav-btn">Discordに参加</a>
+            </nav>
+        </div>
+    </nav>
+    <header id="hero" style="padding-top: 80px; padding-bottom: 80px;">
+        <div class="content-wrapper">
+            <h1 style="font-size: 42px;">利用規約</h1>
+            <p style="margin-bottom: 0;">サーバーのルールと規約</p>
         </div>
     </header>
+    <section id="terms-main" class="content-section">
+        <div class="policy-wrapper">
 
-    <div class="back-link-container container">
-
-    </div>
-
-    <section class="terms-section">
-        <div class="container">
-            <h2 class="section-title">なんてつサーバー 利用規約</h2>
             <p class="update-date">制定日: 2025年11月10日 / 最終改定日: 2025年11月10日</p>
             
-            <div class="terms-content">
+            <div class="policy-content">
 
                 <h3>第1章 総則</h3>
                 <p><strong>第1条 (本規約の適用)</strong></p>
@@ -156,22 +409,20 @@ footer a {
                 <p>ユーザーは、自身のMinecraftアカウント、Discordアカウント、その他本サービスに関連するアカウント情報を自己の責任において厳重に管理するものとし、第三者への貸与、譲渡を禁止します。アカウント情報の不正利用により生じた損害は、すべてユーザーの責任とします。</p>
                 
                 <h3>第3章 禁止事項と利用停止</h3>
-<p><strong>第5条 (禁止事項)</strong></p>
-<p>ユーザーは、本サービスの利用にあたり、以下の各号に定める行為を行ってはなりません。</p>
-<ul>
-    <li>法令、公序良俗に反する行為、またはそれに結びつく行為。</li>
-    <li>他のユーザーまたは運営の知的財産権、プライバシー権、肖像権、その他の権利を侵害する行為。</li>
-    <li>ハラスメント、誹謗中傷、差別的言動、暴力的な表現、わいせつな表現を含むコンテンツを投稿・送信する行為。</li>
-    
-    <li>盗難または不正な手段によって取得されたアカウント、あるいは利用権のないアカウントを使用して本サービスを利用する行為。</li>
-    
-    <li>チート、バグの悪用、不正なツール、マクロ、改造クライアント等を使用する行為。</li>
-    <li>BOT、またはこれに準ずる自動操作により、サーバーに過度な負荷を与える行為。</li>
-    <li>他のユーザーのゲームプレイを意図的に妨害する行為（無断PvP、長時間拘束、進行妨害など）。</li>
-    <li>本サービスの運営を妨害する行為、または運営の信用を毀損する行為。</li>
-    <li>本サービス内において、運営の許可なく商業活動や宗教活動、他サーバーへの勧誘等を行う行為。</li>
-</ul>
-                
+                <p><strong>第5条 (禁止事項)</strong></p>
+                <p>ユーザーは、本サービスの利用にあたり、以下の各号に定める行為を行ってはなりません。</p>
+                <ul>
+                    <li>法令、公序良俗に反する行為、またはそれに結びつく行為。</li>
+                    <li>他のユーザーまたは運営の知的財産権、プライバシー権、肖像権、その他の権利を侵害する行為。</li>
+                    <li>ハラスメント、誹謗中傷、差別的言動、暴力的な表現、わいせつな表現を含むコンテンツを投稿・送信する行為。</li>
+                    <li>盗難または不正な手段によって取得されたアカウント、あるいは利用権のないアカウントを使用して本サービスを利用する行為。</li>
+                    <li>チート、バグの悪用、不正なツール、マクロ、改造クライアント等を使用する行為。</li>
+                    <li>BOT、またはこれに準ずる自動操作により、サーバーに過度な負荷を与える行為。</li>
+                    <li>他のユーザーのゲームプレイを意図的に妨害する行為（無断PvP、長時間拘束、進行妨害など）。</li>
+                    <li>本サービスの運営を妨害する行為、または運営の信用を毀損する行為。</li>
+                    <li>本サービス内において、運営の許可なく商業活動や宗教活動、他サーバーへの勧誘等を行う行為。</li>
+                </ul>
+                                
                 <p><strong>第6条 (利用停止およびアカウント削除)</strong></p>
                 <p>運営は、ユーザーが前条の禁止事項に違反した場合、またはその他運営が不適切と判断した場合、ユーザーに事前に通知することなく、直ちに以下の措置の全部または一部を講じることができるものとします。</p>
                 <ul>
@@ -205,19 +456,44 @@ footer a {
                 <p><strong>第12条 (規約の変更)</strong></p>
                 <p>運営は、必要と判断した場合、ユーザーに事前に通知することなく、いつでも本規約を変更できるものとします。変更後の規約は、本ウェブサイト上に掲載した時点より効力を生じるものとし、ユーザーは変更後も本サービスの利用を継続した場合、変更後の規約に同意したものとみなされます。</p>
                 
-                <div style="margin-top: 50px; text-align: right;">
+                <div style="margin-top: 50px; text-align: right; color: var(--color-text-dark); font-weight: 700;">
                     なんてつサーバー 運営
                 </div>
 
             </div>
         </div>
     </section>
-
     <footer>
-        <div class="container">
+        <div class="content-wrapper">
             <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="index.html#contact">お問い合わせ</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="terms.html">利用規約</a></p>
         </div>
     </footer>
-
-</body>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // モバイルメニューの開閉機能
+        const menuToggle = document.getElementById('menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+        if (menuToggle && mainNav) {
+            menuToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('open');
+                const icon = menuToggle.querySelector('i');
+                if (mainNav.classList.contains('open')) {
+                    icon.classList.replace('fa-bars', 'fa-times');
+                } else {
+                    icon.classList.replace('fa-times', 'fa-bars');
+                }
+            });
+            // メニューリンククリックで閉じる
+            mainNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('open');
+                        menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+                    }
+                });
+            });
+        }
+    });
+    </script>
+    </body>
 </html>

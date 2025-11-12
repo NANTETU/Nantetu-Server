@@ -4,117 +4,301 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>コマンド一覧 | なんてつサーバー 🌈</title>
+	<meta property="og:title" content="なんてつサーバー | コマンド一覧">
+	<meta property="og:description" content="サーバーで使える便利なコマンド（/tpa, /home, /warp, /ty など）の一覧です。">
+    <meta property="og:type" content="website">
+	<meta property="og:url" content="https://youtube.com/@なんてつ"><meta property="og:image" content="https://minecraft-mcworld.com/wp-content/uploads/maxresdefault-1-2b750d65.jpg"><meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="/icon.jpg" type="image/jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display.swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-/* ========== 既存のカラーと基本設定を流用 ========== */
+/* ========== カラーと基本設定 (V3) ========== */
 :root {
     --color-primary: #5E35B1;
     --color-secondary: #FFC107;
     
     --color-bg-base: #f8f9fa;
     --color-bg-alt: #ffffff;
-    --color-text-dark: #212529; 
+    --color-text-dark: #212529;
     --color-text-medium: #6c757d;
-    --color-border: #dee2e6; 
+    --color-border: #dee2e6;
+    
+    --color-discord: #5865F2;
+    --color-success: #198754;
+    --color-error: #dc3545; /* エラーカラーを追加 */
 
-    --radius-default: 10px;
-    --shadow-default: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --radius-default: 8px;
+    --shadow-subtle: 0 4px 12px rgba(0,0,0,0.05);
+    --shadow-lift: 0 10px 25px rgba(0,0,0,0.08);
+}
 
-    --color-success: #28a745;
+/* ナビゲーションのジャンプをなめらかにする */
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* キーボード操作時のフォーカスカラーをサイトのメインカラーに統一 */
+a:focus, button:focus, input:focus, textarea:focus, .quiz-option:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* 送信完了メッセージのカスタムスタイル (最終版) */
+.submission-success-message {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    border: none;
+    border-radius: none;
+    background-color: transparent;
+}
+.submission-success-message h2 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* hiddenクラスの定義を追記 */
+.hidden {
+    display: none !important;
 }
 
 body {
     font-family: 'Noto Sans JP', sans-serif;
     margin: 0;
-    padding: 0;
-    background-color: var(--color-bg-base);
+    background: var(--color-bg-base);
     color: var(--color-text-dark);
+    line-height: 1.8;
+    overflow-x: hidden;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
 }
+a { color: var(--color-primary); text-decoration: none; transition: all 0.2s ease; }
+a:hover { color: #4527a0; }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* ========== ヘッダー (ナビゲーション) ========== */
-header {
-    background-color: var(--color-bg-alt);
-    box-shadow: var(--shadow-default);
-    padding: 15px 0;
+/* ========== ナビゲーションバー (V3) ========== */
+.navbar {
     position: sticky;
     top: 0;
     z-index: 1000;
-}
-header .container {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    box-shadow: none;
+    border-bottom: 1px solid var(--color-border);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 14px 40px;
 }
-.logo {
+.navbar .logo-link {
+    text-decoration: none;
+    color: var(--color-text-dark);
+    cursor: pointer;
+    display: flex;
+}
+.navbar .logo-link:hover {
+    opacity: 0.8;
+}
+.navbar .logo {
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 900;
     font-size: 26px;
     color: var(--color-primary);
 }
-nav a {
-    text-decoration: none;
+.navbar .nav-links a {
     color: var(--color-text-dark);
     font-weight: 700;
-    margin-left: 25px;
-    padding: 5px 0;
-    transition: color 0.2s;
+    font-size: 15px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
 }
-nav a:hover {
+.navbar .nav-links a:hover {
     color: var(--color-primary);
+    background: rgba(94, 53, 177, 0.05);
 }
-.back-link {
-    color: var(--color-primary) !important;
-    font-size: 16px;
+.discord-nav-btn {
+    padding: 8px 15px;
+    background: var(--color-discord);
+    color: white !important;
+    border-radius: var(--radius-default);
+    font-weight: 700 !important;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+.discord-nav-btn:hover {
+    background: #6D77F9;
+    box-shadow: 0 4px 10px rgba(88, 101, 242, 0.2);
 }
 
-/* ========== メインコンテンツ ========== */
-.command-list-section {
-    padding: 60px 0 80px;
+/* モバイルメニューのトグルボタン */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--color-primary);
+    cursor: pointer;
+    padding: 0;
+    z-index: 1006; /* ボタンが最前面にくるように */
 }
-.section-title {
-    font-family: 'Noto Sans JP', sans-serif;
+
+/* ========== ヘッダー (V4 - 画像実装) ========== */
+header {
+    position: relative;
     text-align: center;
-    font-size: 32px;
+    padding: 100px 20px 100px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
+                url('banner.jpg') no-repeat center center;
+    background-size: cover;
+    background-position: center top; /* 上端を基準に画像を配置 */
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* 文字を見やすく */
+    box-shadow: none;
+    margin-bottom: 0;
+}
+header h1 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    font-size: 58px; 
+    margin: 0;
+}
+header p {
+    font-size: 20px;
+    opacity: 0.9;
     margin-bottom: 40px;
+    font-weight: 400;
+}
+
+/* ========== CTAボタン (V3) ========== */
+.action-btn, .submit-btn, .join-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--shadow-subtle);
+}
+.join-btn {
+    background: var(--color-secondary);
     color: var(--color-text-dark);
+}
+.join-btn:hover {
+    background: #FFD550;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+}
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.95);
+    color: var(--color-primary);
+    border: 1px solid #fff;
+    box-shadow: none;
+    border-radius: var(--radius-default); /* ボタンの角を丸くする */
+    padding: 12px 25px; /* サイズ調整 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.secondary-btn:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-subtle);
+}
+
+/* ========== セクションの基本スタイル (V3) ========== */
+section {
+    position: relative;
+    width: 100%;
+    padding: 80px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--color-border);
+}
+section:nth-child(even) { background: var(--color-bg-base); }
+section:nth-child(odd) { background: var(--color-bg-alt); }
+
+.content-wrapper { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+h2 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    color: var(--color-text-dark);
+    padding-bottom: 15px;
+    margin-bottom: 50px;
+    font-size: 38px;
+    text-align: center;
     position: relative;
 }
+h2::after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: var(--color-primary);
+    border-radius: 2px;
+    margin: 15px auto 0;
+}
+h3 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    color: var(--color-primary);
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+/* ========== ▼ コマンドカード用のスタイル (guide.htmlの .feature-card を流用) ========== */
 .command-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 25px;
+    gap: 30px;
+    margin-top: 40px;
 }
 .command-card {
     background-color: var(--color-bg-alt);
-    padding: 25px;
     border-radius: var(--radius-default);
-    box-shadow: var(--shadow-default);
-    transition: transform 0.2s;
+    box-shadow: var(--shadow-subtle);
+    padding: 30px;
+    border-top: 5px solid var(--color-primary);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
+/* ▼ 管理者用カードのスタイルを変更 */
+.admin-card {
+    border-top: 5px solid var(--color-secondary);
+}
+
 .command-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lift);
 }
 .command-card h3 {
-    margin-top: 0;
-    font-size: 20px;
-    color: var(--color-primary);
-    border-bottom: 2px solid var(--color-border);
+    margin: 0;
+    font-size: 22px;
+    color: var(--color-text-dark);
     padding-bottom: 10px;
+    border-bottom: 1px solid var(--color-border);
     margin-bottom: 15px;
 }
-.command-card p {
+.command-card p { /* 説明文は削除し、リストに統一 */
     font-size: 16px;
-    line-height: 1.6;
+    color: var(--color-text-medium);
+}
+.command-card ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+}
+.command-card li {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 12px;
 }
 .command-card code {
     background-color: #e9ecef;
@@ -123,6 +307,9 @@ nav a:hover {
     border-radius: 4px;
     font-family: monospace;
     font-weight: 700;
+    font-size: 0.95em;
+    display: inline-block; /* codeタグのレイアウト調整 */
+    margin-bottom: 5px;
 }
 .admin-badge {
     display: inline-block;
@@ -134,11 +321,13 @@ nav a:hover {
     font-size: 12px;
     margin-left: 10px;
 }
+/* ========== ▲ コマンドカード用のスタイル ========== */
+
 
 /* ========== フッター ========== */
 footer {
     text-align: center;
-    padding: 20px 0;
+    padding: 30px 0;
     background-color: var(--color-text-dark);
     color: #cccccc;
     font-size: 14px;
@@ -149,93 +338,201 @@ footer a {
     margin: 0 10px;
 }
 
-/* ========== レスポンシブ対応 ========== */
+/* ========== モバイルCSS (768px以下) ========== */
 @media (max-width: 768px) {
-    nav {
+    .navbar .content-wrapper { padding: 0 15px; }
+    .navbar .logo { font-size: 22px; }
+    
+    .menu-toggle { display: block; } /* モバイルメニューボタンを表示 */
+    .navbar .nav-links { display: none !important; }
+
+    /* モバイルメニューのスタイル */
+    nav#main-nav {
         display: none;
+        position: fixed;
+        top: 60px; 
+        right: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-bg-alt);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        padding: 10px 0;
+        transition: transform 0.3s ease-out; 
+        transform: translateY(-100%);
+        z-index: 1005; /* 最前面 */
     }
-    header .container {
-        justify-content: center;
-    }
-    .back-link-container {
+    nav#main-nav.open {
         display: flex;
-        justify-content: center;
-        padding-top: 15px;
+        transform: translateY(0);
     }
-    .command-list-section {
-        padding: 40px 0;
+    nav#main-nav a {
+        padding: 12px 20px;
+        text-align: left;
+        width: 100%;
+        border-bottom: 1px solid var(--color-border);
+    }
+    nav#main-nav a:last-child { border-bottom: none; }
+    
+    header { padding: 80px 20px 80px; }
+    header h1 { font-size: 38px; }
+    header p { font-size: 16px; }
+
+    h2 { font-size: 32px; margin-bottom: 30px; }
+
+    .command-grid {
+        grid-template-columns: 1fr; /* モバイルでは1カラム */
     }
 }
     </style>
-</head>
-<body>
+    </head>
+<body id="top">
 
-    <header>
-        <div class="container">
-            <a href="index.html" class="logo">なんてつサーバー</a>
-            </div>
+    <nav class="navbar">
+        <div class="content-wrapper" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+            <a href="index.html" class="logo-link">
+                <div class="logo">なんてつサーバー</div>
+            </a>
+            
+            <button class="menu-toggle" id="menu-toggle" aria-label="メニューを開く">
+                <i class="fas fa="bars"></i>
+            </button>
+
+            <nav id="main-nav" class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> トップ</a>
+                <a href="index.html#about"><i class="fas fa-info-circle"></i> 概要</a>
+                <a href="index.html#rules-accordion">ルール</a>
+                <a href="command.html">コマンド一覧</a>
+				<a href="guide.html">FAQ</a>
+                <a href="terms.html">利用規約</a>
+                <a href="index.html#contact">お問い合わせ</a>
+                <a href="https://discord.gg/79H7Jy65nz" class="discord-nav-btn">Discordに参加</a>
+            </nav>
+        </div>
+    </nav>
+    <header id="hero" style="padding-top: 80px; padding-bottom: 80px;">
+        <div class="content-wrapper">
+            <h1 style="font-size: 42px;">コマンド一覧</h1>
+            <p style="margin-bottom: 0;">サーバー生活を便利にするコマンド</p>
+        </div>
     </header>
 
-    <div class="back-link-container container">
+    <section id="command-list" class="content-section">
+        <div class="content-wrapper">
 
-    </div>
-
-    <section class="command-list-section">
-        <div class="container">
-            <h2 class="section-title">コマンド一覧 (便利機能)</h2>
-			<p style="text-align: center; font-size: 1.1em; margin-top: -30px; margin-bottom: 50px; color: var(--color-text-medium);">
-    コマンドを使えば、サバイバル生活をより便利にすることができます。
-</p>
+            <h2><i class="fas fa-user"></i> プレイヤー用コマンド</h2>
+            <p style="text-align: center; max-width: 800px; margin: -30px auto 50px; font-size: 1.1em; color: var(--color-text-medium);">
+                サバイバル生活を便利にするためのコマンドです。
+            </p>
 
             <div class="command-grid">
                 
                 <div class="command-card">
-                    <h3>テレポート・移動系コマンド</h3>
+                    <h3><i class="fas fa-fw fa-running"></i> 移動・テレポート系 (Essentials)</h3>
                     <ul>
-                        <li><code>/tpa &lt;プレイヤー名&gt;</code>: 指定したプレイヤーにテレポートを**リクエスト**します。相手の承認が必要です。</li>
-                        <li><code>/back</code>: 最後にテレポートした場所、または死んだ場所に**戻る**ことができます。</li>
-                        <li><code>/home</code>: 設定した家に移動します。</li>
-                        <li><code>/sethome</code>: 現在いる場所をあなたの家として設定します。（初期設定：1箇所まで）</li>
-                        <li><code>/warp &lt;場所名&gt;</code>: 運営が設定した公共の場所（スポーン地点、マーケットなど）にワープします。</li>
+                        <li><code>/tpa &lt;プレイヤー名&gt;</code><br>指定したプレイヤーにテレポートを**リクエスト**します。</li>
+                        <li><code>/tpaccept</code><br><code>/tpa</code> のリクエストを承認します。</li>
+                        <li><code>/tpdeny</code><br><code>/tpa</code> のリクエストを拒否します。</li>
+                        <li><code>/back</code><br>最後にテレポートした場所、または死んだ場所に戻ります。</li>
+                        <li><code>/sethome</code><br>現在地を[ホーム名]として設定します。</li>
+                        <li><code>/home</code><br>設定したホームにテレポートします。</li>
+                        <li><code>/spawn</code><br>サーバーの初期スポーン地点に戻ります。</li>
+                        <li><code>/warp</code><br>運営が設定した公共施設へ移動します。</li>
                     </ul>
                 </div>
 
                 <div class="command-card">
-                    <h3>領地・保護・ログ系コマンド</h3>
+                    <h3><i class="fas fa-fw fa-shield-alt"></i> 領地・保護・ログ系 (Territory / Tianyan)</h3>
                     <ul>
-                        <li><code>/ty</code>: 新しい領地を作成します。（Territory Yesの略）</li>
-                        <li><code>/ty x y z &lt;時間&gt; &lt;半径&gt;</code>: 指定した座標・時間・半径の範囲で**監査ログ**を確認します。（上級者向け）</li>
-                        <li><code>/tygui</code>: 監査ログを**GUI（画面操作）**で確認します。（直感的でオススメ）</li>
-                        </ul>
-                </div>
-                
-                <div class="command-card">
-                    <h3>経済・コミュニケーション系コマンド</h3>
-                    <ul>
-                        <li><code>/e &lt;アクション&gt;</code>: チャットにアクションメッセージを送信します。（例: <code>/e happy</code>で「〇〇は楽しそうです」）</li>
-                        <li><code>/um pay &lt;プレイヤー名&gt; &lt;金額&gt;</code>: プレイヤーにお金を送金します。</li>
-                        <li><code>/um rank</code>: 所持金のランキングを確認します。</li>
-                        <li><code>/notice</code>: サーバーのお知らせ（イベント情報など）を確認します。</li>
-                        <li><code>/ping</code>: 自分のサーバーとのPing値を確認します。（遅延チェック）</li>
+                        <li><code>/tty</code><br>自分の領地として設定します。(事前に保護したい範囲の座標をメモする必要があります。)</li>
+                        <li><code>/tygui</code><br>監査ログを**GUI（画面操作）**で確認します。荒らしの特定に便利です。（Tianyan）</li>
+                        <li><code>/ty x y z &lt;時間&gt; &lt;半径&gt;</code><br>**チャット**で検索し監査ログを確認します。（上級者向け・Tianyan）</li>
                     </ul>
                 </div>
                 
                 <div class="command-card">
-                    <h3>管理者向けコマンド <span class="admin-badge">ADMIN</span></h3>
+                    <h3><i class="fas fa-fw fa-comments-dollar"></i> 経済・コミュニケーション (UMoney / Essentials)</h3>
                     <ul>
-                        <li><code>/broadcast &lt;メッセージ&gt;</code>: サーバー全体にブロードキャスト（全体通知）を送信します。</li>
-                        </ul>
+                        <li><code>/um</code><br>自分の所持金（マネー）を確認します。</li>
+                        <li><code>/um</code> → &lt;送金- ｵﾝﾗｲﾝ/ｵﾌﾗｲﾝプレイヤー&gt;<br>指定したプレイヤーにお金を送金します。</li>
+                        <li><code>/um</code> → &lt;お金ランキング&gt;<br>所持金のサーバー内ランキングを確認します。</li>
+                        <li><code>/msg &lt;プレイヤー名&gt; &lt;内容&gt;</code><br>指定したプレイヤーに個人メッセージ（DM）を送ります。</li>
+                        <li><code>/ping</code><br>サーバーとの接続遅延(Ping値)を確認します。</li>
+                        <li><code>/notice</code><br>サーバーからのお知らせを確認します。</li>
+                    </ul>
+                </div>
+
+                <div class="command-card">
+                    <h3><i class="fas fa-fw fa-theater-masks"></i> ロールプレイ系 (RolePlay)</h3>
+                    <ul>
+                        <li><code>/e &lt;アクション&gt;</code><br>チャットにアクション（感情表現）を送信します。（例: <code>/e happy</code>, <code>/e wave</code>）</li>
+                    </ul>
                 </div>
 
             </div>
+
+            <h2 style="margin-top: 80px;"><i class="fas fa-user-shield"></i> 管理者用コマンド</h2>
+            <p style="text-align: center; max-width: 800px; margin: -30px auto 50px; font-size: 1.1em; color: var(--color-text-medium);">
+                サーバーを管理・運営するためのコマンドです。（OP権限が必要）
+            </p>
+
+            <div class="command-grid">
+                <div class="command-card admin-card">
+                    <h3><i class="fas fa-fw fa-tools"></i> サーバー管理 (Essentials / U_Backup)</h3>
+                    <ul>
+                        <li><code>/broadcast &lt;メッセージ&gt;</code><br>サーバー全体にアナウンスを送信します。</li>
+                        <li><code>/kick &lt;プレイヤー名&gt; [理由]</code><br>プレイヤーをサーバーからキックします。</li>
+                        <li><code>/ban &lt;プレイヤー名&gt; [理由]</code><br>プレイヤーをBANします。</li>
+                        <li><code>/unban &lt;プレイヤー名&gt;</code><br>プレイヤーのBANを解除します。</li>
+                        <li><code>/gamemode &lt;モード&gt; [プレイヤー]</code><br>ゲームモードを変更します。</li>
+                        <li><code>/tp &lt;対象&gt; [目的地]</code><br>プレイヤーを強制的にテレポートさせます。</li>
+                        <li><code>/backup</code><br>サーバーデータのバックアップを作成します。(U_Backup)</li>
+                    </ul>
+                </div>
+
+                <div class="command-card admin-card">
+                    <h3><i class="fas fa-fw fa-money-check-alt"></i> 経済・領地管理 (UMoney / Territory)</h3>
+                    <ul>
+                        <li><code>/um</code> → &lt;ﾌﾟﾚｲﾔｰの経済を管理&gt; → &lt;ﾌﾟﾚｲﾔｰ名&gt; → &lt;経済を変更&gt;<br>プレイヤーの所持金を指定した額に設定します。</li>
+                        <li><code>/optty set if_[bomb/break/build/damage/jiaohu/tp] false/true</code><br>他人の領地を強制的に管理します。</li>
+                        <li><code>/optty reload</code><br>領地プラグインの設定をリロードします。</li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
     </section>
-
     <footer>
-        <div class="container">
-            <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="index.html#contact">お問い合わせ</a></p>
+        <div class="content-wrapper">
+            <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="index.html#contact">お問い合わせ</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="terms.html">利用規約</a></p>
         </div>
     </footer>
-
-</body>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // モバイルメニューの開閉機能
+        const menuToggle = document.getElementById('menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+        if (menuToggle && mainNav) {
+            menuToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('open');
+                const icon = menuToggle.querySelector('i');
+                if (mainNav.classList.contains('open')) {
+                    icon.classList.replace('fa-bars', 'fa-times');
+                } else {
+                    icon.classList.replace('fa-times', 'fa-bars');
+                }
+            });
+            // メニューリンククリックで閉じる
+            mainNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('open');
+                        menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+                    }
+                });
+            });
+        }
+    });
+    </script>
+    </body>
 </html>

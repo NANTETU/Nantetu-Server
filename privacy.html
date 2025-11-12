@@ -3,33 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>プライバシーポリシー | なんてつサーバー</title>
-    <link rel="icon" href="/icon.png" type="image/png">
+    <title>プライバシーポリシー | なんてつサーバー 🌈</title>
+	<meta property="og:title" content="なんてつサーバー | プライバシーポリシー">
+	<meta property="og:description" content="なんてつサーバーのプライバシーポリシー（個人情報保護方針）についてのページです。">
+    <meta property="og:type" content="website">
+	<meta property="og:url" content="https://youtube.com/@なんてつ"><meta property="og:image" content="https://minecraft-mcworld.com/wp-content/uploads/maxresdefault-1-2b750d65.jpg"><meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="/icon.jpg" type="image/jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display.swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
     <style>
+/* ========== カラーと基本設定 (V3) ========== */
 :root {
     --color-primary: #5E35B1;
+    --color-secondary: #FFC107;
+    
     --color-bg-base: #f8f9fa;
+    --color-bg-alt: #ffffff;
     --color-text-dark: #212529;
     --color-text-medium: #6c757d;
-    --color-discord: #5865F2;
     --color-border: #dee2e6;
+    
+    --color-discord: #5865F2;
+    --color-success: #198754;
+    --color-error: #dc3545; /* エラーカラーを追加 */
+
+    --radius-default: 8px;
+    --shadow-subtle: 0 4px 12px rgba(0,0,0,0.05);
+    --shadow-lift: 0 10px 25px rgba(0,0,0,0.08);
 }
+
+/* ナビゲーションのジャンプをなめらかにする */
+html {
+    scroll-behavior: smooth;
+}
+
+
+/* キーボード操作時のフォーカスカラーをサイトのメインカラーに統一 */
+a:focus, button:focus, input:focus, textarea:focus, .quiz-option:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* 送信完了メッセージのカスタムスタイル (最終版) */
+.submission-success-message {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0;
+    border: none;
+    border-radius: none;
+    background-color: transparent;
+}
+.submission-success-message h2 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* hiddenクラスの定義を追記 */
+.hidden {
+    display: none !important;
+}
+
 body {
     font-family: 'Noto Sans JP', sans-serif;
     margin: 0;
-    background: #ffffff; /* 白を基調に */
+    background: var(--color-bg-base);
     color: var(--color-text-dark);
-    line-height: 2.0; /* 行間を広めに */
-    font-size: 16px;
+    line-height: 1.8;
+    overflow-x: hidden;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
 }
 a { color: var(--color-primary); text-decoration: none; transition: all 0.2s ease; }
 a:hover { color: #4527a0; }
 
+/* ========== ナビゲーションバー (V3) ========== */
 .navbar {
     position: sticky;
     top: 0;
@@ -42,6 +95,15 @@ a:hover { color: #4527a0; }
     justify-content: space-between;
     align-items: center;
     padding: 14px 40px;
+}
+.navbar .logo-link {
+    text-decoration: none;
+    color: var(--color-text-dark);
+    cursor: pointer;
+    display: flex;
+}
+.navbar .logo-link:hover {
+    opacity: 0.8;
 }
 .navbar .logo {
     font-family: 'Noto Sans JP', sans-serif;
@@ -61,112 +123,342 @@ a:hover { color: #4527a0; }
     color: var(--color-primary);
     background: rgba(94, 53, 177, 0.05);
 }
-
-.content-wrapper {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 60px 20px 100px;
+.discord-nav-btn {
+    padding: 8px 15px;
+    background: var(--color-discord);
+    color: white !important;
+    border-radius: var(--radius-default);
+    font-weight: 700 !important;
+    font-size: 15px;
+    transition: all 0.3s;
 }
-h1 {
+.discord-nav-btn:hover {
+    background: #6D77F9;
+    box-shadow: 0 4px 10px rgba(88, 101, 242, 0.2);
+}
+
+/* モバイルメニューのトグルボタン */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--color-primary);
+    cursor: pointer;
+    padding: 0;
+    z-index: 1006; /* ボタンが最前面にくるように */
+}
+
+/* ========== ヘッダー (V4 - 画像実装) ========== */
+header {
+    position: relative;
+    text-align: center;
+    padding: 100px 20px 100px;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
+                url('banner.jpg') no-repeat center center;
+    background-size: cover;
+    background-position: center top; /* 上端を基準に画像を配置 */
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5); /* 文字を見やすく */
+    box-shadow: none;
+    margin-bottom: 0;
+}
+header h1 {
     font-family: 'Noto Sans JP', sans-serif;
     font-weight: 900;
-    font-size: 36px;
-    color: var(--color-primary);
-    border-bottom: 3px solid var(--color-primary);
-    padding-bottom: 15px;
-    margin-bottom: 40px;
-    text-align: center;
+    font-size: 58px; 
+    margin: 0;
 }
-h2 {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-weight: 800;
-    font-size: 28px;
-    margin-top: 50px;
+header p {
+    font-size: 20px;
+    opacity: 0.9;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+/* ========== CTAボタン (V3) ========== */
+.action-btn, .submit-btn, .join-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    border: none;
+    box-shadow: var(--shadow-subtle);
+}
+.join-btn {
+    background: var(--color-secondary);
     color: var(--color-text-dark);
 }
-p {
-    margin-bottom: 25px;
+.join-btn:hover {
+    background: #FFD550;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
 }
-footer {
-    text-align: center; 
-    padding: 40px 0; 
-    background: var(--color-bg-base); 
-    color: var(--color-text-medium); 
-    font-size: 14px;
-    border-top: 1px solid var(--color-border);
-}
-.social-links a {
-    margin: 0 15px;
-    font-size: 24px;
-    color: var(--color-text-medium);
-}
-.social-links a:hover {
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.95);
     color: var(--color-primary);
+    border: 1px solid #fff;
+    box-shadow: none;
+    border-radius: var(--radius-default); /* ボタンの角を丸くする */
+    padding: 12px 25px; /* サイズ調整 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
+.secondary-btn:hover {
+    background: #fff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-subtle);
+}
+
+/* ========== セクションの基本スタイル (V3) ========== */
+section {
+    position: relative;
+    width: 100%;
+    padding: 80px 0;
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--color-border);
+}
+/* ▼ 規約ページは白背景で統一 */
+section:nth-child(even) { background: var(--color-bg-alt); }
+section:nth-child(odd) { background: var(--color-bg-alt); }
+
+.content-wrapper { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+/* ▼ 規約ページ用に max-width を調整 */
+.policy-wrapper {
+    max-width: 900px; 
+    margin: 0 auto; 
+    padding: 0 20px; 
+}
+
+h2 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 900;
+    color: var(--color-text-dark);
+    padding-bottom: 15px;
+    margin-bottom: 50px;
+    font-size: 38px;
+    text-align: center;
+    position: relative;
+}
+h2::after {
+    content: '';
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: var(--color-primary);
+    border-radius: 2px;
+    margin: 15px auto 0;
+}
+h3 {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    color: var(--color-primary);
+    font-size: 24px;
+    margin-top: 40px; /* h3の上下マージン調整 */
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 5px;
+}
+/* ========== テキストコンテンツ用のスタイル ========== */
+.policy-content {
+    background: var(--color-bg-alt);
+    padding: 30px 40px;
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-subtle);
+}
+.policy-content p, .policy-content li {
+    font-size: 16px;
+    line-height: 2.0; /* 行間を広めに */
+    margin-bottom: 15px;
+}
+.policy-content ul {
+    padding-left: 20px;
+}
+
+/* ========== フッター ========== */
+footer {
+    text-align: center;
+    padding: 30px 0;
+    background-color: var(--color-text-dark);
+    color: #cccccc;
+    font-size: 14px;
+}
+footer a {
+    color: #ffffff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+/* ========== モバイルCSS (768px以下) ========== */
 @media (max-width: 768px) {
-    .navbar { padding: 12px 15px; }
-    .content-wrapper { padding: 40px 15px 80px; }
-    h1 { font-size: 30px; }
-    h2 { font-size: 24px; }
+    .navbar .content-wrapper { padding: 0 15px; }
+    .navbar .logo { font-size: 22px; }
+    
+    .menu-toggle { display: block; } /* モバイルメニューボタンを表示 */
+    .navbar .nav-links { display: none !important; }
+
+    /* モバイルメニューのスタイル */
+    nav#main-nav {
+        display: none;
+        position: fixed;
+        top: 60px; 
+        right: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-bg-alt);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        padding: 10px 0;
+        transition: transform 0.3s ease-out; 
+        transform: translateY(-100%);
+        z-index: 1005; /* 最前面 */
+    }
+    nav#main-nav.open {
+        display: flex;
+        transform: translateY(0);
+    }
+    nav#main-nav a {
+        padding: 12px 20px;
+        text-align: left;
+        width: 100%;
+        border-bottom: 1px solid var(--color-border);
+    }
+    nav#main-nav a:last-child { border-bottom: none; }
+    
+    header { padding: 80px 20px 80px; }
+    header h1 { font-size: 38px; }
+    header p { font-size: 16px; }
+
+    h2 { font-size: 32px; margin-bottom: 30px; }
+    h3 { font-size: 20px; }
+
+    .policy-content {
+        padding: 20px;
+    }
 }
     </style>
-</head>
-<body>
-<nav class="navbar">
-    <a href="index.html#top" class="logo-link">
-        <div class="logo">なんてつサーバー</div>
-    </a>
-    <div class="nav-links">
-	        <a href="index.html"><i class="fas fa-home"></i> ホーム</a>
-            <a href="index.html#contact" class="discord-nav-btn"><i class="fas fa-headset"></i> お問い合わせ</a>
+    </head>
+<body id="top">
+
+    <nav class="navbar">
+        <div class="content-wrapper" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+            <a href="index.html" class="logo-link">
+                <div class="logo">なんてつサーバー</div>
+            </a>
+            
+            <button class="menu-toggle" id="menu-toggle" aria-label="メニューを開く">
+                <i class="fas fa="bars"></i>
+            </button>
+
+            <nav id="main-nav" class="nav-links">
+                <a href="index.html"><i class="fas fa-home"></i> トップ</a>
+                <a href="index.html#about"><i class="fas fa-info-circle"></i> 概要</a>
+                <a href="index.html#rules-accordion">ルール</a>
+                <a href="command.html">コマンド一覧</a>
+				<a href="guide.html">FAQ</a>
+                <a href="terms.html">利用規約</a>
+                <a href="index.html#contact">お問い合わせ</a>
+                <a href="https://discord.gg/79H7Jy65nz" class="discord-nav-btn">Discordに参加</a>
+            </nav>
         </div>
-</nav>
+    </nav>
+    <header id="hero" style="padding-top: 80px; padding-bottom: 80px;">
+        <div class="content-wrapper">
+            <h1 style="font-size: 42px;">プライバシーポリシー</h1>
+            <p style="margin-bottom: 0;">個人情報保護方針</p>
+        </div>
+    </header>
+    <section id="policy-main" class="content-section">
+        <div class="policy-wrapper">
+            
+            <div class="policy-content">
+                <p>「なんてつサーバー」（以下、「当サーバー」）は、プレイヤーの皆様の個人情報の重要性を認識し、その保護を徹底するために、以下のプライバシーポリシーを定めます。</p>
 
-    <div class="content-wrapper">
-        <h1>プライバシーポリシー</h1>
-
-        <p>「なんてつサーバー」（以下、「当サーバー」）は、プレイヤーの皆様の個人情報の重要性を認識し、その保護を徹底するために、以下のプライバシーポリシーを定めます。</p>
-
-        <h2>1. 取得する情報とその利用目的</h2>
-        <p>当サーバーでは、サービス提供のために以下の情報を取得し、それぞれの目的のみに利用します。</p>
+                <h3>1. 取得する情報とその利用目的</h3>
+                <p>当サーバーでは、サービス提供のために以下の情報を取得し、それぞれの目的のみに利用します。</p>
+                
+                <h4>1-1. ゲーム内情報</h4>
+                <ul>
+                    <li><strong>取得情報:</strong> Minecraftのプレイヤー名 (ID)、ゲーム内の操作ログ、チャットログ、接続元IPアドレス。</li>
+                    <li><strong>利用目的:</strong> 荒らし行為の特定と防止、サービス品質の維持、規約違反者の処罰、サーバー接続障害の調査。</li>
+                </ul>
         
-        <h3>1-1. ゲーム内情報</h3>
-        <ul>
-            <li><strong>取得情報:</strong> Minecraftのプレイヤー名 (ID)、ゲーム内の操作ログ、チャットログ、接続元IPアドレス。</li>
-            <li><strong>利用目的:</strong> 荒らし行為の特定と防止、サービス品質の維持、規約違反者の処罰、サーバー接続障害の調査。</li>
-        </ul>
-
-        <h3>1-2. お問い合わせフォーム情報</h3>
-        <ul>
-            <li><strong>取得情報:</strong> お問い合わせフォームに入力されたお名前（プレイヤー名）、Discordタグ、お問い合わせ内容。</li>
-            <li><strong>利用目的:</strong> お問い合わせへの対応、本人確認、サポート提供。</li>
-        </ul>
-
-        <h2>2. 情報の第三者提供について</h2>
-        <p>当サーバーは、法令に基づく場合や、プレイヤーの生命・身体または財産の保護のために必要な場合を除き、**プレイヤーの同意なく第三者に個人情報を提供することはありません。**</p>
-
-        <h2>3. 情報の管理と保護</h2>
-        <p>当サーバーは、取得した情報の漏洩、紛失、不正利用を防止するため、適切なセキュリティ対策を講じて厳重に管理します。ログ情報などの機密性の高い情報は、限定された運営メンバーのみがアクセスできる環境で管理されます。</p>
-
-        <h2>4. 外部サービスについて</h2>
-        <p>当サーバーは、サーバー監視のため外部API（mcstatus.ioなど）を利用していますが、プレイヤーの個人情報（氏名、住所など）をこれらの外部サービスに送信することはありません。</p>
+                <h4>1-2. お問い合わせフォーム情報</h4>
+                <ul>
+                    <li><strong>取得情報:</strong> お問い合わせフォームに入力されたお名前（プレイヤー名）、Discordタグ、お問い合わせ内容。</li>
+                    <li><strong>利用目的:</strong> お問い合わせへの対応、本人確認、サポート提供。</li>
+                </ul>
         
-        <h2>5. 本ポリシーの変更</h2>
-        <p>本ポリシーの内容は、法令の改正、サーバーの運営方針の変更等に伴い、予告なく変更されることがあります。変更後のプライバシーポリシーは、本ウェブサイトに掲載された時点から効力を生じるものとします。</p>
-
-        <h2 id="contact-info">6. お問い合わせ窓口</h2>
-        <p>本ポリシーに関するご質問は、以下の連絡先へお問い合わせください。</p>
-        <p>運営連絡先: <a href="mailto:nantetu2@gmail.com">nantetu2@gmail.com</a></p>
-
-        <p style="text-align: right; font-size: 14px; margin-top: 50px;">制定日: 2025年11月9日</p>
-    </div>
-
+                <h3>2. 情報の第三者提供について</h3>
+                <p>当サーバーは、法令に基づく場合や、プレイヤーの生命・身体または財産の保護のために必要な場合を除き、**プレイヤーの同意なく第三者に個人情報を提供することはありません。**</p>
+        
+                <h3>3. 情報の管理と保護</h3>
+                <p>当サーバーは、取得した情報の漏洩、紛失、不正利用を防止するため、適切なセキュリティ対策を講じて厳重に管理します。ログ情報などの機密性の高い情報は、限定された運営メンバーのみがアクセスできる環境で管理されます。</p>
+        
+                <h3>4. 外部サービスについて</h3>
+                <p>当サーバーは、サーバー監視のため外部API（mcstatus.ioなど）を利用していますが、プレイヤーの個人情報（氏名、住所など）をこれらの外部サービスに送信することはありません。</p>
+                
+                <h3>5. 本ポリシーの変更</h3>
+                <p>本ポリシーの内容は、法令の改正、サーバーの運営方針の変更等に伴い、予告なく変更されることがあります。変更後のプライバシーポリシーは、本ウェブサイトに掲載された時点から効力を生じるものとします。</p>
+        
+                <h3 id="contact-info">6. お問い合わせ窓口</h3>
+                <p>本ポリシーに関するご質問は、以下の連絡先へお問い合わせください。</p>
+                <p>運営連絡先: <a href="mailto:nantetu2@gmail.com">nantetu2@gmail.com</a></p>
+        
+                <p style="text-align: right; font-size: 14px; margin-top: 50px; color: var(--color-text-medium);">制定日: 2025年11月9日</p>
+            </div>
+            
+        </div>
+    </section>
     <footer>
-        <div class="social-links" style="margin-bottom: 10px;">
-            <a href="https://youtube.com/@なんてつ" target="_blank" title="YouTube"><i class="fab fa-youtube" style="color: #FF0000;"></i></a>
-            <a href="https://x.com/nantetu123" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter" style="color: #000000;"></i></a>
+        <div class="content-wrapper">
+            <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="index.html#contact">お問い合わせ</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="terms.html">利用規約</a></p>
         </div>
-        | <a href="privacy.html" style="color: inherit;">プライバシーポリシー</a> | Not an official Minecraft server. | © 2025 なんてつサーバー
     </footer>
-</body>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // モバイルメニューの開閉機能
+        const menuToggle = document.getElementById('menu-toggle');
+        const mainNav = document.getElementById('main-nav');
+        if (menuToggle && mainNav) {
+            menuToggle.addEventListener('click', () => {
+                mainNav.classList.toggle('open');
+                const icon = menuToggle.querySelector('i');
+                if (mainNav.classList.contains('open')) {
+                    icon.classList.replace('fa-bars', 'fa-times');
+                } else {
+                    icon.classList.replace('fa-times', 'fa-bars');
+                }
+            });
+            // メニューリンククリックで閉じる
+            mainNav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 768) {
+                        mainNav.classList.remove('open');
+                        menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+                    }
+                });
+            });
+        }
+        
+        // スムーズスクロール (このページではあまり使わないが念のため)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            if (anchor.getAttribute('href') === '#') return;
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    });
+    </script>
+    </body>
 </html>
