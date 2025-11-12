@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>なんてつサーバー 🌈</title>
-	<meta property="og:title" content="なんてつサーバー | 統合版サバイバルサーバー">
-	<meta property="og:description" content="2025年9月開始！ゆるいサバイバルと建築が楽しめる、統合版完全対応のサバイバルサーバーです。荒らし対策も万全。">
-	<meta property="og:type" content="website">
+    <title>なんてつサーバー 🌈 | 参加方法ガイド</title>
+	<meta property="og:title" content="なんてつサーバー | 参加方法ガイド">
+	<meta property="og:description" content="画像付きで解説！なんてつサーバーへの参加手順をステップバイステップでご案内します。">
+    <meta property="og:type" content="website">
 	<meta property="og:url" content="https://youtube.com/@なんてつ"><meta property="og:image" content="https://minecraft-mcworld.com/wp-content/uploads/maxresdefault-1-2b750d65.jpg"><meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="/icon.jpg" type="image/jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display.swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
 /* ========== カラーと基本設定 (V3) ========== */
@@ -537,6 +537,67 @@ h3 {
     margin-top: 10px;
 }
 
+/* ▼▼▼ guide.htmlからステップリストのCSSを追加 ▼▼▼
+*/
+.step-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* 間隔を少し広げる */
+}
+.step-item {
+    background-color: var(--color-bg-alt);
+    padding: 30px;
+    border-left: 5px solid var(--color-secondary);
+    border-radius: var(--radius-default);
+    box-shadow: var(--shadow-subtle);
+    display: flex; /* Flexboxで内容と画像を横並びにする */
+    align-items: flex-start;
+}
+.step-item:nth-child(even) {
+    flex-direction: row-reverse; /* 偶数番目は画像とテキストを逆順にする */
+}
+
+.step-item-content {
+    flex-basis: 60%; /* テキストエリアの幅 */
+    padding-right: 20px;
+}
+.step-item:nth-child(even) .step-item-content {
+    padding-right: 0;
+    padding-left: 20px;
+    text-align: right;
+}
+/* h3のスタイルは既存のものと競合しないよう調整 */
+.step-item h3 {
+    margin-top: 0;
+    color: var(--color-text-dark);
+    font-size: 22px;
+}
+.step-item h3 span {
+    color: var(--color-secondary);
+    font-size: 30px;
+    font-weight: 900;
+    margin-right: 15px;
+}
+
+.step-image {
+    flex-basis: 40%; /* 画像エリアの幅 */
+    min-width: 200px;
+    text-align: center;
+}
+.step-image img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: var(--radius-default);
+    object-fit: cover;
+    box-shadow: var(--shadow-lift);
+}
+/* ▲▲▲ guide.htmlからステップリストのCSSを追加 ▲▲▲
+*/
+
+
 /* ========== フッター ========== */
 footer {
     text-align: center;
@@ -556,7 +617,10 @@ footer a {
     .navbar .content-wrapper { padding: 0 15px; }
     .navbar .logo { font-size: 22px; }
     
-    .menu-toggle { display: none; }
+    /* ▼ モバイルメニューのトグルボタンの表示 (index.htmlから修正)
+        .menu-toggle { display: none; } -> .menu-toggle { display: block; }
+    */
+    .menu-toggle { display: block; } 
     .navbar .nav-links { display: none !important; }
 
     /* モバイルメニューのスタイル */
@@ -614,6 +678,29 @@ footer a {
         order: 2; /* 接続情報を下に移動 */
     }
 
+    /* ▼▼▼ guide.htmlからモバイル用CSSを追加 ▼▼▼
+    */
+    .step-item {
+        flex-direction: column !important; /* モバイルでは縦並びに戻す */
+    }
+    .step-item-content {
+        flex-basis: auto;
+        padding: 0;
+        text-align: left !important;
+    }
+    .step-item h3 {
+        text-align: left;
+    }
+    .step-item-content p {
+        /* モバイルでのテキストの右寄せを解除 */
+        text-align: left !important;
+    }
+    .step-image {
+        flex-basis: auto;
+        padding-top: 20px;
+    }
+    /* ▲▲▲ guide.htmlからモバイル用CSSを追加 ▲▲▲
+    */
 }
 
 /* 🚨 クリックバグ修正のz-index調整を統合 */
@@ -632,7 +719,7 @@ footer a {
 
     <nav class="navbar">
         <div class="content-wrapper" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
-            <a href="#hero" class="logo-link">
+            <a href="index.html" class="logo-link">
                 <div class="logo">なんてつサーバー</div>
             </a>
             
@@ -641,265 +728,129 @@ footer a {
             </button>
 
             <nav id="main-nav" class="nav-links">
-                <a href="#about"><i class="fas fa-info-circle"></i> 概要</a>
-                <a href="#rules-accordion">ルール</a>
+                <a href="index.html#about"><i class="fas fa-info-circle"></i> 概要</a>
+                <a href="index.html#rules-accordion">ルール</a>
                 <a href="command.html">コマンド一覧</a>
-				<a href="guide.html">ガイド</a>
-				<a href="news.php"><i class="fas fa-bullhorn"></i> ニュース</a>
+				<a href="guide.html">FAQ</a>
                 <a href="terms.html">利用規約</a>
-                <a href="#contact">お問い合わせ</a>
+                <a href="index.html#contact">お問い合わせ</a>
                 <a href="https://discord.gg/79H7Jy65nz" class="discord-nav-btn">Discordに参加</a>
             </nav>
-        </div>
+            </div>
     </nav>
 
     <header id="hero">
         <div class="content-wrapper">
-            <h1>"ゆるい"だけじゃない。誰もが楽しめて、　確かな技術。</h1>
-            <p>荒らし対策・高機能プラグイン完備。安定したサーバー環境で、あなただけの生活を始めよう。</p>
-            <a href="#join" class="action-btn join-btn">今すぐ参加する</a>
-			
-        </div>
+            <h1>サーバーへの参加方法</h1>
+            <p>画像付きでステップバイステップで解説！<br>どちらかの方法でサーバーに参加してください。</p>
+            <a href="#join-guide" class="action-btn join-btn">参加手順を見る</a>
+            </div>
     </header>
 
-    <section id="about" class="content-section">
+    <section id="join-guide" class="content-section">
         <div class="content-wrapper">
-            <h2 id="about-title">なんてつサーバーの概要</h2>
-            <div class="about-layout">
-                <div class="about-text">
-                    <p>なんてつサーバーは、**統合版で統合版の常識を覆す。Java版級の機能とクオリティ**を最大の強みとする、サバイバル重視のコミュニティサーバーです。</p>
-                    <p>運営が**専用プラグイン**を用いてサーバーを常に監視・保護しており、チートや荒らし行為に対して対応できる体制を整えています。安心安全な環境で、自由な建築とサバイバルを存分にお楽しみください。</p>
-                    <p>初心者の方も大歓迎！ Discordコミュニティでいつでも質問や交流が可能です。ぜひ、私たちの「ゆるい」けれど**確かな安心感**のある生活に参加してみませんか？</p>
-                    <p class="stat-description" style="margin-top: 25px;"><strong>🚨 サーバー稼働実績:</strong> <br>2025年9月のサーバー開始から、安定した運営を続けています。 (最終更新日: 2025年11月10日)</p>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="number">150+</div>
-                        <div class="description">累計参加者数</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="number">70%</div>
-                        <div class="description">常連率</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="number">99.9%</div>
-                        <div class="description">サーバー稼働率</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="number">15+</div>
-                        <div class="description">最大同時接続数</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="features" class="content-section">
-        <div class="content-wrapper">
-        <h2 style="font-size: 42px; color: #5E35B1;"><i class="fas fa-star"></i> プレイ環境の特徴</h2>
-        <ul class="feature-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; list-style: none; padding: 0; text-align: center;">
-            <li class="contact-card" style="padding: 30px; background: #fff3e0; border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s;">
-                <i class="fas fa-shield-alt" style="font-size: 40px; color: #FF9800; margin-bottom: 15px;"></i>
-                <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">強力な荒らし対策</h3>
-                <p>土地保護、監査ログ、ロールバック機能完備。大切な建築は100%守られます。</p>
-            </li>
-            <li class="contact-card" style="padding: 30px; background: #e0f7fa; border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s;">
-                <i class="fas fa-plane" style="font-size: 40px; color: #00ACC1; margin-bottom: 15px;"></i>
-                <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">便利なテレポート機能</h3>
-                <p>`/tpa`や`/home`､`/warp` などの生活系コマンドで長距離移動のストレスを解消。</p>
-            </li>
-            <li class="contact-card" style="padding: 30px; background: #f1f8e9; border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s;">
-                <i class="fas fa-link" style="font-size: 40px; color: #7CB342; margin-bottom: 15px;"></i>
-                <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">統合版完全対応</h3>
-                <p>あらゆるデバイスが同じサーバーで遊べます。さらに、統合版のためJava版の仕様は全くありません。</p>
-            </li>
-            <li class="contact-card" style="padding: 30px; background: #fffde7; border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s;">
-                <i class="fas fa-money-bill-wave" style="font-size: 40px; color: #FDD835; margin-bottom: 15px;"></i>
-                <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">シンプルな経済システム</h3>
-                <p>通貨プラグインを導入。経済要素はありますが、ほとんどバニラのまま。</p>
-            </li>
-            <li class="contact-card" style="padding: 30px; background: #e8f5e9; border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s;">
-                <i class="fas fa-tachometer-alt" style="font-size: 40px; color: #43A047; margin-bottom: 15px;"></i>
-                <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">超低遅延</h3>
-                <p>快適サーバーでストレスフリー。サバイバルも建築もスムーズに楽しめます。</p>
-            </li>
-            <li class="contact-card" style="padding: 30px; background: #fff0f5; border-radius: 20px; transition: transform 0.3s, box-shadow 0.3s;">
-                <i class="fas fa-hands-helping" style="font-size: 40px; color: #EC407A; margin-bottom: 15px;"></i>
-                <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">初心者歓迎</h3>
-                <p>サーバー内は優しい人ばかりで初めてでも安心。質問も気軽にどうぞ。</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="join" class="content-section">
-        <div class="content-wrapper">
-            <h2 class="section-title">参加方法 🎮</h2>
+            <h2><i class="fas fa-gamepad"></i> サーバーへの参加手順</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 50px;">
+                サーバーへの参加方法は2種類あります。「サーバーを追加」する方法が最もおすすめです。
+            </p>
             
-            <div class="join-layout">
-                
-                <div>
-                    <div id="howToJoinDiv" class="card-large">
-                        <h3 class="card-title" style="color: var(--color-primary);"><i class="fas fa-globe"></i> サーバー接続情報</h3>
+            <ul class="step-list">
+
+                <li class="step-item">
+                    <div class="step-item-content">
+                        <h3><span>方法1.</span> フレンドから参加 (推奨)</h3>
+                        <p>「プレイ」から「ソーシャル」を押し、「プレイヤーを探す」を選択します。</p>
+                        <p><code>nantetu5877<code>を入力して検索し、フレンド申請を送ってください。数秒後、承認されると、「ワールド」タブにサーバーが表示されます。</p>
+                        
+                        <div style="padding: 20px; margin-top: 20px; background: var(--color-bg-base); border-radius: var(--radius-default); border: 1px solid var(--color-border);">
+                            <div class="gamer-tag-copy-container" style="margin-bottom: 0;">
+                                <p>ゲーマータグ</p>
+                                <div class="gamer-tag-copy-item">
+                                    <span id="registeredGamerTag" class="copy-text">nantetu5877</span>
+                                    <button id="copyGamerTag" class="btn-copy"><i class="fas fa-copy"></i> コピー</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p style="margin-top: 15px;"><strong>注意:</strong> この方法は障害などにより自動で承認されない場合があります。その際は、お手数ですが 方法2 で参加をしてください。</p>
+                    </div>
+                    <div class="step-image">
+                        <img src="step_friend.jpg" alt="フレンド追加画面" loading="lazy">
+                    </div>
+                </li>
+				
+                <li class="step-item">
+                    <div class="step-item-content">
+                        <h3><span>方法2.</span> サーバーを追加</h3>
+                        <p>Minecraftを起動し、「プレイ」から「サーバー」タブを開きます。一番下までスクロールし、「サーバーを追加」ボタンを押してください。</p>
+                        <p>以下の情報を入力して「保存」します。リストにサーバーが追加されたら、選択して「サーバーに参加」を押してください。</p>
+                        
+                        <div style="padding: 20px; margin-top: 20px; background: var(--color-bg-base); border-radius: var(--radius-default); border: 1px solid var(--color-border);">
                             <div id="server-status" style="font-weight: 700; margin-bottom: 20px;">
-        <i class="fas fa-spinner fa-spin" style="color: var(--color-text-medium);"></i> 状態確認中...
-    </div>
-						<p>以下の情報を使って、マインクラフトからサーバーに参加してください。</p>
-
-                        <div class="gamer-tag-copy-container">
-                            <p>ゲーマータグ</p>
-                            <div class="gamer-tag-copy-item">
-                                <span id="registeredGamerTag" class="copy-text">nantetu5877</span>
-                                <button id="copyGamerTag" class="btn-copy"><i class="fas fa-copy"></i> コピー</button>
+                                <i class="fas fa-spinner fa-spin" style="color: var(--color-text-medium);"></i> 状態確認中...
                             </div>
-                        </div>
-                        
-                        <div class="join-info-grid">
-                            <div class="join-info-item">
-                                <p>IPアドレス</p>
-                                <div class="ip-copy-container">
-                                    <span id="ipAddress" class="copy-text">nantetu123.f5.si</span>
-                                    <button id="copyIP" class="btn-copy"><i class="fas fa-copy"></i> コピー</button>
+                            
+                            <div class="join-info-grid">
+                                <div class="join-info-item">
+                                    <p>IPアドレス</p>
+                                    <div class="ip-copy-container">
+                                        <span id="ipAddress" class="copy-text">nantetu123.f5.si</span>
+                                        <button id="copyIP" class="btn-copy"><i class="fas fa-copy"></i> コピー</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="join-info-item">
-                                <p>ポート番号</p>
-                                <div class="port-copy-container">
-                                    <span id="portNumber" class="copy-text">5346</span>
-                                    <button id="copyPort" class="btn-copy"><i class="fas fa-copy"></i> コピー</button>
+                                <div class="join-info-item">
+                                    <p>ポート番号</p>
+                                    <div class="port-copy-container">
+                                        <span id="portNumber" class="copy-text">5346</span>
+                                        <button id="copyPort" class="btn-copy"><i class="fas fa-copy"></i> コピー</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <p style="margin-top: 20px;">※ アドレスから参加する場合は「サーバーを追加」、フレンドから参加する場合は「プレイヤーを探す」から申請して参加してください。</p>
                         
-                        <a href="Join_Info.html" class="action-btn secondary-btn" style="margin-top: 20px; background-color: white; border: 1px solid var(--color-border); color: var(--color-primary);">
-                            <i class="fas fa-images"></i> 画像付きの参加手順を見る
-                        </a>
-                        </div>
-                </div>
+                    </div>
+                    <div class="step-image">
+                        <img src="step_server.jpg" alt="サーバー情報入力画面" loading="lazy">
+                    </div>
+                </li>
 
-                <div class="join-image-container">
-                    <img src="join_info.png" alt="サーバー参加画面のイメージ" loading="lazy">
-                </div>
-            </div>
+                <li class="step-item">
+                    <div class="step-item-content">
+                        <h3><span>完了!</span> サーバーへようこそ！</h3>
+                        <p>サーバーに参加したら、まずはチャットに送信されるルールを見ましょう。</p>
+                        <p>ルールを理解したら、建築場所を探しに移動してください。わからないことがあれば、Discordやチャットで質問しましょう！</p>
+                        <p>コマンド <code>/warp</code> で、様々な公共施設への移動も可能です。</p>
+                        <p style="margin-top: 20px;">
+                            <a href="guide.html" class="action-btn secondary-btn" style="margin-right: 10px; background-color: white; border: 1px solid var(--color-border); color: var(--color-primary);">よくある質問 (FAQ)</a>
+                            <a href="command.html" class="action-btn secondary-btn" style="background-color: white; border: 1px solid var(--color-border); color: var(--color-primary);">コマンド一覧</a>
+                        </p>
+                    </div>
+                    <div class="step-image">
+                        <img src="step_spawn.jpg" alt="サーバーのスポーン地点の様子" loading="lazy">
+                    </div>
+                </li>
+
+            </ul>
         </div>
     </section>
-
-    <section id="rules-accordion" class="content-section">
-        <div class="content-wrapper">
-            <h2>サーバーのルール</h2>
-            <div class="accordion-container">
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span>第1条: 荒らし行為・窃盗・チートの禁止</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li>他プレイヤーの所有物（建築物、チェスト内のアイテム）の破壊、窃盗、無断使用は永久BANの対象です。</li>
-                            <li>テクスチャパック以外の改造クライアント、チート、BOTの使用は禁止します。</li>
-                            <li>発見したバグやグリッチは悪用せず、速やかに運営に報告してください。</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span>第2条: 迷惑行為・ハラスメントの禁止</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li>他プレイヤーへの差別的発言、誹謗中傷、過度なハラスメント行為を禁止します。</li>
-                            <li>サーバーへの過度な負荷をかける行為（クロック回路の放置など）は禁止します。</li>
-                            <li>その他、他のプレイヤーが不快に感じる行為は、運営の判断でペナルティの対象となります。</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <div class="accordion-header">
-                        <span>第3条: 建造物・景観に関するルール</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="accordion-content">
-                        <ul>
-                            <li>景観を著しく損なう建築物（豆腐、巨大な柱など）は、改善を求められる場合があります。</li>
-                            <li>プレイヤーが定住しているエリアから最低5ブロック離れた場所に建築を開始してください。</li>
-                            <li>公序良俗に反するシンボルやメッセージを含む建築物は禁止します。</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 50px;">
-                <p><strong>ルールを理解したことを確認するため、簡単なクイズに挑戦してください。</strong></p>
-                <button id="start-quiz-button" class="action-btn secondary-btn">ルール確認クイズを始める</button>
-            </div>
-
-            <div id="quiz-section" class="card-large" style="margin-top: 30px;">
-                <h3 style="margin-top: 0; color: var(--color-text-dark);">ルール確認クイズ</h3>
-                <div id="quiz-container">
-                    <p id="question-text">クイズがここに表示されます...</p>
-                    <div id="options-container" class="quiz-options">
-                        </div>
-                    <p id="result-div" style="margin-top: 20px; font-weight: 700;"></p>
-                    <button id="next-quiz-button" class="action-btn join-btn" style="display: none; margin-top: 15px;">次へ</button>
-                </div>
-            </div>
-
-        </div>
-    </section>
-	
-	
-
-    <section id="contact" class="content-section">
-        <div class="content-wrapper">
-            <h2>お問い合わせ・報告</h2>
-            <p class="section-description" style="text-align: center;">荒らし報告、バグ報告、運営への質問など、お気軽にご連絡ください。</p>
-
-            <div class="contact-card">
-                <form id="contactForm" class="contact-form">
-                    <input type="text" id="name" name="name" placeholder="お名前" required>
-                    <input type="email" id="email" name="email" placeholder="メールアドレス/DiscordID" required>
-                    <textarea id="message" name="message" placeholder="メッセージ内容" rows="6" required></textarea>
-                    <button type="submit" class="submit-btn">送信する</button>
-                    <p id="contactFormStatus" class="form-message"></p>
-                </form>
-				
-				
-				
-				
-
-                <div id="successMessage" class="submission-success-message hidden">
-                    <i class="fas fa-check-circle" style="font-size: 60px; color: var(--color-success); margin-bottom: 20px;"></i>
-                    <h2 style="color: var(--color-text-dark);">送信完了しました！</h2>
-                    <p style="color: var(--color-text-medium);">メッセージありがとうございます。内容を確認後、必要に応じて運営からご連絡させていただきます。</p>
-                    <a href="#top" class="action-btn join-btn" style="margin-top: 20px;">トップに戻る</a>
-					
-				
-                </div>
-				
-            </div>
-        </div>
-    </section>
-    
     <footer>
         <div class="content-wrapper">
-            <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="#contact">お問い合わせ</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="terms.html">利用規約</a></p>
-        </div>
+            <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="index.html#contact">お問い合わせ</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="terms.html">利用規約</a></p>
+            </div>
     </footer>
 
     <script>
+	
 document.addEventListener('DOMContentLoaded', function() {
-    
     // ====================================================================
     // 0. グローバル変数とユーティリティ
     // ====================================================================
+    // CSS変数の値を取得するヘルパー関数
     const varColor = (name) => getComputedStyle(document.documentElement).getPropertyValue(`--color-${name}`).trim();
     
     // モバイルメニューの開閉機能
     const menuToggle = document.getElementById('menu-toggle');
     const mainNav = document.getElementById('main-nav');
-
     if (menuToggle && mainNav) {
         menuToggle.addEventListener('click', () => {
             mainNav.classList.toggle('open');
@@ -915,7 +866,7 @@ document.addEventListener('DOMContentLoaded', function() {
         mainNav.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 // 画面幅がモバイルサイズ（768px以下）の場合のみ閉じる
-                if (window.innerWidth <= 768) { 
+                if (window.innerWidth <= 768) {
                     mainNav.classList.remove('open');
                     menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
                 }
@@ -927,7 +878,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // 1. ルールのアコーディオン機能の定義
     // ====================================================================
     const accordionHeaders = document.querySelectorAll('.accordion-header');
-
     accordionHeaders.forEach(header => {
         header.addEventListener('click', () => {
             const content = header.nextElementSibling;
@@ -938,93 +888,57 @@ document.addEventListener('DOMContentLoaded', function() {
                 content.classList.remove('open');
                 header.classList.remove('active');
                 const icon = header.querySelector('i');
-                if (icon) {
-                    icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-                }
+                if (icon) { icon.classList.replace('fa-chevron-up', 'fa-chevron-down'); }
             } else {
                 // 開く処理
+                content.style.maxHeight = content.scrollHeight + "px";
                 content.classList.add('open');
-                content.style.maxHeight = content.scrollHeight + 'px';
                 header.classList.add('active');
                 const icon = header.querySelector('i');
-                if (icon) {
-                    icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
-                }
+                if (icon) { icon.classList.replace('fa-chevron-down', 'fa-chevron-up'); }
             }
         });
     });
 
-
     // ====================================================================
-    // 2. お問い合わせフォーム機能
+    // 2. コピー機能の定義
     // ====================================================================
+    const copyElements = [
+        { id: 'copyGamerTag', text: 'nantetu5877', type: 'ゲーマータグ' },
+        { id: 'copyIP', text: 'nantetu123.f5.si', type: 'IPアドレス' },
+        /* ▼ ポート番号を index.html (5346) に合わせる (script内の 5877 は古い情報)
+        */
+        { id: 'copyPort', text: '5346', type: 'ポート番号' } 
+    ];
 
-    // お問い合わせフォーム
-    const contactForm = document.getElementById('contactForm');
-    const contactFormStatus = document.getElementById('contactFormStatus');
-    const successMessage = document.getElementById('successMessage');
-    const contactCard = document.querySelector('#contact .contact-card');
-    
-    const GAS_CONTACT_URL = "https://script.google.com/macros/s/AKfycbwK4H-T1QiP1iZlKXBx5lb9R6NPnkDgX-yXY-M_NnRE9nIiytJyPIEnSE1w4TVN--VhTg/exec"; 
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-
-            contactFormStatus.textContent = '🔄 送信処理中...';
-            contactFormStatus.style.color = varColor('text-medium');
-            submitButton.disabled = true;
-
-            const formData = new FormData(contactForm);
-
-            fetch(GAS_CONTACT_URL, {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors'
-            })
-            .then(() => {
-                // 成功時の処理
-                contactForm.classList.add('hidden');
-                successMessage.classList.remove('hidden');
-                
-                // カードの高さを調整して、成功メッセージを中央に表示
-                if (contactCard) {
-                    contactCard.style.height = `${contactForm.offsetHeight}px`;
-                    contactCard.style.transition = 'height 0.5s ease-out';
-                }
-            })
-            .catch(error => {
-                console.error('お問い合わせフォーム送信エラー:', error);
-                contactFormStatus.textContent = '⚠️ 送信に失敗しました。メールアドレスまたはDiscordから直接ご連絡ください。';
-                contactFormStatus.style.color = varColor('error');
-                submitButton.disabled = false;
-            });
+    function copyText(text, buttonId) {
+        navigator.clipboard.writeText(text).then(() => {
+            const button = document.getElementById(buttonId);
+            if (!button) return; // このページにボタンがなければ何もしない
+            const originalIcon = button.innerHTML;
+            
+            // コピー成功時のフィードバック
+            button.innerHTML = '<i class="fas fa-check"></i> コピー完了!';
+            button.style.backgroundColor = varColor('success'); 
+            
+            setTimeout(() => {
+                button.innerHTML = originalIcon; // アイコンを元に戻す
+                button.style.backgroundColor = ''; // 背景色を元に戻す
+            }, 1500);
+        }).catch(err => {
+            console.error('コピー失敗: ', err);
+            alert('コピーに失敗しました。お手数ですが手動でコピーしてください。');
         });
     }
 
     // ====================================================================
-    // 3. クイズ機能
+    // 3. ルールクイズ機能の定義
     // ====================================================================
-
     const quizData = [
-        {
-            question: "【第1条】他人の建築物を無断で破壊・窃盗した場合、どうなりますか？",
-            options: ["見つからなければ問題ない", "運営が警告する", "永久BANの対象となる"],
-            answer: "永久BANの対象となる"
-        },
-        {
-            question: "【第2条】ゲーム内で他のプレイヤーに対して差別的な発言をしました。これは許可されますか？",
-            options: ["サーバーの負荷にならないので許可される", "他のプレイヤーの不快感に関わるため禁止される", "個人的なやり取りなら問題ない"],
-            answer: "他のプレイヤーの不快感に関わるため禁止される"
-        },
-        {
-            question: "【第3条】自分の拠点を作る際、他のプレイヤーの拠点に近すぎる場合、最低何ブロック離れるべきですか？",
-            options: ["10ブロック", "50ブロック", "100ブロック"],
-            answer: "10ブロック"
-        }
+        { question: "資源を無制限に確保するため、無限増殖バグを利用するのは？", options: ["許可されている", "禁止されている"], answer: 1 },
+        { question: "他のプレイヤーの建築物を許可なく改変・破壊する行為は？", options: ["許可されている", "禁止されている"], answer: 1 },
+        { question: "放置（AFK）は？", options: ["許可されている", "過度な放置は禁止されている"], answer: 1 }
     ];
-
     let currentQuizIndex = 0;
     let quizCompleted = false;
 
@@ -1032,95 +946,85 @@ document.addEventListener('DOMContentLoaded', function() {
     const quizSection = document.getElementById('quiz-section');
     const questionText = document.getElementById('question-text');
     const optionsContainer = document.getElementById('options-container');
-    const resultDiv = document.getElementById('result-div');
+    const resultDiv = document.getElementById('quiz-result');
     const nextButton = document.getElementById('next-quiz-button');
 
     function loadQuiz() {
-        if (quizCompleted) return;
-
-        const currentQuiz = quizData[currentQuizIndex];
-        questionText.textContent = `Q${currentQuizIndex + 1}: ${currentQuiz.question}`;
+        if (quizCompleted || !questionText) return; // 要素がなければ実行しない
+        const quiz = quizData[currentQuizIndex];
+        
+        questionText.textContent = `【第${currentQuizIndex + 1}問】 ${quiz.question}`;
         optionsContainer.innerHTML = '';
         resultDiv.textContent = '';
         nextButton.style.display = 'none';
 
-        currentQuiz.options.forEach(option => {
-            const optionElement = document.createElement('div');
-            optionElement.classList.add('quiz-option');
-            optionElement.textContent = option;
-            optionElement.tabIndex = 0; // キーボード操作可能にする
-            optionElement.addEventListener('click', () => checkAnswer(option, currentQuiz.answer, optionElement));
-            optionElement.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') checkAnswer(option, currentQuiz.answer, optionElement);
+        quiz.options.forEach((optionText, index) => {
+            const option = document.createElement('div');
+            option.classList.add('quiz-option');
+            option.textContent = optionText;
+            option.tabIndex = 0; // キーボード操作可能に
+            
+            option.addEventListener('click', () => handleAnswer(index, quiz.answer, option));
+            option.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleAnswer(index, quiz.answer, option);
+                }
             });
-            optionsContainer.appendChild(optionElement);
+            optionsContainer.appendChild(option);
         });
     }
 
-    function checkAnswer(selected, correct, element) {
-        if (quizCompleted) return;
+    function handleAnswer(selectedIndex, correctAnswerIndex, selectedOptionElement) {
+        if (quizCompleted || !optionsContainer) return; // 要素がなければ実行しない
+        
+        const options = optionsContainer.querySelectorAll('.quiz-option');
+        options.forEach(opt => {
+            opt.removeEventListener('click', handleAnswer); // 二重回答防止
+            opt.style.pointerEvents = 'none'; // クリック無効化
+            opt.tabIndex = -1; // キーボード操作無効化
 
-        const allOptions = optionsContainer.querySelectorAll('.quiz-option');
-        allOptions.forEach(opt => {
-            opt.removeEventListener('click', () => {});
-            opt.classList.remove('quiz-option:hover');
-            opt.style.pointerEvents = 'none'; // 他の選択肢をクリック不可に
-        });
-
-        if (selected === correct) {
-            element.classList.add('correct');
-            resultDiv.textContent = '正解です！';
-            resultDiv.style.color = varColor('success');
-            nextButton.style.display = 'block';
-        } else {
-            element.classList.add('incorrect');
-            const correctElement = Array.from(allOptions).find(opt => opt.textContent === correct);
-            if (correctElement) {
-                correctElement.classList.add('correct');
+            // 正解・不正解の色付け
+            if (options.length > 0) { // オプションが存在することを確認
+                if (parseInt(opt.textContent.trim().split(' ')[0]) === selectedIndex + 1) { // 選択された要素の確認
+                    if (selectedIndex === correctAnswerIndex) {
+                        selectedOptionElement.classList.add('correct');
+                    } else {
+                        selectedOptionElement.classList.add('incorrect');
+                    }
+                } else if (index === correctAnswerIndex) { // 正解の要素の確認
+                    // 正解を緑色にする
+                    opt.classList.add('correct');
+                }
             }
-            resultDiv.textContent = '不正解です。ルールを再確認しましょう。';
+        });
+        
+        if (selectedIndex === correctAnswerIndex) {
+            resultDiv.textContent = '⭕ 正解です！';
+            resultDiv.style.color = varColor('success');
+        } else {
+            resultDiv.textContent = '❌ 不正解です。ルールを再確認しましょう。';
             resultDiv.style.color = varColor('error');
-            // 不正解でも次に進めるようにする（強制ではないため）
-            nextButton.style.display = 'block'; 
+        }
+
+        // 最終問題でなければ次へボタンを表示
+        if (currentQuizIndex < quizData.length - 1) {
+            nextButton.style.display = 'block';
+            nextButton.focus(); // キーボード操作のためにフォーカスを移動
+        } else {
+            // 最終問題の場合、ボタンのテキストを「終了」に変更
+            nextButton.textContent = 'クイズを終了する';
+            nextButton.style.display = 'block';
+            nextButton.focus();
         }
     }
 
 
     // ====================================================================
-    // 4. イベントリスナー（その他） - コピー機能のみに簡素化
+    // 4. イベントリスナー（その他）
     // ====================================================================
 
-    // ゲーマータグの値を固定
-    const FIXED_GAMER_TAG = 'nantetu5877';
-
-    // 全てのコピー要素と対応するテキストを定義
-    let copyElements = [
-        { id: 'copyGamerTag', text: FIXED_GAMER_TAG }, // ゲーマータグを固定
-        { id: 'copyIP', text: 'nantetu123.f5.si' },
-        { id: 'copyPort', text: '5346' }
-    ];
-
-    function copyText(textToCopy, elementId) {
-        if (!textToCopy) return;
-
-        navigator.clipboard.writeText(textToCopy)
-            .then(() => {
-                const button = document.getElementById(elementId);
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i class="fas fa-check"></i> コピー完了!';
-                button.style.backgroundColor = varColor('success');
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.style.backgroundColor = ''; 
-                }, 1500);
-            })
-            .catch(err => {
-                console.error('コピー失敗:', err);
-                alert('コピーに失敗しました。手動でコピーしてください: ' + textToCopy);
-            });
-    }
-    
-    // 全てのコピーボタンにイベントリスナーを設定
+    // コピー機能のイベントリスナー
     copyElements.forEach(item => {
         const element = document.getElementById(item.id);
         if (element) {
@@ -1150,19 +1054,43 @@ document.addEventListener('DOMContentLoaded', function() {
                 quizCompleted = true;
                 questionText.textContent = "🥳 クイズ終了！お疲れ様でした。";
                 optionsContainer.innerHTML = '';
-                resultDiv.textContent = 'すべてのルールを確認できましたね！これで安心して参加できます！';
+                resultDiv.textContent = 'すべてのルールを確認できましたね！';
                 resultDiv.style.color = varColor('primary');
                 nextButton.style.display = 'none';
             }
         });
     }
-	
+
+    // ====================================================================
+    // 5. スムーズスクロールの強制適用
+    // ====================================================================
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        // リンクがフォーム送信を目的としていないことを確認
+        if (anchor.getAttribute('href') === '#') return;
+
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault(); // デフォルトのジャンプ動作をキャンセル
+
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth', // なめらかスクロールを指定
+                    block: 'start'      // 常に上端に合わせる
+                });
+            }
+        });
+    });
+
 // ====================================================================
 // 6. サーバー状態の初期ロードとポーリング (統合版対応)
 // ====================================================================
 
 const SERVER_IP = 'nantetu123.f5.si'; 
+// 統合版（Bedrock）のデフォルトポート19132を指定
 const BEDROCK_PORT = '5346'; 
+// APIのURLを統合版のエンドポイントに変更
 const SERVER_STATUS_API = `https://api.mcsrvstat.us/bedrock/2/${SERVER_IP}:${BEDROCK_PORT}`; 
 
 const serverStatusDiv = document.getElementById('server-status');
@@ -1213,11 +1141,9 @@ fetchServerStatus();
 
 // 30秒ごとに更新
 setInterval(fetchServerStatus, 30000);
-    
-;
-    
-});
-    </script>
+
+}); // DOMContentLoaded 終了
+</script>
 
 </body>
 </html>
