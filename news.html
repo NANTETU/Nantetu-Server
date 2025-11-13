@@ -421,7 +421,7 @@ footer a {
     </footer>
     <script>
         // ★★★ 【重要】ここにPart 2でデプロイしたあなたのGAS WebアプリのURLを貼り付けてください ★★★
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxtUxOya_ekYBptUNncsW9Wz7B2j-Rjqj0boAuUotMWn0paoEpxPtCNC6cX35W7E9qywQ/exec '; 
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxemEOnSsmeGY5V4JxapLyZd28MYCJJBRzWxg4-OWKM9JnkrD2xlie_UmY7RTDoyHEItw/exec '; 
 
         const newsListContainer = document.getElementById('news-list');
 
@@ -448,7 +448,7 @@ footer a {
 
         async function fetchAndRenderNews() {
             // URLが設定されていない場合は処理を中断
-            if (GAS_WEB_APP_URL.includes('【あなたのGAS WebアプリURLを貼り付け】')) {
+            if (GAS_WEB_APP_URL.includes('https://script.google.com/macros/s/AKfycbxemEOnSsmeGY5V4JxapLyZd28MYCJJBRzWxg4-OWKM9JnkrD2xlie_UmY7RTDoyHEItw/exec ')) {
                  newsListContainer.innerHTML = `
                     <div class="news-item error-item">
                         <h3>設定エラー</h3>
@@ -554,3 +554,4 @@ footer a {
 </body>
 
 </html>
+
