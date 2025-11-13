@@ -446,18 +446,6 @@ footer a {
             return date.toLocaleDateString('ja-JP', options);
         }
 
-        async function fetchAndRenderNews() {
-            // URLが設定されていない場合は処理を中断
-            if (GAS_WEB_APP_URL.includes(' ')) {
-                 newsListContainer.innerHTML = `
-                    <div class="news-item error-item">
-                        <h3>設定エラー</h3>
-                        <p>GAS_WEB_APP_URLが正しく設定されていません。コード内のURLを置き換えてください。</p>
-                    </div>
-                `;
-                return;
-            }
-
             try {
                 const response = await fetch(GAS_WEB_APP_URL);
                 const newsData = await response.json();
@@ -554,5 +542,6 @@ footer a {
 </body>
 
 </html>
+
 
 
