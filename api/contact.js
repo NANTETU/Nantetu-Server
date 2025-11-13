@@ -1,4 +1,4 @@
-// api/contact.js (Vercel API Route - お問い合わせフォーム用)
+// api/contact.js (最終修正版)
 
 // サーバー側の Node.js 環境で実行されます
 export default async (req, res) => {
@@ -10,7 +10,7 @@ export default async (req, res) => {
         return;
     }
 
-    // クライアントから送られたPOSTデータ (JSON) を取得
+    // クライアントから送られたPOSTデータ (JSONオブジェクト) を取得
     const requestBody = req.body; 
 
     // 取得したデータをそのままGAS Webアプリに転送
@@ -21,7 +21,7 @@ export default async (req, res) => {
                 // GASは 'Content-Type': 'application/json' でデータを受け取る
                 'Content-Type': 'application/json' 
             },
-            // クライアントから受け取ったJSONデータをそのままGASに渡す
+            // 受け取ったJSONオブジェクトを、文字列に変換してGASに渡す (GASのdoPostの仕様に合わせる)
             body: JSON.stringify(requestBody) 
         });
         
