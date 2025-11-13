@@ -448,7 +448,7 @@ footer a {
 
         async function fetchAndRenderNews() {
             // URLが設定されていない場合は処理を中断
-            if (GAS_WEB_APP_URL.includes('https://script.google.com/macros/s/AKfycbxemEOnSsmeGY5V4JxapLyZd28MYCJJBRzWxg4-OWKM9JnkrD2xlie_UmY7RTDoyHEItw/exec ')) {
+            if (GAS_WEB_APP_URL.includes(' ')) {
                  newsListContainer.innerHTML = `
                     <div class="news-item error-item">
                         <h3>設定エラー</h3>
@@ -554,4 +554,5 @@ footer a {
 </body>
 
 </html>
+
 
