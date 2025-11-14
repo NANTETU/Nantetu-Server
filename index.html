@@ -353,13 +353,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // 2. お問い合わせフォーム機能
     // ====================================================================
 
-    // お問い合わせフォーム
+    document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contactForm');
     const contactFormStatus = document.getElementById('contactFormStatus');
     const successMessage = document.getElementById('successMessage');
     const contactCard = document.querySelector('#contact .contact-card');
     
-    const DISCORD_WEBHOOK_URL = "/api/contact"; 
+    // VercelのAPIルートへのパス
+    const API_ENDPOINT_URL = "/api/contact"; 
+
+    // varColor関数が未定義の場合のエラー防止（環境に合わせて修正してください）
+    const varColor = (name) => {
+        // デバッグ用のダミー関数。実際はCSS変数から色を取得する関数が入ります
+        if (name === 'text-medium') return '#999';
+        if (name === 'error') return '#D00';
+        return '#000';
+    };
+
 
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
@@ -371,31 +381,53 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.disabled = true;
 
             const formData = new FormData(contactForm);
-
-            fetch(DISCORD_WEBHOOK_URL, {
+            
+            // 💡 FormDataをJSONオブジェクトに変換
+            const dataToSend = {};
+            for (const [key, value] of formData.entries()) {
+                // フォームの name 属性と Vercel側が期待するキー名が一致していることを確認
+                dataToSend[key] = value;
+            }
+            
+            // --- API送信処理 ---
+            fetch(API_ENDPOINT_URL, {
                 method: 'POST',
-                body: formData,
-                mode: 'no-cors'
+                // 💡 JSON形式で送信するためのヘッダー
+                headers: {
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(dataToSend) // 構築したJSONを文字列にして送信
             })
-            .then(() => {
+            .then(response => {
+                // HTTPステータスが200番台以外の場合はエラーを投げる
+                if (!response.ok) {
+                    // Vercelが返したエラーメッセージを取得
+                    return response.json().then(errorData => {
+                        throw new Error(`HTTP Error! Status: ${response.status}. Message: ${errorData.message || 'Unknown server error.'}`);
+                    });
+                }
+                return response.json(); 
+            })
+            .then(data => {
                 // 成功時の処理
                 contactForm.classList.add('hidden');
                 successMessage.classList.remove('hidden');
                 
-                // カードの高さを調整して、成功メッセージを中央に表示
                 if (contactCard) {
+                    // カードの高さを調整して、成功メッセージを中央に表示
                     contactCard.style.height = `${contactForm.offsetHeight}px`;
                     contactCard.style.transition = 'height 0.5s ease-out';
                 }
             })
             .catch(error => {
                 console.error('送信エラー:', error);
-                contactFormStatus.textContent = '⚠️ 送信に失敗しました。メールアドレスまたはDiscordから直接ご連絡ください。';
+                contactFormStatus.textContent = '⚠️ 送信に失敗しました。詳細: ' + error.message;
                 contactFormStatus.style.color = varColor('error');
                 submitButton.disabled = false;
             });
         });
     }
+});
 
     // ====================================================================
     // 3. クイズ機能
@@ -612,14 +644,5 @@ setInterval(fetchServerStatus, 30000);
     
 });
     </script>
-
 </body>
-
 </html>
-
-
-
-
-
-
-
