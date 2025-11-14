@@ -1,7 +1,8 @@
-// api/contact.js (Discord Webhook直結版)
+// api/contact.js (Vercel / Next.js API Route)
 
 // サーバー側の Node.js 環境で実行されます
 export default async (req, res) => {
+    // 秘匿されたDiscord Webhook URLを環境変数から取得
     const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 
     if (!WEBHOOK_URL) {
@@ -10,23 +11,28 @@ export default async (req, res) => {
     }
 
     // 💡 1. req.body が存在しない/空の場合を考慮
-    const requestBody = req.body || {}; // bodyがundefinedの場合、空のオブジェクト {} を使用
+    const requestBody = req.body || {}; 
 
     // 💡 2. データが存在しない場合はエラーを返す
+    // フロントエンドのキー名と一致することを確認してください
     if (!requestBody.player_name || !requestBody.message) {
-        return res.status(400).json({ status: 'error', message: 'Missing required data (player_name or message) in request body.' });
+        // 400 Bad Request を返す
+        return res.status(400).json({ 
+            status: 'error', 
+            message: 'Missing required data (player_name or message) in request body.' 
+        });
     }
     
     // Discordに送信するJSONペイロードを構築
     const payload = {
-        username: "なんてつサーバー お問い合わせフォーム",
+        username: "お問い合わせ",
         embeds: [
             {
-                // ... (中略) ...
+                title: "新しいお問い合わせが届きました 📩",
+                color: 3719089, // 紫色
+                description: `**Discordにて順次対応をお願いします。**`,
                 fields: [
-                    // 💡 3. オプショナルチェーンまたは論理ORを使って安全にプロパティにアクセス
                     { name: "👤 お名前 / プレイヤー名", value: requestBody.player_name || 'N/A', inline: true },
-                    // requestBodyがundefinedになることはなくなったので、簡略化できます
                     { name: "👾 Discord Tag", value: requestBody.discord_tag || 'N/A', inline: true },
                     { 
                         name: "📋 お問い合わせ内容",
@@ -47,17 +53,19 @@ export default async (req, res) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload) // 構築したペイロードを送信
+            body: JSON.stringify(payload)
         });
         
         // DiscordのWebhookは成功時 204 No Content を返す
         if (discordResponse.status === 204 || discordResponse.status === 200) {
+            // 成功をフロントエンドに返す
             res.status(200).json({ status: 'success', message: 'Form submitted successfully via Discord Webhook.' });
         } else {
-            // Discordがエラーコードを返した場合
+            // Discord側でエラーが発生した場合
             const errorText = await discordResponse.text();
             console.error("Discord Webhook Error:", discordResponse.status, errorText);
-            res.status(500).json({ status: 'error', message: `Discord Webhook failed: ${discordResponse.status}` });
+            // 500 Internal Server Errorを返す
+            res.status(500).json({ status: 'error', message: `Failed to post to Discord. Status: ${discordResponse.status}. Details: ${errorText.substring(0, 100)}` });
         }
 
     } catch (error) {
