@@ -2,7 +2,6 @@
 
 // サーバー側の Node.js 環境で実行されます
 export default async (req, res) => {
-    // 秘匿されたDiscord Webhook URLを環境変数から取得
     const WEBHOOK_URL = process.env.DISCORD_WEBHOOK_URL;
 
     if (!WEBHOOK_URL) {
@@ -10,21 +9,24 @@ export default async (req, res) => {
         return;
     }
 
-    // クライアントから送られたPOSTデータ (JSONオブジェクト) を取得
-    const requestBody = req.body;
+    // 💡 1. req.body が存在しない/空の場合を考慮
+    const requestBody = req.body || {}; // bodyがundefinedの場合、空のオブジェクト {} を使用
+
+    // 💡 2. データが存在しない場合はエラーを返す
+    if (!requestBody.player_name || !requestBody.message) {
+        return res.status(400).json({ status: 'error', message: 'Missing required data (player_name or message) in request body.' });
+    }
     
     // Discordに送信するJSONペイロードを構築
-    // 💡 GASで使っていたロジックをNode.js (Vercel) に移植します
     const payload = {
         username: "なんてつサーバー お問い合わせフォーム",
         embeds: [
             {
-                title: "新しいお問い合わせが届きました 📩",
-                color: 3719089,
-                description: `**Discordにて順次対応をお願いします。**`,
+                // ... (中略) ...
                 fields: [
-                    // requestBodyが { player_name: "...", discord_tag: "...", message: "..." } の構造を想定
+                    // 💡 3. オプショナルチェーンまたは論理ORを使って安全にプロパティにアクセス
                     { name: "👤 お名前 / プレイヤー名", value: requestBody.player_name || 'N/A', inline: true },
+                    // requestBodyがundefinedになることはなくなったので、簡略化できます
                     { name: "👾 Discord Tag", value: requestBody.discord_tag || 'N/A', inline: true },
                     { 
                         name: "📋 お問い合わせ内容",
