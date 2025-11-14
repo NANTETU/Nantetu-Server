@@ -3,10 +3,10 @@
 // サーバー側の Node.js 環境で実行されます
 export default async (req, res) => {
     // 秘匿されたGASのURLを環境変数から取得
-    const GAS_URL = process.env.GAS_WEB_APP_URL;
+    const GAS_URL = process.env.GAS_CONTACT_URL;
 
     if (!GAS_URL) {
-        res.status(500).json({ error: 'Server configuration error: GAS_WEB_APP_URL is not set.' });
+        res.status(500).json({ error: 'Server configuration error: GAS_CONTACT_URL is not set.' });
         return;
     }
 
