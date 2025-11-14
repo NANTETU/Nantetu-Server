@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const formData = new FormData(contactForm);
 
-            fetch(GAS_CONTACT_URL {
+            fetch(GAS_CONTACT_URL, {
                 method: 'POST',
                 body: formData,
                 mode: 'no-cors'
@@ -616,6 +616,7 @@ setInterval(fetchServerStatus, 30000);
 </body>
 
 </html>
+
 
 
 
