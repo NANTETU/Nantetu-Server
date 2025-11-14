@@ -359,7 +359,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const successMessage = document.getElementById('successMessage');
     const contactCard = document.querySelector('#contact .contact-card');
     
-    const GAS_CONTACT_URL = "/api/contact"; 
+    const DISCORD_WEBHOOK_URL = "/api/contact"; 
 
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
@@ -372,7 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const formData = new FormData(contactForm);
 
-            fetch(GAS_CONTACT_URL, {
+            fetch(DISCORD_WEBHOOK_URL, {
                 method: 'POST',
                 body: formData,
                 mode: 'no-cors'
@@ -616,6 +616,7 @@ setInterval(fetchServerStatus, 30000);
 </body>
 
 </html>
+
 
 
 
