@@ -95,10 +95,6 @@ a:hover { color: #4527a0; }
     font-size: 26px;
     color: var(--color-primary);
 }
-.navbar .nav-links a.active-nav-link { 
-    color: var(--color-primary);
-    background: rgba(94, 53, 177, 0.1); 
-}
 .navbar .nav-links a {
     color: var(--color-text-dark);
     font-weight: 700;
@@ -111,6 +107,13 @@ a:hover { color: #4527a0; }
     color: var(--color-primary);
     background: rgba(94, 53, 177, 0.05);
 }
+
+/* ★ JSでアクティブになったリンクに適用するスタイル (必須) */
+.navbar .nav-links a.active-nav-link { 
+    color: var(--color-primary);
+    background: rgba(94, 53, 177, 0.1); 
+}
+
 .discord-nav-btn {
     padding: 8px 15px;
     background: var(--color-discord);
@@ -127,16 +130,50 @@ a:hover { color: #4527a0; }
 
 /* モバイルメニューのトグルボタン */
 .menu-toggle {
-    display: none; /* デスクトップでは非表示 */
+    display: none;
     background: none;
     border: none;
     font-size: 24px;
     color: var(--color-primary);
     cursor: pointer;
     padding: 0;
-    z-index: 1006; /* ボタンが最前面にくるように */
+    z-index: 1006; 
 }
 
+/* モバイルメニューのスタイル (768px以下用) */
+@media (max-width: 768px) {
+    .navbar .content-wrapper { padding: 0 15px; }
+    .navbar .logo { font-size: 22px; }
+    
+    .menu-toggle { display: block; } 
+    .navbar .nav-links { display: none !important; } /* デフォルトで非表示 */
+
+    nav#main-nav {
+        display: flex; /* JavaScriptで制御するため、ここを flex に変更 */
+        position: fixed;
+        top: 60px; /* ナビバーの高さに合わせて調整 */
+        right: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--color-bg-alt);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        padding: 10px 0;
+        transition: transform 0.3s ease-out; 
+        transform: translateY(-100%);
+        z-index: 1005; 
+    }
+    nav#main-nav.open {
+        transform: translateY(0);
+    }
+    nav#main-nav a {
+        padding: 12px 20px;
+        text-align: left;
+        width: 100%;
+        border-bottom: 1px solid var(--color-border);
+    }
+    nav#main-nav a:last-child { border-bottom: none; }
+}
 /* ========== クイズセクションのスタイル (index.html) ========== */
 .quiz-options {
     display: flex;
@@ -895,4 +932,5 @@ footer a {
     position: relative; 
     z-index: 1001; 
 }
+
 
