@@ -17,35 +17,15 @@
     </head>
 <body id="top">
 
-    <nav class="navbar">
-        <div class="content-wrapper" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
-            <a href="index.html" class="logo-link">
-                <div class="logo">なんてつサーバー</div>
-            </a>
-            
-            <button class="menu-toggle" id="menu-toggle" aria-label="メニューを開く">
-                <i class="fas fa="bars"></i>
-            </button>
+<div id="header-placeholder"></div>
+<script src="_inject_header.js"></script>
 
-            <nav id="main-nav" class="nav-links">
-                <a href="index.html"><i class="fas fa-home"></i> トップ</a>
-                <a href="index.html#about"><i class="fas fa-info-circle"></i> 概要</a>
-                <a href="index.html#rules-accordion">ルール</a>
-                <a href="command.html">コマンド一覧</a>
-				<a href="guide.html">ガイド</a>
-				<a href="news.html"><i class="fas fa-bullhorn"></i> お知らせ</a>
-                <a href="terms.html">利用規約</a>
-                <a href="index.html#contact">お問い合わせ</a>
-                <a href="https://discord.gg/79H7Jy65nz" class="discord-nav-btn">Discordに参加</a>
-            </nav>
-        </div>
-    </nav>
-    <header id="hero" style="padding-top: 80px; padding-bottom: 80px;">
-        <div class="content-wrapper">
-            <h1 style="font-size: 42px;">コマンド一覧</h1>
-            <p style="margin-bottom: 0;">サーバー生活を便利にするコマンド</p>
-        </div>
-    </header>
+<header id="hero" style="padding-top: 80px; padding-bottom: 80px;">
+    <div class="content-wrapper">
+        <h1 style="font-size: 42px;">コマンド一覧</h1>
+        <p style="margin-bottom: 0;">サーバー生活を便利にするコマンド</p>
+    </div>
+</header>
 
     <section id="command-list" class="content-section">
         <div class="content-wrapper">
@@ -132,38 +112,12 @@
 
         </div>
     </section>
-    <footer>
-        <div class="content-wrapper">
-            <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="index.html#contact">お問い合わせ</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="terms.html">利用規約</a></p>
-        </div>
-    </footer>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // モバイルメニューの開閉機能
-        const menuToggle = document.getElementById('menu-toggle');
-        const mainNav = document.getElementById('main-nav');
-        if (menuToggle && mainNav) {
-            menuToggle.addEventListener('click', () => {
-                mainNav.classList.toggle('open');
-                const icon = menuToggle.querySelector('i');
-                if (mainNav.classList.contains('open')) {
-                    icon.classList.replace('fa-bars', 'fa-times');
-                } else {
-                    icon.classList.replace('fa-times', 'fa-bars');
-                }
-            });
-            // メニューリンククリックで閉じる
-            mainNav.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 768) {
-                        mainNav.classList.remove('open');
-                        menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
-                    }
-                });
-            });
-        }
-    });
-    </script>
+<footer>
+    <div class="content-wrapper">
+        <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="/#contact">お問い合わせ</a> | <a href="privacy">プライバシーポリシー</a> | <a href="terms">利用規約</a></p>
+    </div>
+</footer>
     </body>
 
 </html>
+
