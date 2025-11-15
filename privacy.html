@@ -23,23 +23,9 @@
                 <div class="logo">なんてつサーバー</div>
             </a>
             
-            <button class="menu-toggle" id="menu-toggle" aria-label="メニューを開く">
-                <i class="fas fa="bars"></i>
-            </button>
-
-            <nav id="main-nav" class="nav-links">
-                <a href="index.html"><i class="fas fa-home"></i> トップ</a>
-                <a href="index.html#about"><i class="fas fa-info-circle"></i> 概要</a>
-                <a href="index.html#rules-accordion">ルール</a>
-                <a href="command.html">コマンド一覧</a>
-				<a href="guide.html">ガイド</a>
-				<a href="news.html"><i class="fas fa-bullhorn"></i> お知らせ</a>
-                <a href="terms.html">利用規約</a>
-                <a href="index.html#contact">お問い合わせ</a>
-                <a href="https://discord.gg/79H7Jy65nz" class="discord-nav-btn">Discordに参加</a>
-            </nav>
-        </div>
-    </nav>
+<div id="header-placeholder"></div>
+<script src="_inject_header.js"></script>
+			
     <header id="hero" style="padding-top: 80px; padding-bottom: 80px;">
         <div class="content-wrapper">
             <h1 style="font-size: 42px;">プライバシーポリシー</h1>
@@ -88,11 +74,11 @@
             
         </div>
     </section>
-    <footer>
-        <div class="content-wrapper">
-            <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="index.html#contact">お問い合わせ</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="terms.html">利用規約</a></p>
-        </div>
-    </footer>
+<footer>
+    <div class="content-wrapper">
+        <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="/#contact">お問い合わせ</a> | <a href="privacy">プライバシーポリシー</a> | <a href="terms">利用規約</a></p>
+    </div>
+</footer>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // モバイルメニューの開閉機能
@@ -136,3 +122,4 @@
     </body>
 
 </html>
+
