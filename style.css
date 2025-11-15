@@ -95,6 +95,10 @@ a:hover { color: #4527a0; }
     font-size: 26px;
     color: var(--color-primary);
 }
+.navbar .nav-links a.active-nav-link { 
+    color: var(--color-primary);
+    background: rgba(94, 53, 177, 0.1); 
+}
 .navbar .nav-links a {
     color: var(--color-text-dark);
     font-weight: 700;
@@ -891,3 +895,4 @@ footer a {
     position: relative; 
     z-index: 1001; 
 }
+
