@@ -5,8 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!placeholder) return; 
 
-        // 💡 修正点: fetch('_header.html') を fetch('/_header.html') に変更 
-        //            これにより、どの階層からでもルート(`/`)を基準にファイルを探します。
+        // 💡 修正点: fetch('/_header.html') でルート相対パスを使用
         fetch('/_header.html') 
             .then(response => {
                 if (!response.ok) {
@@ -20,8 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // ナビゲーションが挿入された後、必要な機能を設定
                 setupMobileMenuToggle();
-                // 💡 修正点２：ナビゲーションのリンクURLも修正する必要がある場合があります
-                //     (下記に解説)
                 fixHeaderLinks(); 
                 setActiveLink();
             })
@@ -32,24 +29,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 現在のページに基づいてアクティブなリンクをハイライトする関数
     function setActiveLink() {
-        // 例: /guide/ -> guide, /index.html -> /, / -> /
-        const currentPath = window.location.pathname.split('/').pop().split('.')[0] || '/'; 
+        // 例: /guide/index.html -> guide, /index.html -> index
+        // `split('/').pop()`で末尾のファイル名を取得（例: index.html）
+        // `.split('.')[0]`で拡張子を取り除く（例: index）
+        const currentPath = window.location.pathname.split('/').filter(p => p).pop().split('.')[0] || 'index'; 
         
         const navLinks = document.querySelectorAll('#main-nav a');
         
         navLinks.forEach(link => {
-            const linkPath = link.getAttribute('href').split('/').pop();
+            // リンクのhrefからファイル名部分を取得（例: guide/ -> guide, / -> /）
+            let linkPath = link.getAttribute('href').replace(/\//g, ''); 
             
-            // リンクのパス（/を除く）が現在のファイル名（拡張子なし）と一致するかチェック
-            // / の場合は「トップ」をアクティブにする
-            if (currentPath === '/' && linkPath === '/') {
-                 link.classList.add('active-nav-link');
-            } else if (linkPath !== '/' && currentPath === linkPath) {
+            // index.html または / の場合は 'index' として扱う
+            if (linkPath === '' || linkPath === 'index') {
+                linkPath = 'index';
+            }
+            
+            // 現在のファイル名（拡張子なし）とリンクのパス（フォルダ名）が一致するかチェック
+            if (currentPath === linkPath) {
                  link.classList.add('active-nav-link');
             }
         });
     }
 
+    // 💡 修正した fixHeaderLinks 関数
     function fixHeaderLinks() {
         const navLinks = document.querySelectorAll('.navbar .nav-links a');
         navLinks.forEach(link => {
@@ -61,11 +64,13 @@ document.addEventListener('DOMContentLoaded', function() {
             } 
             // 例: guide.html -> /guide/
             else if (href.endsWith('.html')) {
-                // ファイル名から.htmlを取り除き、最後に / をつける
-                const newHref = '/' + href.replace('.html', '/')
+                // ファイル名から.htmlを取り除き、前後に / をつける
+                const newHref = '/' + href.replace('.html', '/');
                 link.setAttribute('href', newHref);
             }
-    
+        });
+    } // <-- ここに閉じ括弧を追加しました！
+
     // モバイルメニューの開閉機能を設定する関数
     function setupMobileMenuToggle() {
         const menuToggle = document.getElementById('menu-toggle');
