@@ -5,12 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (!placeholder) return; 
 
-        // _header.htmlの内容を取得
-        fetch('_header.html')
+        // 💡 修正点: fetch('_header.html') を fetch('/_header.html') に変更 
+        //            これにより、どの階層からでもルート(`/`)を基準にファイルを探します。
+        fetch('/_header.html') 
             .then(response => {
                 if (!response.ok) {
-                    // 開発中にファイルが見つからない場合に分かりやすくするため
-                    throw new Error('Header file not found: _header.html'); 
+                    throw new Error('Header file not found: /_header.html'); 
                 }
                 return response.text();
             })
@@ -20,6 +20,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // ナビゲーションが挿入された後、必要な機能を設定
                 setupMobileMenuToggle();
+                // 💡 修正点２：ナビゲーションのリンクURLも修正する必要がある場合があります
+                //     (下記に解説)
+                fixHeaderLinks(); 
                 setActiveLink();
             })
             .catch(error => {
@@ -46,6 +49,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    function fixHeaderLinks() {
+        const navLinks = document.querySelectorAll('.navbar .nav-links a');
+        navLinks.forEach(link => {
+            let href = link.getAttribute('href');
+            
+            // 例: index.html -> /
+            if (href === 'index.html') {
+                link.setAttribute('href', '/');
+            } 
+            // 例: guide.html -> /guide/
+            else if (href.endsWith('.html')) {
+                // ファイル名から.htmlを取り除き、最後に / をつける
+                const newHref = '/' + href.replace('.html', '/')
+                link.setAttribute('href', newHref);
+            }
     
     // モバイルメニューの開閉機能を設定する関数
     function setupMobileMenuToggle() {
