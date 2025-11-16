@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>なんてつAI</title>
+    <link rel="stylesheet" href="widget_style.css"> 
+</head>
+<body>
+
+    <div id="chat-container">
+        <header id="chat-header">
+            <h3>なんてつAIアシスタント</h3>
+            <button id="close-button">×</button>
+        </header>
+
+        <div id="messages">
+            <div class="message bot-message initial-message">
+                <p>なんてつサーバーへようこそ！ルール、コマンド、接続情報など、何でもご質問ください。</p>
+            </div>
+        </div>
+
+        <form id="input-form">
+            <input type="text" id="user-input" placeholder="例: 土地保護はどうするの？" required>
+            <button type="submit" id="send-button">送信</button>
+        </form>
+    </div>
+
+    <script src="widget_logic.js"></script> 
+</body>
+</html>
