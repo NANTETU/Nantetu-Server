@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 共通ヘッダーを挿入する関数
+    // 共通ヘッダーを挿入する関数 (変更なし)
     function loadHeader() {
         const placeholder = document.getElementById('header-placeholder');
         
         if (!placeholder) return; 
 
-        // 💡 修正点: fetch('/_header.html') でルート相対パスを使用
         fetch('/_header.html') 
             .then(response => {
                 if (!response.ok) {
@@ -14,10 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.text();
             })
             .then(html => {
-                // 取得したHTMLをプレースホルダーに挿入
                 placeholder.innerHTML = html;
                 
-                // ナビゲーションが挿入された後、必要な機能を設定
                 setupMobileMenuToggle();
                 fixHeaderLinks(); 
                 setActiveLink();
@@ -27,51 +24,67 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // 現在のページに基づいてアクティブなリンクをハイライトする関数
+    // 💡 新規追加: 共通フッターを挿入する関数
+    function loadFooter() {
+        // フッター用のプレースホルダーIDを取得
+        const placeholder = document.getElementById('footer-placeholder');
+        
+        if (!placeholder) return; 
+
+        // ルート相対パスを使用して_footer.htmlを読み込む
+        fetch('/_footer.html') 
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Footer file not found: /_footer.html'); 
+                }
+                return response.text();
+            })
+            .then(html => {
+                // 取得したHTMLをプレースホルダーに挿入
+                placeholder.innerHTML = html;
+            })
+            .catch(error => {
+                console.error('Failed to load footer:', error);
+            });
+    }
+
+    // 現在のページに基づいてアクティブなリンクをハイライトする関数 (変更なし)
     function setActiveLink() {
-        // 例: /guide/index.html -> guide, /index.html -> index
-        // `split('/').pop()`で末尾のファイル名を取得（例: index.html）
-        // `.split('.')[0]`で拡張子を取り除く（例: index）
+        // ... (省略: 修正済みの setActiveLink 関数の中身を記述)
         const currentPath = window.location.pathname.split('/').filter(p => p).pop().split('.')[0] || 'index'; 
         
         const navLinks = document.querySelectorAll('#main-nav a');
         
         navLinks.forEach(link => {
-            // リンクのhrefからファイル名部分を取得（例: guide/ -> guide, / -> /）
             let linkPath = link.getAttribute('href').replace(/\//g, ''); 
             
-            // index.html または / の場合は 'index' として扱う
             if (linkPath === '' || linkPath === 'index') {
                 linkPath = 'index';
             }
             
-            // 現在のファイル名（拡張子なし）とリンクのパス（フォルダ名）が一致するかチェック
             if (currentPath === linkPath) {
                  link.classList.add('active-nav-link');
             }
         });
     }
 
-    // 💡 修正した fixHeaderLinks 関数
+    // ヘッダーのリンクを絶対パスに自動修正する関数 (変更なし)
     function fixHeaderLinks() {
         const navLinks = document.querySelectorAll('.navbar .nav-links a');
         navLinks.forEach(link => {
             let href = link.getAttribute('href');
             
-            // 例: index.html -> /
             if (href === 'index.html') {
                 link.setAttribute('href', '/');
             } 
-            // 例: guide.html -> /guide/
             else if (href.endsWith('.html')) {
-                // ファイル名から.htmlを取り除き、前後に / をつける
                 const newHref = '/' + href.replace('.html', '/');
                 link.setAttribute('href', newHref);
             }
         });
-    } // <-- ここに閉じ括弧を追加しました！
+    }
 
-    // モバイルメニューの開閉機能を設定する関数
+    // モバイルメニューの開閉機能を設定する関数 (変更なし)
     function setupMobileMenuToggle() {
         const menuToggle = document.getElementById('menu-toggle');
         const mainNav = document.getElementById('main-nav');
@@ -87,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // メニューリンククリックで閉じる
             mainNav.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
                     if (window.innerWidth <= 768) {
@@ -102,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 読み込みを開始
+    // 💡 実行部分も両方を呼び出すように修正
     loadHeader();
+    loadFooter();
 });
