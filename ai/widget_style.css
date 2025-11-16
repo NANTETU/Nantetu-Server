@@ -1,0 +1,105 @@
+/* ウィジェット全体のリセットとフォント設定 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #f7f7f7;
+    height: 100vh;
+    overflow: hidden; /* 親ページ内でスクロールバーが出ないように */
+}
+
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 100%;
+}
+
+/* ヘッダー */
+#chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #4B0082; /* 濃い紫 */
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#chat-header h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* メッセージエリア */
+#messages {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto; /* メッセージが多くなったらスクロール */
+    background-color: #ffffff;
+}
+
+.message {
+    padding: 8px 12px;
+    border-radius: 18px;
+    margin-bottom: 15px;
+    max-width: 80%;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.bot-message {
+    background-color: #E6E6FA; /* ラベンダー */
+    color: #333;
+    align-self: flex-start;
+    margin-right: auto;
+}
+
+.user-message {
+    background-color: #4B0082; /* 濃い紫 */
+    color: white;
+    margin-left: auto;
+    align-self: flex-end;
+    text-align: right;
+}
+
+/* フォームエリア */
+#input-form {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    background-color: #f7f7f7;
+}
+
+#user-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+#send-button {
+    background-color: #8A2BE2; /* 青みがかった紫 */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#send-button:hover {
+    background-color: #4B0082;
+}
