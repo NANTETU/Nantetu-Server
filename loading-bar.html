@@ -1,0 +1,56 @@
+<div id="page-loader-overlay">
+    </div>
+
+<div id="loading-bar"></div>
+
+<script>
+    // CSS変数から色を取得するヘルパー関数
+    const varColor = (name) => getComputedStyle(document.documentElement).getPropertyValue(`--color-${name}`).trim();
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const loadingBar = document.getElementById('loading-bar');
+        const overlay = document.getElementById('page-loader-overlay');
+        
+        if (!loadingBar) return; // 要素が存在しない場合は処理を終了
+
+        // ページロードの進行状況をチェック
+        let loadProgress = 0;
+        const interval = setInterval(() => {
+            if (loadProgress < 95) {
+                // 95%までは時間で進める
+                loadProgress += 1;
+                loadingBar.style.width = `${loadProgress}%`;
+            } else {
+                // 95%に達したら停止
+                clearInterval(interval);
+            }
+        }, 50);
+
+        // すべてのコンテンツ（画像、CSS、JSなど）の読み込みが完了したら
+        window.addEventListener('load', () => {
+            // 100%まで一気に進める
+            loadingBar.style.width = '100%'; 
+            
+            // 完全に完了したことを示すために少し遅延させる
+            setTimeout(() => {
+                // ローディングバーを非表示にする
+                loadingBar.style.opacity = '0'; 
+                
+                // オーバーレイをフェードアウトさせて非表示にする
+                if (overlay) {
+                    overlay.classList.add('hidden');
+                }
+            }, 300);
+
+            // ローディングバーの要素をDOMから削除してメモリを解放
+            setTimeout(() => {
+                loadingBar.remove();
+                if (overlay) overlay.remove();
+            }, 800);
+        });
+
+        if (document.readyState === 'complete') {
+            window.dispatchEvent(new Event('load'));
+        }
+    });
+</script>
