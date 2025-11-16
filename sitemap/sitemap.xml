@@ -1,26 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-   
+    
     <url>
-        <loc>https://nantetu-server.vercel.app//index.html</loc>
+        <loc>https://nantetu-server.vercel.app/</loc>
+        <lastmod>2025-11-16</lastmod> <changefreq>daily</changefreq> <priority>1.0</priority>
+    </url>
+    
+    <url>
+        <loc>https://nantetu-server.vercel.app/news/</loc>
+        <lastmod>2025-11-16</lastmod> 
+        <changefreq>weekly</changefreq> <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://nantetu-server.vercel.app/guide/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://nantetu-server.vercel.app//guide.html</loc>
+        <loc>https://nantetu-server.vercel.app/Join_Info/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
     </url>
     <url>
-        <loc>https://nantetu-server.vercel.app//Join_Info.html</loc>
+        <loc>https://nantetu-server.vercel.app/command/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://nantetu-server.vercel.app/privacy/</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
     </url>
     <url>
-        <loc>https://nantetu-server.vercel.app//command.html</loc>
-    </url>
-    <url>
-        <loc>https://nantetu-server.vercel.app//news.html</loc>
-    </url>
-    <url>
-        <loc>https://nantetu-server.vercel.app//privacy.html</loc>
-    </url>
-    <url>
-        <loc>https://nantetu-server.vercel.app//terms.html</loc>
+        <loc>https://nantetu-server.vercel.app/terms/</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
     </url>
 
 </urlset>
