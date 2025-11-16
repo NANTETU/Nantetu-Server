@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 共通ヘッダーを挿入する関数 (変更なし)
+    // 共通ヘッダーを挿入する関数
     function loadHeader() {
         const placeholder = document.getElementById('header-placeholder');
         
@@ -24,14 +24,29 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // 💡 新規追加: 共通フッターを挿入する関数
+    // 💡 新規追加: AIウィジェットのスクリプトを挿入する関数
+    function injectAiWidget() {
+        const body = document.body;
+        if (!body) return; 
+
+        // AI Widgetのスクリプト要素を作成
+        const widgetScript = document.createElement('script');
+        widgetScript.type = 'text/javascript';
+
+        // 🚨 絶対パスを使用: '/ai/widget.js' のパスでAIウィジェットのメインロジックを読み込みます。
+        widgetScript.src = '/ai/widget.js'; 
+
+        // ページにスクリプトを挿入
+        body.appendChild(widgetScript);
+        console.log('AI Widget script injected successfully.');
+    }
+
+    // 共通フッターを挿入する関数
     function loadFooter() {
-        // フッター用のプレースホルダーIDを取得
         const placeholder = document.getElementById('footer-placeholder');
         
         if (!placeholder) return; 
 
-        // ルート相対パスを使用して_footer.htmlを読み込む
         fetch('/_footer.html') 
             .then(response => {
                 if (!response.ok) {
@@ -40,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 return response.text();
             })
             .then(html => {
-                // 取得したHTMLをプレースホルダーに挿入
                 placeholder.innerHTML = html;
             })
             .catch(error => {
@@ -50,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 現在のページに基づいてアクティブなリンクをハイライトする関数 (変更なし)
     function setActiveLink() {
-        // ... (省略: 修正済みの setActiveLink 関数の中身を記述)
         const currentPath = window.location.pathname.split('/').filter(p => p).pop().split('.')[0] || 'index'; 
         
         const navLinks = document.querySelectorAll('#main-nav a');
@@ -114,7 +127,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 💡 実行部分も両方を呼び出すように修正
+    // 💡 実行部分にウィジェット挿入を追加
     loadHeader();
     loadFooter();
+    injectAiWidget(); // AIウィジェットを呼び出し
 });
