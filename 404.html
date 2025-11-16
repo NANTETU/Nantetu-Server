@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | ページが見つかりません 🚧</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display.swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="policy-page">
+    <nav class="navbar">
+        <div class="logo-link">
+            <span class="logo">なんてつサーバー 🌈</span>
+        </div>
+        <div class="nav-links" id="main-nav">
+            <a href="index.html">ホーム</a>
+            <a href="news.html">ニュース</a>
+            <a href="guide.html">ガイド＆FAQ</a>
+            <a href="command.html">コマンド</a>
+            <a href="Join_Info.html" class="discord-nav-btn">参加する</a>
+        </div>
+        <button class="menu-toggle" id="menu-toggle" aria-label="メニューを開く/閉じる">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <section id="error404" style="padding-top: 100px; padding-bottom: 100px;">
+        <div class="content-wrapper">
+            <div class="policy-wrapper" style="text-align: center;">
+                <h2 style="margin-bottom: 20px;">404</h2>
+                <div class="policy-content" style="padding: 50px;">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 60px; color: var(--color-secondary); margin-bottom: 20px;"></i>
+                    <h3 style="font-size: 28px; color: var(--color-text-dark); margin: 20px 0;">ページが見つかりません</h3>
+                    <p style="font-size: 18px; line-height: 1.8; color: var(--color-text-medium);">
+                        お探しのURLは移動されたか、削除された可能性があります。<br>
+                        お手数ですが、以下のボタンからトップページへお戻りください。
+                    </p>
+                    <a href="index.html" class="join-btn" style="margin-top: 30px; font-size: 16px; padding: 12px 30px;">
+                        <i class="fas fa-home"></i> トップページに戻る
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="content-wrapper">
+            <p>&copy; 2025 なんてつサーバー. All rights reserved. | <a href="index.html#contact">お問い合わせ</a> | <a href="privacy.html">プライバシーポリシー</a> | <a href="terms.html">利用規約</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // モバイルメニューの開閉機能は全てのページで必要なので残します
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menu-toggle');
+            const mainNav = document.getElementById('main-nav');
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', () => {
+                    mainNav.classList.toggle('open');
+                    const icon = menuToggle.querySelector('i');
+                    if (mainNav.classList.contains('open')) {
+                        icon.classList.replace('fa-bars', 'fa-times');
+                    } else {
+                        icon.classList.replace('fa-times', 'fa-bars');
+                    }
+                });
+                // メニューリンククリックで閉じる
+                mainNav.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 768) {
+                            mainNav.classList.remove('open');
+                            menuToggle.querySelector('i').classList.replace('fa-times', 'fa-bars');
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
