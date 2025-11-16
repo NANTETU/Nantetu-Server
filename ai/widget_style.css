@@ -1,5 +1,5 @@
 /* ウィジェット全体のリセットとフォント設定 */
-body {
+#chat-container body { 
     margin: 0;
     padding: 0;
     font-family: 'Noto Sans JP', sans-serif;
