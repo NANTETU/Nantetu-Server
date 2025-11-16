@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 共通ヘッダーを挿入する関数 (変更なし)
     function loadHeader() {
         const placeholder = document.getElementById('header-placeholder');
         
@@ -24,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // 💡 新規追加: 共通フッターを挿入する関数
     function loadFooter() {
         // フッター用のプレースホルダーIDを取得
         const placeholder = document.getElementById('footer-placeholder');
@@ -50,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 現在のページに基づいてアクティブなリンクをハイライトする関数 (変更なし)
     function setActiveLink() {
-        // ... (省略: 修正済みの setActiveLink 関数の中身を記述)
         const currentPath = window.location.pathname.split('/').filter(p => p).pop().split('.')[0] || 'index'; 
         
         const navLinks = document.querySelectorAll('#main-nav a');
