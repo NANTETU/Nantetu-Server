@@ -7,39 +7,70 @@
     <meta property="og:title" content="なんてつサーバー | サイトマップ">
     <meta property="og:description" content="なんてつサーバーの全ページ構成（サイトマップ）です。">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://example.com/sitemap/">
+    <meta property="og:url" content="https://nantetu-server.vercel.app//sitemap/">
     
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=RocknRoll+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="all.min.css">
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="/style.css"> 
     
     <style>
+        /* カテゴリ見出しのスタイル */
+        .sitemap-category-title {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--color-primary);
+            border-bottom: 3px solid var(--color-border);
+            padding-bottom: 15px;
+            margin-top: 60px;
+            margin-bottom: 30px;
+        }
+        .sitemap-category-title:first-of-type {
+            margin-top: 0;
+        }
+
         .sitemap-page-list {
             list-style: none;
             padding: 0;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            margin-top: 40px;
+            margin-top: 20px;
         }
+        
         /* コマンド一覧のカードスタイル (.command-card) をベースに適用 */
         .sitemap-card {
             background-color: var(--color-bg-alt);
             border-radius: var(--radius-default);
             box-shadow: var(--shadow-subtle);
-            padding: 30px;
+            padding: 25px 30px; /* 少しパディングを調整 */
             border-top: 5px solid var(--color-primary);
             transition: transform 0.2s, box-shadow 0.2s;
-            line-height: 1.5;
+            line-height: 1.6; /* 行間を少し広げる */
+            display: flex; /* Flexboxでアイコンとコンテンツを配置 */
+            flex-direction: column;
         }
         .sitemap-card:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-lift);
         }
-        .sitemap-card > a {
+
+        /* ▼ アイコンのスタイルを追加 */
+        .sitemap-card .card-icon {
+            font-size: 28px;
+            color: var(--color-secondary);
+            margin-bottom: 15px;
+            width: 50px; /* アイコンの占める幅を固定 */
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            border-radius: 50%;
+            background-color: var(--color-bg-base);
+        }
+
+        .sitemap-card .card-content a.page-title {
             display: block;
             font-size: 22px;
             font-weight: 700;
@@ -47,24 +78,45 @@
             margin-bottom: 5px;
             text-decoration: none;
         }
-        .sitemap-card > p {
-            font-size: 14px;
-            color: var(--color-text-medium);
-            margin-bottom: 10px;
+        .sitemap-card .card-content a.page-title:hover {
+            color: var(--color-primary);
         }
-        .sitemap-card ul {
+
+        .sitemap-card .card-content p.page-description {
+            font-size: 15px;
+            color: var(--color-text-medium);
+            margin-bottom: 15px;
+            flex-grow: 1; /* 説明文がカードの高さを埋めるように */
+        }
+
+        /* ▼ トップページのサブリンクのスタイルを改善 */
+        .sitemap-card ul.sub-links {
             list-style: none;
             padding-left: 0;
             margin-top: 10px;
-            border-top: 1px dashed var(--color-border);
-            padding-top: 10px;
+            border-top: 1px solid var(--color-border);
+            padding-top: 15px;
         }
-        .sitemap-card ul li a {
+        .sitemap-card ul.sub-links li a {
             font-size: 15px;
-            color: var(--color-text-medium);
+            color: var(--color-text-dark);
             display: block;
-            padding: 2px 0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
         }
+        .sitemap-card ul.sub-links li a:hover {
+            background-color: var(--color-bg-base);
+            color: var(--color-primary);
+        }
+        .sitemap-card ul.sub-links li a i {
+            margin-right: 8px;
+            color: var(--color-text-medium);
+            width: 16px; /* アイコンの幅を固定 */
+            text-align: center;
+        }
+        
         /* AIボタンのアイコン調整 */
         #ai-chat-button i {
             vertical-align: middle;
@@ -74,66 +126,84 @@
 <body id="top">
 
 <div id="header-placeholder"></div>
-<script src="/scripts/_inject_header.js"></script>
-
-<header id="hero" style="padding-top: 80px; padding-bottom: 80px;">
+<script src="/_inject_header.js"></script> <header id="hero" style="padding-top: 80px; padding-bottom: 80px;">
     <div class="content-wrapper">
         <h1 style="font-size: 42px;">サイトマップ</h1>
         <p style="margin-bottom: 0;">当サイトの全てのページ一覧</p>
     </div>
 </header>
+
 <section id="sitemap-list" class="content-section">
     <div class="content-wrapper">
 
-        <h2>ページ一覧</h2>
-        <p style="text-align: center; max-width: 800px; margin: -30px auto 50px; font-size: 1.1em; color: var(--color-text-medium);">
-            サイトの全コンテンツがここに網羅されています。
-        </p>
+        <h2 class="sitemap-category-title"><i class="fas fa-server"></i> サーバー情報</h2>
+        <ul class="sitemap-page-list">
+            
+            <li class="sitemap-card">
+                <i class="fas fa-home card-icon"></i>
+                <div class="card-content">
+                    <a href="/" class="page-title">トップページ</a> <p class="page-description">サイトの入り口。サーバーの概要、特徴、参加方法、ルール、お問い合わせ窓口が集約されています。</p>
+                    <ul class="sub-links">
+                        <li><a href="/#about"><i class="fas fa-info-circle"></i> 概要 (ABOUT)</a></li>
+                        <li><a href="/#features"><i class="fas fa-star"></i> 特徴 (FEATURES)</a></li>
+                        <li><a href="/#join"><i class="fas fa-gamepad"></i> 参加方法 (JOIN)</a></li>
+                        <li><a href="/#rules-accordion"><i class="fas fa-scroll"></i> ルール (RULES)</a></li>
+                        <li><a href="/#contact"><i class="fas fa-envelope"></i> お問い合わせ (CONTACT)</a></li>
+                    </ul>
+                </div>
+            </li>
+            
+            <li class="sitemap-card">
+                <i class="fas fa-images card-icon"></i>
+                <div class="card-content">
+                    <a href="/Join_Info/" class="page-title">参加情報</a> <p class="page-description">画像付きで、サーバーへの参加手順をステップバイステップで詳しく解説します。</p>
+                </div>
+            </li>
 
+            <li class="sitemap-card">
+                <i class="fas fa-book card-icon"></i>
+                <div class="card-content">
+                    <a href="/guide/" class="page-title">利用ガイド (FAQ)</a> <p class="page-description">よくある質問と回答（FAQ）や、サーバーの基本的な遊び方をまとめたガイドです。</p>
+                </div>
+            </li>
+
+            <li class="sitemap-card">
+                <i class="fas fa-terminal card-icon"></i>
+                <div class="card-content">
+                    <a href="/command/" class="page-title">コマンド一覧</a> <p class="page-description">プレイヤーが使える便利なコマンドと、管理者用のコマンドを一覧で確認できます。</p>
+                </div>
+            </li>
+
+            <li class="sitemap-card">
+                <i class="fas fa-bullhorn card-icon"></i>
+                <div class="card-content">
+                    <a href="/news/" class="page-title">お知らせ</a> <p class="page-description">サーバーの最新アップデート、イベント告知、メンテナンス情報などを自動で表示します。</p>
+                </div>
+            </li>
+        </ul>
+
+        <h2 class="sitemap-category-title"><i class="fas fa-gavel"></i> サポート・規約</h2>
         <ul class="sitemap-page-list">
             <li class="sitemap-card">
-                <a href="index.html">トップページ</a>
-                <p>サイトの入り口、サーバーの重要な情報が集約されています。</p>
-                <ul>
-                    <li><a href="index.html#about">ABOUT (概要)</a></li>
-                    <li><a href="index.html#features">FEATURES (特徴)</a></li>
-                    <li><a href="index.html#join">JOIN (参加方法)</a></li>
-                    <li><a href="index.html#rules">RULES (ルール)</a></li>
-                    <li><a href="index.html#contact">CONTACT (お問い合わせ)</a></li>
-                </ul>
+                <i class="fas fa-user-shield card-icon"></i>
+                <div class="card-content">
+                    <a href="/privacy/" class="page-title">プライバシーポリシー</a> <p class="page-description">ユーザーの個人情報やデータの取り扱いに関する保護方針です。</p>
+                </div>
             </li>
+            
             <li class="sitemap-card">
-                <a href="guide.html">利用ガイド</a>
-                <p>サーバー利用開始までのステップバイステップガイド。</p>
-            </li>
-            <li class="sitemap-card">
-                <a href="Join_Info.html">参加情報</a>
-                <p>参加に関する詳細な情報ページ。</p>
-            </li>
-            <li class="sitemap-card">
-                <a href="command.html">コマンド一覧</a>
-                <p>プレイヤー用、管理者用の便利なコマンドリスト。</p>
-            </li>
-            <li class="sitemap-card">
-                <a href="news.html">お知らせ</a>
-                <p>サーバーからの最新ニュースやメンテナンス情報。</p>
-            </li>
-            <li class="sitemap-card">
-                <a href="privacy.html">プライバシーポリシー</a>
-                <p>ユーザーデータの取り扱いに関する規約。</p>
-            </li>
-            <li class="sitemap-card">
-                <a href="terms.html">利用規約</a>
-                <p>サイトおよびサーバーの利用に関するルール。</p>
+                <i class="fas fa-file-contract card-icon"></i>
+                <div class="card-content">
+                    <a href="/terms/" class="page-title">利用規約</a> <p class="page-description">サイトおよびサーバーを利用する上での詳細なルールと同意事項です。</p>
+                </div>
             </li>
         </ul>
         
     </div>
 </section>
-	
+    
 <div id="footer-placeholder"></div>
-	
-<button id="ai-chat-button" style="position: fixed; bottom: 20px; right: 20px; background-color: #8A2BE2; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; z-index: 9999; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+<script src="/_inject_footer.js"></script> <button id="ai-chat-button" style="position: fixed; bottom: 20px; right: 20px; background-color: #8A2BE2; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; z-index: 9999; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
 <i class="fas fa-robot"></i>
 </button>
 
