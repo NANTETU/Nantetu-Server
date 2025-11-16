@@ -1,5 +1,4 @@
 import { GoogleGenAI } from '@google/genai';
-const GITHUB_ACTION = 'AIzaSyDMn5mMpb54ra7xC8AxmpqWKzoVEQoMylI';
 // Vercel Edge Functionとして動作させるための設定
 export const config = {
   runtime: 'edge',
@@ -129,7 +128,6 @@ export default async function handler(request) {
   try {
     // 💡 環境変数 'GEMINI_API_KEY' (または GOOGLE_API_KEY) が自動的に使用される
 const ai = new GoogleGenAI({ 
-        apiKey: GITHUB_ACTION
 
     // ユーザーの質問とナレッジベースを組み合わせたメッセージ
     const response = await ai.models.generateContent({
