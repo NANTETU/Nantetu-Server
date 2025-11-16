@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputForm = document.getElementById('input-form');
     const userInput = document.getElementById('user-input');
     const closeButton = document.getElementById('close-button');
-    const SEND_API_ENDPOINT = '/api/chat.js'; // 👈 後で実装するVercel Edge FunctionのAPIパス
+    const SEND_API_ENDPOINT = 'https://nantetuservercloudflare.nantetu1.workers.dev/'; 
 
     // ===================================================
     // 1. 親ウィンドウとの連携 (閉じるボタン)
