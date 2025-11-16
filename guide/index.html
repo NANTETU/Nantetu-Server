@@ -232,24 +232,51 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
     </script>
+	<button id="ai-chat-button" style="position: fixed; bottom: 20px; right: 20px; background-color: #8A2BE2; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; z-index: 9999; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+    <i class="fas fa-robot"></i>
+</button>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const chatButton = document.getElementById('ai-chat-button');
+        let chatIframe = null; // iframeのインスタンスを保持
+
+        // チャットウィジェットを開く/閉じる
+        chatButton.addEventListener('click', () => {
+            if (!chatIframe) {
+                // 初回クリック時: iframeを作成
+                chatIframe = document.createElement('iframe');
+                // 💡 ここも相対パスで指定します
+                chatIframe.src = 'ai/ai_widget.html'; 
+                chatIframe.id = 'ai-chat-iframe';
+                chatIframe.style.cssText = `
+                    position: fixed;
+                    bottom: 80px; /* ボタンの上に配置 */
+                    right: 20px;
+                    width: 350px;
+                    height: 500px;
+                    border: 1px solid #ccc;
+                    border-radius: 15px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                    z-index: 9998;
+                    display: block; /* 作成時は表示 */
+                `;
+                document.body.appendChild(chatIframe);
+            } else {
+                // 2回目以降のクリック時: 表示/非表示を切り替え
+                const isHidden = chatIframe.style.display === 'none';
+                chatIframe.style.display = isHidden ? 'block' : 'none';
+            }
+        });
+
+        // iframeからのメッセージを受け取る (閉じる処理)
+        window.addEventListener('message', (event) => {
+            // セキュリティのため、送信元URLをチェックすべきですが、今回はシンプルな実装のため省略
+            if (event.data === 'close-ai-widget' && chatIframe) {
+                chatIframe.style.display = 'none';
+            }
+        });
+    });
+</script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
