@@ -1,18 +1,22 @@
 import { GoogleGenAI } from '@google/genai';
-// Vercel Edge Functionとして動作させるための設定
-export const config = {
-  runtime: 'edge',
-};
 
-// ======================================================
-// 1. なんてつサーバーのナレッジベース (システムプロンプト)
-// ======================================================
-const SYSTEM_PROMPT = `
-あなたはマインクラフト統合版サーバー「なんてつサーバー」の公式AIアシスタントです。
-フレンドリーで親切なトーンで、簡潔に回答してください。
-あなたの回答は、以下の提供情報のみに基づいている必要があります。情報にない質問には「申し訳ありませんが、その情報はありません。」と回答してください。
+// ⚠️ 注意: Cloudflare Workersでは、環境変数は 'env' オブジェクトから取得します。
 
-以下学習用データ
+export default {
+  async fetch(request, env) { // env オブジェクトに設定した環境変数が含まれる
+    if (request.method !== 'POST') {
+      return new Response(null, { status: 405 });
+    }
+
+    const { prompt } = await request.json();
+    if (!prompt) {
+      return new Response(JSON.stringify({ error: 'Prompt is required' }), { status: 400 });
+    }
+    
+    // ======================================================
+    // 1. なんてつサーバーのナレッジベース (SYSTEM_PROMPT) はここに貼り付ける
+    // ======================================================
+    const SYSTEM_PROMPT = `AI学習用データ: ウェブサイト「なんてつサーバー」詳細解説
 
 1. 基本情報
 サイト名: なんてつサーバー
@@ -81,7 +85,7 @@ Minecraft Java版では一般的だが統合版では標準搭載されていな
 ゲーマータグ: nantetu5877 （フレンド申請（「プレイヤーを探す」）で使用）
 IPアドレス: nantetu123.f5.si （「サーバーを追加」で使用）
 ポート番号: 5346 （「サーバーを追加」で使用）
-また、「画像付きの参加手順を見る」(Join_Info) というページで詳しい説明が見れます。
+また、「画像付きの参加手順を見る」(Join_Info) という別ページへのリンクが存在しますが、当該ページの内容は現在（※ブラウジング時点）取得できません。
 
 7. サーバーのルールとガバナンス
 安全なコミュニティを維持するため、詳細なルールが3つの条項で定められています。
@@ -107,52 +111,46 @@ IPアドレス: nantetu123.f5.si （「サーバーを追加」で使用）
 8. その他のサイト機能
 お問い合わせ・報告フォーム:
 サイト下部にフォームが設置されており、荒らし報告、バグ報告、運営への質問などを送信できます。
+送信完了メッセージも定義されています。
 
 フッターリンク:
 サイトのフッターには「© 2025 なんてつサーバー」という著作権表示と共に、「お問い合わせ」「プライバシーポリシー」(privacy)、「利用規約」(terms) へのリンクが存在します。
+（※ただし、privacy および terms のページ内容は現在取得できません）
 `;
 
-// ======================================================
-// 2. Vercel Edge Functionのハンドラ
-// ======================================================
-export default async function handler(request) {
-  if (request.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method Not Allowed' }), { status: 405 });
-  }
+    try {
+      // 💡 修正箇所: Cloudflare Workersの環境変数からキーを取得
+      const ai = new GoogleGenAI({ 
+          apiKey: env.GEMINI_API_KEY // 設定した環境変数の名前
+      }); 
 
-  const { prompt } = await request.json();
-  if (!prompt) {
-    return new Response(JSON.stringify({ error: 'Prompt is required' }), { status: 400 });
-  }
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash-lite', 
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        config: {
+          systemInstruction: SYSTEM_PROMPT, 
+          temperature: 0.5,
+          maxOutputTokens: 300,
+        }
+      });
 
-  try {
-    // 💡 環境変数 'GEMINI_API_KEY' (または GOOGLE_API_KEY) が自動的に使用される
-const ai = new GoogleGenAI({ 
+      const aiResponse = response.text.trim();
 
-    // ユーザーの質問とナレッジベースを組み合わせたメッセージ
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash-lite', // 💡 無料枠で高性能なFlashモデルを選択
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      config: {
-        // システムプロンプトを設定 (AIの役割とナレッジベースを定義)
-        systemInstruction: SYSTEM_PROMPT, 
-        temperature: 0.5, // 創造性の度合い
-        maxOutputTokens: 300,
-      }
-    });
+      // 💡 CORSヘッダーを追加して、GitHub Pagesからのアクセスを許可
+      return new Response(JSON.stringify({ response: aiResponse }), {
+        status: 200,
+        headers: { 
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*', // すべてのオリジンからのアクセスを許可
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+        },
+      });
 
-    const aiResponse = response.text.trim();
-
-    return new Response(JSON.stringify({ response: aiResponse }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
-
-  } catch (error) {
-    console.error("Gemini API Error:", error);
-    return new Response(JSON.stringify({ error: '通信中にエラーが発生しました。' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-}
+    } catch (error) {
+      // エラー処理
+      console.error("Gemini API Error:", error);
+      return new Response(JSON.stringify({ error: 'AI通信エラー' }), { status: 500 });
+    }
+  },
+};
