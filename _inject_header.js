@@ -40,26 +40,21 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('AI Widget script injected successfully.');
     }
 
-    // 共通フッターを挿入する関数
-    function loadFooter() {
-        const placeholder = document.getElementById('footer-placeholder');
-        
-        if (!placeholder) return; 
+ const loadingBar = document.getElementById("loading-bar");
 
-        fetch('/_footer.html') 
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Footer file not found: /_footer.html'); 
-                }
-                return response.text();
-            })
-            .then(html => {
-                placeholder.innerHTML = html;
-            })
-            .catch(error => {
-                console.error('Failed to load footer:', error);
-            });
-    }
+    // ページ読み込み進行度をシミュレーション
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += Math.random() * 20; // ランダムに進行
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+        setTimeout(() => {
+          loadingBar.style.opacity = "0"; // 完了後にフェードアウト
+        }, 500);
+      }
+      loadingBar.style.width = progress + "%";
+    }, 300);
 
     // 現在のページに基づいてアクティブなリンクをハイライトする関数 (変更なし)
     function setActiveLink() {
