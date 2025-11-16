@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   
+    <url>
+        <loc>https://nantetu-server.vercel.app//index.html</loc>
+    </url>
+    <url>
+        <loc>https://nantetu-server.vercel.app//guide.html</loc>
+    </url>
+    <url>
+        <loc>https://nantetu-server.vercel.app//Join_Info.html</loc>
+    </url>
+    <url>
+        <loc>https://nantetu-server.vercel.app//command.html</loc>
+    </url>
+    <url>
+        <loc>https://nantetu-server.vercel.app//news.html</loc>
+    </url>
+    <url>
+        <loc>https://nantetu-server.vercel.app//privacy.html</loc>
+    </url>
+    <url>
+        <loc>https://nantetu-server.vercel.app//terms.html</loc>
+    </url>
+
+</urlset>
