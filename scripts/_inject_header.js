@@ -81,6 +81,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    document.addEventListener('DOMContentLoaded', function() {
+    function loadExternalHTML(url, targetElementId) {
+    fetch(url)
+        .then(response => response.text())
+        .then(data => {
+            const target = document.getElementById(targetElementId);
+            if (target) {
+                // プレースホルダーに外部HTML（ローディングバー）の内容を挿入
+                target.innerHTML = data;
+            }
+        })
+        .catch(error => console.error('外部HTMLの読み込みに失敗:', error));
+        loadExternalHTML('loading-bar.html', 'loading-bar-placeholder');
+}
+
+// ページロード時に実行
+document.addEventListener('DOMContentLoaded', function() {
+    
     // モバイルメニューの開閉機能を設定する関数 (変更なし)
     function setupMobileMenuToggle() {
         const menuToggle = document.getElementById('menu-toggle');
