@@ -218,7 +218,7 @@ header {
     text-align: center;
     padding: 100px 20px 100px;
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6)),
-                url('banner.jpg') no-repeat center center;
+                url('/images/banner.jpg') no-repeat center center;
     background-size: cover;
     background-position: center top; /* 上端を基準に画像を配置 */
     color: #fff;
@@ -932,5 +932,6 @@ footer a {
     position: relative; 
     z-index: 1001; 
 }
+
 
 
