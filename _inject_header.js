@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // 💡 新規追加: AIウィジェットのスクリプトを挿入する関数
     function injectAiWidget() {
         const body = document.body;
         if (!body) return; 
