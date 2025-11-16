@@ -129,8 +129,10 @@
             if (!chatIframe) {
                 // 初回クリック時: iframeを作成
                 chatIframe = document.createElement('iframe');
-                // 💡 ここも相対パスで指定します
-                chatIframe.src = 'ai/ai_widget.html'; 
+                
+                // 💡 修正箇所: 相対パス 'ai/ai_widget.html' を絶対パス '/ai/ai_widget.html' に変更
+                chatIframe.src = '/ai/ai_widget.html'; 
+                
                 chatIframe.id = 'ai-chat-iframe';
                 chatIframe.style.cssText = `
                     position: fixed;
@@ -164,15 +166,3 @@
     </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
