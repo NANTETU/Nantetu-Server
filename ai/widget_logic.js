@@ -3,7 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputForm = document.getElementById('input-form');
     const userInput = document.getElementById('user-input');
     const closeButton = document.getElementById('close-button');
-    const SEND_API_ENDPOINT = 'https://nantetuservercloudflare.nantetu1.workers.dev/'; 
+    
+    // 💡 Cloudflare Workerのデプロイ済みフルURLに設定
+    // 末尾のスラッシュ '/' を削除して正確なURLにします。
+    const SEND_API_ENDPOINT = 'https://nantetuservercloudflare.nantetu1.workers.dev'; 
 
     // ===================================================
     // 1. 親ウィンドウとの連携 (閉じるボタン)
@@ -50,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
         try {
-            // Vercel Edge FunctionへのAPIコール
+            // Cloudflare WorkerへのAPIコール
             const response = await fetch(SEND_API_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -58,13 +61,25 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (!response.ok) {
-                throw new Error('サーバー応答エラー');
+                // 応答が 500 や 400 の場合、サーバーからのエラー詳細をチェック
+                let errorDetail = 'サーバー応答エラー';
+                try {
+                    // Worker側がJSONでエラーを返すことを期待
+                    const errorJson = await response.json(); 
+                    if (errorJson && errorJson.error) {
+                         errorDetail = errorJson.error;
+                    }
+                } catch (e) {
+                    // JSONパースエラーの場合は、WorkerがHTMLなどのテキストを返している可能性
+                }
+                throw new Error(errorDetail);
             }
             
             // ローディングメッセージを削除し、AIの回答を表示
             messagesContainer.removeChild(loadingMessage);
-            const data = await response.json(); // Edge FunctionがJSONで回答を返すことを想定
+            const data = await response.json();
 
+            // data.response にAIの回答が入っていることを期待
             addMessage(data.response || '回答を取得できませんでした。', 'bot');
 
         } catch (error) {
@@ -73,8 +88,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (messagesContainer.contains(loadingMessage)) {
                  messagesContainer.removeChild(loadingMessage);
             }
-            addMessage('エラーが発生しました。時間を置いて再度お試しください。', 'bot');
+            // ユーザーフレンドリーなエラーメッセージ
+            addMessage(`エラーが発生しました。（詳細: ${error.message}）時間を置いて再度お試しください。`, 'bot');
         }
     });
 
+    // 初期メッセージの表示
+    addMessage('なんてつサーバーへようこそ！ルール、コマンド、接続情報など、何でもご質問ください。', 'bot');
 });
