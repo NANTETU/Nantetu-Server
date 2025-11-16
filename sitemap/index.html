@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>サイトマップ | なんてつサーバー 🌈</title>
-	<meta property="og:title" content="なんてつサーバー | サイトマップ">
-	<meta property="og:description" content="なんてつサーバーの全ページ構成（サイトマップ）です。">
+    <meta property="og:title" content="なんてつサーバー | サイトマップ">
+    <meta property="og:description" content="なんてつサーバーの全ページ構成（サイトマップ）です。">
     <meta property="og:type" content="website">
-	<meta property="og:url" content="https://example.com/sitemap/"><link rel="preconnect" href="https://fonts.googleapis.com/">
+    <meta property="og:url" content="https://example.com/sitemap/">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=RocknRoll+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="all.min.css"><link rel="stylesheet" href="/style.css"><style>
-		        .sitemap-page-list {
+    <link rel="stylesheet" href="all.min.css">
+    
+    <link rel="stylesheet" href="/style.css"> 
+    
+    <style>
+        .sitemap-page-list {
             list-style: none;
             padding: 0;
             display: grid;
@@ -25,9 +31,9 @@
             border-radius: var(--radius-default);
             box-shadow: var(--shadow-subtle);
             padding: 30px;
-            border-top: 5px solid var(--color-primary); /* メインカラーの帯 */
+            border-top: 5px solid var(--color-primary);
             transition: transform 0.2s, box-shadow 0.2s;
-            line-height: 1.5; /* 行間調整 */
+            line-height: 1.5;
         }
         .sitemap-card:hover {
             transform: translateY(-5px);
@@ -37,15 +43,15 @@
             display: block;
             font-size: 22px;
             font-weight: 700;
-            color: var(--color-text-dark); /* タイトルは濃い色 */
+            color: var(--color-text-dark);
             margin-bottom: 5px;
+            text-decoration: none;
         }
         .sitemap-card > p {
             font-size: 14px;
             color: var(--color-text-medium);
             margin-bottom: 10px;
         }
-        /* サブリストのスタイル */
         .sitemap-card ul {
             list-style: none;
             padding-left: 0;
@@ -56,17 +62,16 @@
         .sitemap-card ul li a {
             font-size: 15px;
             color: var(--color-text-medium);
-            display: block; /* リンクエリアを広げる */
+            display: block;
             padding: 2px 0;
         }
+        /* AIボタンのアイコン調整 */
+        #ai-chat-button i {
+            vertical-align: middle;
+        }
+    </style>
 </head>
 <body id="top">
-
-<div id="header-placeholder">
-    <nav class="navbar">
-        <div class="content-wrapper" style="display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
-            <a href="index.html" class="logo-link">
-                <div class="logo">なんてつサーバー</div>
 
 <div id="header-placeholder"></div>
 <script src="/scripts/_inject_header.js"></script>
@@ -77,58 +82,57 @@
         <p style="margin-bottom: 0;">当サイトの全てのページ一覧</p>
     </div>
 </header>
+<section id="sitemap-list" class="content-section">
+    <div class="content-wrapper">
 
-    <section id="sitemap-list" class="content-section">
-        <div class="content-wrapper">
+        <h2>ページ一覧</h2>
+        <p style="text-align: center; max-width: 800px; margin: -30px auto 50px; font-size: 1.1em; color: var(--color-text-medium);">
+            サイトの全コンテンツがここに網羅されています。
+        </p>
 
-            <h2>ページ一覧</h2>
-            <p style="text-align: center; max-width: 800px; margin: -30px auto 50px; font-size: 1.1em; color: var(--color-text-medium);">
-                サイトの全コンテンツがここに網羅されています。
-            </p>
-
-            <ul class="sitemap-page-list">
-                <li class="sitemap-card">
-                    <a href="index.html">トップページ</a>
-                    <p>サイトの入り口、サーバーの重要な情報が集約されています。</p>
-                    <ul>
-                        <li><a href="index.html#about">ABOUT (概要)</a></li>
-                        <li><a href="index.html#features">FEATURES (特徴)</a></li>
-                        <li><a href="index.html#join">JOIN (参加方法)</a></li>
-                        <li><a href="index.html#rules">RULES (ルール)</a></li>
-                        <li><a href="index.html#contact">CONTACT (お問い合わせ)</a></li>
-                    </ul>
-                </li>
-                <li class="sitemap-card">
-                    <a href="guide.html">利用ガイド</a>
-                    <p>サーバー利用開始までのステップバイステップガイド。</p>
-                </li>
-                <li class="sitemap-card">
-                    <a href="Join_Info.html">参加情報</a>
-                    <p>参加に関する詳細な情報ページ。</p>
-                </li>
-                <li class="sitemap-card">
-                    <a href="command.html">コマンド一覧</a>
-                    <p>プレイヤー用、管理者用の便利なコマンドリスト。</p>
-                </li>
-                <li class="sitemap-card">
-                    <a href="news.html">お知らせ</a>
-                    <p>サーバーからの最新ニュースやメンテナンス情報。</p>
-                </li>
-                <li class="sitemap-card">
-                    <a href="privacy.html">プライバシーポリシー</a>
-                    <p>ユーザーデータの取り扱いに関する規約。</p>
-                </li>
-                <li class="sitemap-card">
-                    <a href="terms.html">利用規約</a>
-                    <p>サイトおよびサーバーの利用に関するルール。</p>
-                </li>
-            </ul>
-            
-        </div>
-    </section>
-
+        <ul class="sitemap-page-list">
+            <li class="sitemap-card">
+                <a href="index.html">トップページ</a>
+                <p>サイトの入り口、サーバーの重要な情報が集約されています。</p>
+                <ul>
+                    <li><a href="index.html#about">ABOUT (概要)</a></li>
+                    <li><a href="index.html#features">FEATURES (特徴)</a></li>
+                    <li><a href="index.html#join">JOIN (参加方法)</a></li>
+                    <li><a href="index.html#rules">RULES (ルール)</a></li>
+                    <li><a href="index.html#contact">CONTACT (お問い合わせ)</a></li>
+                </ul>
+            </li>
+            <li class="sitemap-card">
+                <a href="guide.html">利用ガイド</a>
+                <p>サーバー利用開始までのステップバイステップガイド。</p>
+            </li>
+            <li class="sitemap-card">
+                <a href="Join_Info.html">参加情報</a>
+                <p>参加に関する詳細な情報ページ。</p>
+            </li>
+            <li class="sitemap-card">
+                <a href="command.html">コマンド一覧</a>
+                <p>プレイヤー用、管理者用の便利なコマンドリスト。</p>
+            </li>
+            <li class="sitemap-card">
+                <a href="news.html">お知らせ</a>
+                <p>サーバーからの最新ニュースやメンテナンス情報。</p>
+            </li>
+            <li class="sitemap-card">
+                <a href="privacy.html">プライバシーポリシー</a>
+                <p>ユーザーデータの取り扱いに関する規約。</p>
+            </li>
+            <li class="sitemap-card">
+                <a href="terms.html">利用規約</a>
+                <p>サイトおよびサーバーの利用に関するルール。</p>
+            </li>
+        </ul>
+        
+    </div>
+</section>
+	
 <div id="footer-placeholder"></div>
-
+	
 <button id="ai-chat-button" style="position: fixed; bottom: 20px; right: 20px; background-color: #8A2BE2; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; z-index: 9999; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
 <i class="fas fa-robot"></i>
 </button>
