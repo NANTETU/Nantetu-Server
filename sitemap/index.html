@@ -8,14 +8,19 @@
     <meta property="og:description" content="なんてつサーバーの全ページ構成（サイトマップ）です。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nantetu-server.vercel.app//sitemap/">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com/">
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=RocknRoll+One&display=swap" rel="stylesheet">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="/style.css"> 
-    
+    <link rel="stylesheet" href="/style.css">
+
+    <script src="/scripts/register_sw.js"></script>
+
+    <div id="page-loader-overlay"></div>
+    <div id="loading-bar"></div>
+
     <style>
         /* カテゴリ見出しのスタイル */
         .sitemap-category-title {
@@ -27,9 +32,10 @@
             margin-top: 60px;
             margin-bottom: 30px;
         }
-        .sitemap-category-title:first-of-type {
-            margin-top: 0;
-        }
+
+            .sitemap-category-title:first-of-type {
+                margin-top: 0;
+            }
 
         .sitemap-page-list {
             list-style: none;
@@ -39,7 +45,7 @@
             gap: 30px;
             margin-top: 20px;
         }
-        
+
         /* コマンド一覧のカードスタイル (.command-card) をベースに適用 */
         .sitemap-card {
             background-color: var(--color-bg-alt);
@@ -52,71 +58,76 @@
             display: flex; /* Flexboxでアイコンとコンテンツを配置 */
             flex-direction: column;
         }
-        .sitemap-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lift);
-        }
 
-        /* ▼ アイコンのスタイルを追加 */
-        .sitemap-card .card-icon {
-            font-size: 28px;
-            color: var(--color-secondary);
-            margin-bottom: 15px;
-            width: 50px; /* アイコンの占める幅を固定 */
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            border-radius: 50%;
-            background-color: var(--color-bg-base);
-        }
+            .sitemap-card:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--shadow-lift);
+            }
 
-        .sitemap-card .card-content a.page-title {
-            display: block;
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--color-text-dark);
-            margin-bottom: 5px;
-            text-decoration: none;
-        }
-        .sitemap-card .card-content a.page-title:hover {
-            color: var(--color-primary);
-        }
+            /* ▼ アイコンのスタイルを追加 */
+            .sitemap-card .card-icon {
+                font-size: 28px;
+                color: var(--color-secondary);
+                margin-bottom: 15px;
+                width: 50px; /* アイコンの占める幅を固定 */
+                height: 50px;
+                line-height: 50px;
+                text-align: center;
+                border-radius: 50%;
+                background-color: var(--color-bg-base);
+            }
 
-        .sitemap-card .card-content p.page-description {
-            font-size: 15px;
-            color: var(--color-text-medium);
-            margin-bottom: 15px;
-            flex-grow: 1; /* 説明文がカードの高さを埋めるように */
-        }
+            .sitemap-card .card-content a.page-title {
+                display: block;
+                font-size: 22px;
+                font-weight: 700;
+                color: var(--color-text-dark);
+                margin-bottom: 5px;
+                text-decoration: none;
+            }
 
-        /* ▼ トップページのサブリンクのスタイルを改善 */
-        .sitemap-card ul.sub-links {
-            list-style: none;
-            padding-left: 0;
-            margin-top: 10px;
-            border-top: 1px solid var(--color-border);
-            padding-top: 15px;
-        }
-        .sitemap-card ul.sub-links li a {
-            font-size: 15px;
-            color: var(--color-text-dark);
-            display: block;
-            padding: 5px 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .sitemap-card ul.sub-links li a:hover {
-            background-color: var(--color-bg-base);
-            color: var(--color-primary);
-        }
-        .sitemap-card ul.sub-links li a i {
-            margin-right: 8px;
-            color: var(--color-text-medium);
-            width: 16px; /* アイコンの幅を固定 */
-            text-align: center;
-        }
-        
+                .sitemap-card .card-content a.page-title:hover {
+                    color: var(--color-primary);
+                }
+
+            .sitemap-card .card-content p.page-description {
+                font-size: 15px;
+                color: var(--color-text-medium);
+                margin-bottom: 15px;
+                flex-grow: 1; /* 説明文がカードの高さを埋めるように */
+            }
+
+            /* ▼ トップページのサブリンクのスタイルを改善 */
+            .sitemap-card ul.sub-links {
+                list-style: none;
+                padding-left: 0;
+                margin-top: 10px;
+                border-top: 1px solid var(--color-border);
+                padding-top: 15px;
+            }
+
+                .sitemap-card ul.sub-links li a {
+                    font-size: 15px;
+                    color: var(--color-text-dark);
+                    display: block;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    text-decoration: none;
+                    font-weight: 500;
+                }
+
+                    .sitemap-card ul.sub-links li a:hover {
+                        background-color: var(--color-bg-base);
+                        color: var(--color-primary);
+                    }
+
+                    .sitemap-card ul.sub-links li a i {
+                        margin-right: 8px;
+                        color: var(--color-text-medium);
+                        width: 16px; /* アイコンの幅を固定 */
+                        text-align: center;
+                    }
+
         /* AIボタンのアイコン調整 */
         #ai-chat-button i {
             vertical-align: middle;
