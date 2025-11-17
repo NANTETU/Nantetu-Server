@@ -9,7 +9,7 @@ const filesToCache = [
     '/style.css',
 
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css',
-    'https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display=swap',
+    'https://fonts./googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display=swap',
 
     // 'https://fonts.gstatic.com' 
 
