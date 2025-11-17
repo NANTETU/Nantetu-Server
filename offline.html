@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ネットワークエラー | なんてつサーバー</title>
+    <!-- 既存のCSSファイルを読み込み (404.htmlと同様にルートパスから) -->
+    <link rel="stylesheet" href="/style.css">
+    
+    <!-- Font Awesomeアイコンを読み込み -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- フォントの読み込み (404.htmlのhead内と同じ設定) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 404.htmlと同様にヘッダーインジェクション用のスクリプトを読み込む場合は追加 (今回は省略) -->
+    <!-- <script src="scripts/set_base.js"></script> -->
+    
+    <style>
+        /* 404ページのデザインに合わせて、エラーセクションの配置を調整 */
+        .error-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 100px); /* ヘッダーやフッターを考慮した高さ */
+            padding-top: 100px; /* ヘッダーとのマージン */
+            padding-bottom: 100px;
+            background-color: var(--color-bg-base);
+            text-align: center;
+        }
+
+        /* 404.htmlの .policy-wrapper を流用 */
+        .error-wrapper {
+            max-width: 600px; /* 404.htmlのpolicy-wrapperよりも少し広く設定 */
+            padding: 50px;
+            border-radius: var(--radius-default);
+            background-color: var(--color-bg-alt);
+            box-shadow: var(--shadow-lift);
+        }
+
+        /* アイコンのスタイルを強化 */
+        .error-icon {
+            font-size: 80px;
+            color: var(--color-error); /* 赤色のエラーカラーを使用 */
+            margin-bottom: 20px;
+            /* 404ではアニメーションがないため、シンプルなデザインに戻す */
+        }
+        
+        .error-title {
+            font-size: 2.5rem; /* 404.htmlのH2より少し大きく */
+            font-weight: 700;
+            color: var(--color-text-dark);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .error-subtext {
+            font-size: 1.1rem;
+            color: var(--color-text-medium);
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        /* ボタンのスタイルは style.css の既存のスタイルに依存 */
+        .retry-button {
+            display: inline-block;
+            padding: 12px 25px;
+            /* style.css の .button-primary などがあればそれを使用 */
+            background-color: var(--color-primary); 
+            color: #fff;
+            text-decoration: none;
+            border-radius: var(--radius-default);
+            font-weight: 700;
+            transition: background-color 0.3s, transform 0.1s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .retry-button:hover {
+            background-color: #4b269c; /* 少し暗くする */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="error-page">
+
+<div id="header-placeholder"></div>
+<script src="/_inject_header.js"></script>
+
+
+<!-- 404.htmlのセクション構造を模倣 -->
+<section id="offline-status" class="error-section">
+    <div class="content-wrapper">
+        <div class="error-wrapper">
+            <!-- 404.htmlのH2を模倣 -->
+            <h2 style="margin-bottom: 20px;">オフライン</h2>
+            
+            <div class="error-content" style="padding-top: 20px;">
+                <!-- Wi-Fiアイコン (404.htmlのファイルアイコンを置き換え) -->
+                <i class="fas fa-satellite-dish error-icon" style="color: var(--color-error);"></i>
+                
+                <h1 class="error-title">
+                    ネットワーク接続が失われました
+                </h1>
+                
+                <p id="message-text" class="error-subtext">
+                    このページは現在、インターネットに接続されていないため表示できません。<br>
+                    Wi-Fiまたはモバイルデータ通信が有効か確認し、再試行ボタンを押してください。
+                </p>
+
+                <!-- 404.htmlのボタンを再試行ボタンとして使用 -->
+                <button class="retry-button" id="retry-button">
+                    <i class="fas fa-redo-alt"></i> 接続を再試行
+                </button>
+            </div>
+        </div>
+    </section>
+<div id="footer-placeholder"></div>
+
+	<button id="ai-chat-button" style="position: fixed; bottom: 20px; right: 20px; background-color: #8A2BE2; color: white; border: none; border-radius: 50%; width: 50px; height: 50px; font-size: 24px; cursor: pointer; z-index: 9999; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+    <i class="fas fa-robot"></i>
+</button>
+
+    </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const retryButton = document.getElementById('retry-button');
+        const messageText = document.getElementById('message-text');
+
+        if (!retryButton) return;
+
+        retryButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // ボタンを無効化し、状態を更新
+            retryButton.disabled = true;
+            retryButton.innerHTML = `<i class="fas fa-sync-alt fa-spin"></i> 接続を確認中...`;
+            
+            // ネットワークが回復しているかを確認
+            if (navigator.onLine) {
+                messageText.innerHTML = "接続が回復しました！ページを読み込み中です...";
+                // 接続回復を確認後、リロード
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500); 
+            } else {
+                // オフラインの場合はメッセージを更新
+                messageText.innerHTML = "まだオフラインのようです。接続を確認してから再度お試しください。";
+                
+                // 少し待ってからボタンを元に戻す
+                setTimeout(() => {
+                    retryButton.innerHTML = `<i class="fas fa-redo-alt"></i> 接続を再試行`;
+                    retryButton.disabled = false;
+                }, 2000);
+            }
+        });
+    });
+</script>
+</body>
+</html>
