@@ -1039,3 +1039,40 @@ footer a {
     pointer-events: none; /* 下のコンテンツをクリックできるようにする */
 }
 
+/* ボタンの共通スタイル（既存のスタイルを強化） */
+.button-primary, .button-secondary, .copy-button {
+    /* 遷移アニメーションの追加 */
+    transition: all 0.2s ease-out; /* ホバー時の浮き上がりを滑らかにする */
+}
+
+/* === アニメーション 1: サーバー状態の「鼓動」 === */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+
+    70% {
+        transform: scale(1.03);
+        box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+
+/* サーバー状態ボックスにアニメーション適用 */
+.server-status-box.online {
+    animation: pulse 2s infinite cubic-bezier(0.66, 0, 0.34, 1);
+    /* オンライン時のボックスシャドウを少し明るくして強調 */
+    box-shadow: 0 0 10px rgba(25, 135, 84, 0.5);
+}
+
+/* === アニメーション 2: ボタンのマイクロインタラクション === */
+.button-primary:hover, .button-secondary:hover, .copy-button:hover {
+    transform: translateY(-3px); /* わずかに上に浮き上がらせる */
+    box-shadow: var(--shadow-lift); /* 大きなシャドウで立体感を出す */
+}
+
