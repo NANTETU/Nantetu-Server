@@ -6,4 +6,3 @@ if (isGitHubPages) {
     baseTag.href = `/${REPO_NAME}/`;
     document.head.prepend(baseTag);
 }
-
