@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お知らせ | なんてつサーバー 🌈</title>
+
+    <link rel="icon" href="/icon.jpg" type="image/jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display.swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        /* 詳細ページ専用のスタイル */
+        #news-detail-container {
+            max-width: 900px; /* サイトマップと同じ幅に */
+            margin: 0 auto;
+            background-color: var(--color-bg-alt);
+            padding: 30px 40px;
+            border-radius: var(--radius-default);
+            box-shadow: var(--shadow-subtle);
+        }
+
+            #news-detail-container h1 {
+                font-size: 32px;
+                font-weight: 900;
+                color: var(--color-text-dark);
+                margin-top: 0;
+                margin-bottom: 10px;
+            }
+
+            #news-detail-container .news-date {
+                display: block;
+                color: var(--color-text-medium);
+                font-size: 15px;
+                margin-bottom: 25px;
+                border-bottom: 1px solid var(--color-border);
+                padding-bottom: 20px;
+            }
+
+            #news-detail-container .news-content {
+                font-size: 17px;
+                line-height: 2.0; /* 本文の行間を広めにとる */
+            }
+
+                #news-detail-container .news-content pre {
+                    background: #eee;
+                    padding: 15px;
+                    border-radius: 5px;
+                    white-space: pre-wrap;
+                    word-break: break-all;
+                    font-family: monospace;
+                }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 50px;
+            font-size: 20px;
+            color: var(--color-text-medium);
+        }
+
+        @media (max-width: 768px) {
+            #news-detail-container {
+                padding: 20px;
+            }
+
+                #news-detail-container h1 {
+                    font-size: 26px;
+                }
+        }
+    </style>
+</head>
+<body id="top">
+
+    <div id="header-placeholder"></div>
+
+    <header id="hero" style="padding-top: 80px; padding-bottom: 80px; background: linear-gradient(135deg, rgba(94, 53, 177, 0.7), rgba(0, 0, 0, 0.5)), url('banner.jpg') no-repeat center center; background-size: cover;">
+        <div class="content-wrapper">
+            <h1 style="font-size: 42px;"><i class="fas fa-bullhorn"></i> サーバーニュース</h1>
+            <p style="margin-bottom: 0;">お知らせの詳細</p>
+        </div>
+    </header>
+
+    <section id="news-detail-section" class="content-section">
+        <div id="news-detail-container">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i> 読み込み中...
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="/_inject_header.js"></script>
+    <script src="/_inject_footer.js"></script>
+
+    <script>
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxtUxOya_ekYBptUNncsW9Wz7B2j-Rjqj0boAuUotMWn0paoEpxPtCNC6cX35W7E9qywQ/exec';
+
+        // ▼▼▼ 修正 ▼▼▼
+        // 画像URLと改行を処理する関数
+        function formatDiscordContent(content) {
+            let formatted = content || ''; // null対策
+
+            // 1. HTMLタグをエスケープ (XSS対策)
+            formatted = formatted.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+            // 2. DiscordマークダウンをHTMLに
+            formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            formatted = formatted.replace(/```([\s\S]*?)```/gs, (match, code) => `<pre>${code}</pre>`);
+
+            // 3. 画像URL (http... .png/jpg/gif) を <img> タグに変換
+            // (エスケープされた < や > に影響されないように、マークダウン処理の後に実行)
+            const imageUrlRegex = /(https?:\/\/[^\s<>"']+\.(?:png|jpg|jpeg|gif))/gi;
+            formatted = formatted.replace(imageUrlRegex, (url) => {
+                return `<img src="${url}" alt="お知らせ画像" style="max-width: 100%; border-radius: 8px; margin-top: 10px; margin-bottom: 10px;">`;
+            });
+
+            // 4. 改行を <br> タグに変換
+            formatted = formatted.replace(/\n/g, '<br>');
+
+            return formatted;
+        }
+        // ▲▲▲ 修正 ▲▲▲
+
+        function formatNewsDate(timestamp) {
+            const date = new Date(timestamp);
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Tokyo' };
+            return date.toLocaleDateString('ja-JP', options);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const params = new URLSearchParams(window.location.search);
+            const newsId = params.get('id');
+
+            if (!newsId) {
+                displayError('記事IDが指定されていません。');
+                return;
+            }
+
+            // ▼▼▼ 修正 ▼▼▼
+            // sessionStorageを削除し、ID付きでGASに直接フェッチ
+            findAndRenderPost(newsId);
+        });
+
+        async function findAndRenderPost(id) {
+            const container = document.getElementById('news-detail-container');
+
+            try {
+                // 1. GASに ?id=... を付けてフェッチ
+                const response = await fetch(`${GAS_WEB_APP_URL}?id=${id}`);
+                if (!response.ok) throw new Error('Failed to fetch data');
+
+                // 2. GASからは記事1件のオブジェクトが直接返ってくる
+                const post = await response.json();
+
+                if (post && !post.error) {
+                    // 3. 記事データをHTMLに挿入
+                    const title = post.title || 'タイトルなし';
+                    const author = post.author || '運営';
+                    const formattedDate = formatNewsDate(post.timestamp);
+                    const formattedContent = formatDiscordContent(post.content);
+
+                    document.title = `${title} | なんてつサーバー 🌈`;
+
+                    container.innerHTML = `
+                        <h1>${title}</h1>
+                        <span class="news-date">投稿者: ${author} | ${formattedDate}</span>
+                        <div class="news-content">
+                            ${formattedContent}
+                        </div>
+                        <a href="news" style="display: inline-block; margin-top: 30px; font-weight: 700;">&laquo; お知らせ一覧に戻る</a>
+                    `;
+                } else {
+                    displayError(post.error || '指定された記事が見つかりませんでした。');
+                }
+            } catch (error) {
+                console.error('記事の取得エラー:', error);
+                displayError('記事の読み込みに失敗しました。');
+            }
+        }
+        // ▲▲▲ 修正 ▲▲▲
+
+        function displayError(message) {
+            const container = document.getElementById('news-detail-container');
+            container.innerHTML = `
+                <h1 style="color: var(--color-error);">エラー</h1>
+                <p>${message}</p>
+                <a href="news" style="display: inline-block; margin-top: 30px; font-weight: 700;">&laquo; お知らせ一覧に戻る</a>
+            `;
+        }
+    </script>
+
+</body>
+</html>
