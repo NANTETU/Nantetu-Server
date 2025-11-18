@@ -6,13 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeButton = document.getElementById('close-button');
 
     // 💡 Cloudflare Workerのデプロイ済みフルURLに設定
-    const SEND_API_ENDPOINT = 'https://nantetuservercloudflare.nantetu1.workers.dev';
+    const SEND_API_ENDPOINT = '/api/chat';
+
+    // ===================================================
+    // 💡 会話履歴を格納する配列 (メモリ)
+    // ===================================================
+    const chatHistory = [];
+    const initialBotMessageText = 'なんてつサーバーへようこそ！ルール、コマンド、接続情報など、何でもご質問ください。';
 
     // ===================================================
     // 1. 親ウィンドウとの連携 (閉じるボタン)
     // ===================================================
     closeButton.addEventListener('click', () => {
-        // 親ウィンドウのJSがこのメッセージを受け取り、iframeを非表示にする
         window.parent.postMessage('close-ai-widget', '*');
     });
 
@@ -22,10 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function getCurrentTime() {
         const now = new Date();
-        // 例: 18:37
         return now.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit' });
     }
 
+    // 💡 履歴に追加する機能を追加
     function addMessage(text, sender) {
         const messageDiv = document.createElement('div');
         messageDiv.classList.add('message', `${sender}-message`);
@@ -37,6 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
             <span class="message-time">${timeStamp}</span>
         `;
         messagesContainer.appendChild(messageDiv);
+
+        // 履歴にメッセージを追加 (Gemini APIの形式に合わせる)
+        // role: user (ユーザー) or model (AI)
+        const role = sender === 'user' ? 'user' : 'model';
+        chatHistory.push({
+            role: role,
+            parts: [{ text: text }]
+        });
 
         // 最新のメッセージが見えるように自動スクロール
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -51,36 +64,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const userText = userInput.value.trim();
         if (!userText) return;
 
-        // ユーザーのメッセージを画面に追加
+        // ユーザーのメッセージを画面に追加 (同時に履歴に追加される)
         addMessage(userText, 'user');
         userInput.value = ''; // 入力欄をクリア
 
         // ローディングメッセージを追加
         const loadingMessage = document.createElement('div');
         loadingMessage.classList.add('message', 'bot-message', 'loading');
-        // ローディングメッセージにもタイムスタンプを追加
-        loadingMessage.innerHTML = `<p>...</p><span class="message-time">${getCurrentTime()}</span>`;
+        loadingMessage.innerHTML = `<p>AIが考え中...</p><span class="message-time">${getCurrentTime()}</span>`;
         messagesContainer.appendChild(loadingMessage);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
         try {
             // Cloudflare WorkerへのAPIコール
+            // 💡 修正: prompt ではなく chatHistory 全体を送信
             const response = await fetch(SEND_API_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: userText })
+                // 💡 送信するデータ構造を {history: [...]} に変更
+                body: JSON.stringify({ history: chatHistory })
             });
 
             if (!response.ok) {
                 let errorDetail = 'サーバー応答エラー';
                 try {
-                    // Worker側がJSONでエラーを返すことを期待
                     const errorJson = await response.json();
                     if (errorJson && errorJson.error) {
                         errorDetail = errorJson.error;
                     }
                 } catch (e) {
-                    // JSONパースエラーの場合は、WorkerがHTMLなどのテキストを返している可能性
+                    // JSONパースエラー
                 }
                 throw new Error(errorDetail);
             }
@@ -98,11 +111,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (messagesContainer.contains(loadingMessage)) {
                 messagesContainer.removeChild(loadingMessage);
             }
-            // ユーザーフレンドリーなエラーメッセージ
-            addMessage(`エラーが発生しました。（詳細: ${error.message}）時間を置いて再度お試しください。`, 'bot');
+
+            // 💡 修正: ネットワークエラー（Failed to fetch）の場合、外部障害の可能性を指摘
+            if (error.message.includes('Failed to fetch') || error.message.includes('サーバー応答エラー')) {
+                addMessage(`現在、サーバーまたはネットワークに接続できません。**Cloudflare側の障害**の可能性があります。時間を置いて再度質問を送信してください。`, 'bot');
+            } else {
+                // その他のWorker側、またはAPIキー由来のエラー
+                addMessage(`エラーが発生しました。（詳細: ${error.message}）時間を置いて再度お試しください。`, 'bot');
+            }
         }
     });
 
-    // 初期メッセージの表示
-    addMessage('なんてつサーバーへようこそ！ルール、コマンド、接続情報など、何でもご質問ください。', 'bot');
+    // 初期メッセージの表示 (履歴にも追加される)
+    addMessage(initialBotMessageText, 'bot');
 });
