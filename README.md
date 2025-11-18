@@ -19,6 +19,13 @@
 - ダークモード
 
 ## Pullリクエストについて
-当リポジトリではPullリクエストを作成してウェブサイトに貢献することをとても歓迎します。
+当リポジトリではForkしてPullリクエストを作成してウェブサイトに貢献することをとても歓迎します。
+
+pullリクエストの方法がわからない場合は、[こちら](https://docs.github.com/ja/github/collaborating-with-issues-and-pull-requests/about-pull-requests)をご覧ください。
+
+## 宣伝など
+- YouTube: https://youtube.com/@なんてつ
+- Twitter: https://twitter.com/nantetu123
+- Discordサーバー: https://discord.gg/79H7Jy65nz
 
 Use AI
