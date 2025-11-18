@@ -119,7 +119,7 @@
                             <div id="server-status" style="font-weight: 700; margin-bottom: 20px;">
         <i class="fas fa-spinner fa-spin" style="color: var(--color-text-medium);"></i> 状態確認中...
     </div>
-						<p>以下の情報を使って、マインクラフトからサーバーに参加してください。</p>
+						<p>以下の2つの方法でサーバーに参加してください。</p>
 
                         <div class="gamer-tag-copy-container">
                             <p>ゲーマータグ</p>
@@ -233,17 +233,13 @@
 
             <div class="contact-card">
                 <form id="contactForm" class="contact-form">
-                    <input type="text" id="name" name="name" placeholder="お名前" required>
-                    <input type="email" id="email" name="email" placeholder="メールアドレス/DiscordID" required>
-                    <textarea id="message" name="message" placeholder="メッセージ内容" rows="6" required></textarea>
+                    <input type="text" id="player_name" name="name" placeholder="お名前" required>
+                    <input type="text" id="discord_tag" name="email" placeholder="メールアドレス/DiscordID" required>
+                    <textarea id="subject" name="message" placeholder="メッセージ内容" rows="6" required></textarea>
                     <button type="submit" class="submit-btn">送信する</button>
                     <p id="contactFormStatus" class="form-message"></p>
                 </form>
 				
-				
-				
-				
-
                 <div id="successMessage" class="submission-success-message hidden">
                     <i class="fas fa-check-circle" style="font-size: 60px; color: var(--color-success); margin-bottom: 20px;"></i>
                     <h2 style="color: var(--color-text-dark);">送信完了しました！</h2>
@@ -334,77 +330,61 @@ document.addEventListener('DOMContentLoaded', function() {
     // 2. お問い合わせフォーム機能
     // ====================================================================
 
-    document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contactForm');
-    const contactFormStatus = document.getElementById('contactFormStatus');
-    const successMessage = document.getElementById('successMessage');
-    const contactCard = document.querySelector('#contact .contact-card');
-    
-    // VercelのAPIルートへのパス
-    const API_ENDPOINT_URL = "/api/contact.js"; 
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('contact-form');
+        const submitButton = document.getElementById('submit-button');
+        const successMessage = document.getElementById('form-success-message');
 
-    // varColor関数が未定義の場合のエラー防止（環境に合わせて修正してください）
-    const varColor = (name) => {
-        // デバッグ用のダミー関数。実際はCSS変数から色を取得する関数が入ります
-        if (name === 'text-medium') return '#999';
-        if (name === 'error') return '#D00';
-        return '#000';
-    };
+        // ターゲットURLはVercel APIエンドポイント
+        const VERCEL_API_URL = '/api/contact';
 
+        if (!form) return;
 
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        form.addEventListener('submit', async function (e) {
             e.preventDefault();
-            const submitButton = contactForm.querySelector('button[type="submit"]');
-
-            contactFormStatus.textContent = '🔄 送信処理中...';
-            contactFormStatus.style.color = varColor('text-medium');
             submitButton.disabled = true;
+            submitButton.textContent = '送信中...';
 
-            const formData = new FormData(contactForm);
-            
-            // 💡 FormDataをJSONオブジェクトに変換
-            const dataToSend = {};
-            for (const [key, value] of formData.entries()) {
-                // フォームの name 属性と Vercel側が期待するキー名が一致していることを確認
-                dataToSend[key] = value;
-            }
-            
-            // --- API送信処理 ---
-            fetch(API_ENDPOINT_URL, {
-                method: 'POST',
-                // 💡 JSON形式で送信するためのヘッダー
-                headers: {
-                    'Content-Type': 'application/json' 
-                },
-                body: JSON.stringify(dataToSend) // 構築したJSONを文字列にして送信
-            })
-            .then(response => {
-                // HTTPステータスが200番台以外の場合はエラーを投げる
-                if (!response.ok) {
-                    // Vercelが返したエラーメッセージを取得
-                    return response.json().then(errorData => {
-                        throw new Error(`HTTP Error! Status: ${response.status}. Message: ${errorData.message || 'Unknown server error.'}`);
-                    });
+            // フォームデータを取得
+            const formData = new FormData(form);
+            // JSON形式に変換 (ここで name="player_name" などが JSONキーになります)
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch(VERCEL_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data) // JSONとしてVercel APIに送信
+                });
+
+                // Vercel APIがJSONで応答すると想定
+                const result = await response.json();
+
+                if (response.ok && result.status === 'success') {
+                    // 成功時: フォームを非表示にし、成功メッセージを表示
+                    form.style.display = 'none';
+                    if (successMessage) {
+                        successMessage.style.display = 'block';
+                    }
+
+                    // 3秒後にトップページにリダイレクト
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 3000);
+
+                } else {
+                    // 失敗時: エラーメッセージを表示
+                    alert(`送信失敗: ${result.message || '不明なエラーが発生しました。'}`);
+                    submitButton.disabled = false;
+                    submitButton.textContent = '送信する';
                 }
-                return response.json(); 
-            })
-            .then(data => {
-                // 成功時の処理
-                contactForm.classList.add('hidden');
-                successMessage.classList.remove('hidden');
-                
-                if (contactCard) {
-                    // カードの高さを調整して、成功メッセージを中央に表示
-                    contactCard.style.height = `${contactForm.offsetHeight}px`;
-                    contactCard.style.transition = 'height 0.5s ease-out';
-                }
-            })
-            .catch(error => {
-                console.error('送信エラー:', error);
-                contactFormStatus.textContent = '⚠️ 送信に失敗しました。詳細: ' + error.message;
-                contactFormStatus.style.color = varColor('error');
+            } catch (error) {
+                console.error('Fetch Error:', error);
+                alert('ネットワークエラーにより送信できませんでした。');
                 submitButton.disabled = false;
+                submitButton.textContent = '送信する';
             });
         });
     }
@@ -673,23 +653,3 @@ setInterval(fetchServerStatus, 30000);
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
