@@ -105,17 +105,19 @@ body.dark-mode a:hover {
 
 /* ========== ナビゲーションバー (V3) ========== */
 .navbar {
-    position: sticky;
+    position: fixed; 
     top: 0;
     z-index: 1000;
-    background-color: var(--color-navbar-bg); /* 変数に変更 */
+    width: 100%; 
+
+    background-color: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(8px);
     box-shadow: none;
     border-bottom: 1px solid var(--color-border);
     display: flex;
     justify-content: space-between;
-    align-items: center;
     padding: 14px 40px;
+}
 }
 
     .navbar .logo-link {
@@ -228,6 +230,9 @@ body.dark-mode .navbar .nav-links a.active-nav-link {
 
     .navbar .nav-links {
         display: none !important;
+        display: flex; /* リンクとボタンを横並びにする */
+        align-items: center; /* 垂直方向で中央に揃える */
+        gap: 10px; /* リンクとボタンの間隔を少し空ける */
     }
     /* デフォルトで非表示 */
 

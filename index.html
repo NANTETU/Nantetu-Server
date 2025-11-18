@@ -326,11 +326,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-    // ====================================================================
-    // 2. お問い合わせフォーム機能
-    // ====================================================================
+    // scripts/contact_form.js
 
     document.addEventListener('DOMContentLoaded', function () {
+        // ====================================================================
+        // 2. お問い合わせフォーム機能
+        // ====================================================================
         const form = document.getElementById('contact-form');
         const submitButton = document.getElementById('submit-button');
         const successMessage = document.getElementById('form-success-message');
@@ -338,6 +339,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // ターゲットURLはVercel APIエンドポイント
         const VERCEL_API_URL = '/api/contact';
 
+        // フォームが存在しないページでは実行しない (早期リターン)
         if (!form) return;
 
         form.addEventListener('submit', async function (e) {
@@ -347,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // フォームデータを取得
             const formData = new FormData(form);
-            // JSON形式に変換 (ここで name="player_name" などが JSONキーになります)
+            // JSON形式に変換
             const data = Object.fromEntries(formData.entries());
 
             try {
@@ -385,10 +387,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('ネットワークエラーにより送信できませんでした。');
                 submitButton.disabled = false;
                 submitButton.textContent = '送信する';
-            });
+            }
         });
-    }
-});
+    });
 
     // ====================================================================
     // 3. クイズ機能
