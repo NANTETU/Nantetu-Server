@@ -57,11 +57,11 @@ async function fetchAndRenderNews() {
 
             newsItemDiv.innerHTML = `
                 <h3>
-                    <a href="news_detail?id=${uniqueId}" class="news-title-link">${title}</a>
+                    <a href="news_detail.html?id=${uniqueId}" class="news-title-link">${title}</a>
                 </h3> 
                 <span class="news-date">“ŠeÒ: ${author} | ${formattedDate}</span>
                 <p>${formattedSnippet}</p>
-                <a href="news_detail?id=${uniqueId}" style="display: inline-block; font-weight: 700; margin-top: 10px;">‘±‚«‚ğ“Ç‚Ş &raquo;</a>
+                <a href="news_detail.html?id=${uniqueId}" style="display: inline-block; font-weight: 700; margin-top: 10px;">‘±‚«‚ğ“Ç‚Ş &raquo;</a>
             `;
 
             newsListContainer.appendChild(newsItemDiv);
