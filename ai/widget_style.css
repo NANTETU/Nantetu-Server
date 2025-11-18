@@ -1,19 +1,20 @@
 /* widget_style.css */
 
 /* ウィジェット全体のリセットとフォント設定 */
-body {
+html, body {
     margin: 0;
     padding: 0;
     font-family: 'Noto Sans JP', sans-serif;
     background-color: #f0f4f8;
-    height: 100vh;
+    height: 100%;
     overflow: hidden;
 }
 
 #chat-container {
     display: flex;
     flex-direction: column;
-    max-width: 100%;
+    height: 100%;
+    width: 100%;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -25,10 +26,10 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    /* グラデーションを適用し、奥行きを出す */
     background: linear-gradient(90deg, #4B0082, #6A5ACD);
     color: white;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
 }
 
     #chat-header h3 {
@@ -64,10 +65,20 @@ body {
         transform: scale(1.1);
     }
 
-/* メッセージエリア */
+/* ⚠️ 注意書きのスタイル */
+#disclaimer {
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 11px;
+    color: #8B0000;
+    background-color: #FFF0F0;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
 #messages {
     flex-grow: 1;
-    padding: 15px; /* パディングを増やしてゆとりを持たせる */
+    padding: 15px;
     overflow-y: auto;
     background-color: #ffffff;
 }
@@ -83,16 +94,19 @@ body {
     }
 
 .message {
-    /* 吹き出しの角丸を増やし、滑らかに */
+    /* 👈 修正: display: table に変更。コンテンツ幅に自動で縮小します。 */
+    display: table;
     padding: 10px 15px;
     border-radius: 20px;
     margin-bottom: 12px;
-    max-width: 85%;
+    max-width: 85%; /* 最大幅は維持 */
     line-height: 1.6;
     font-size: 14.5px;
-    /* 吹き出しの影を追加し、浮き上がった感じを出す */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     position: relative;
+    /* 以前の inline-block のためのマージンを削除 */
+    margin-left: 0;
+    margin-right: 0;
 }
 
     .message p {
@@ -110,11 +124,13 @@ body {
 
 /* AI (Bot) メッセージ */
 .bot-message {
-    background-color: #E6E6FA; /* ラベンダー */
+    background-color: #E6E6FA;
     color: #333;
-    border-bottom-left-radius: 4px; /* 角を非対称にして、よりチャットアプリらしく */
+    border-bottom-left-radius: 4px;
     text-align: left;
+    /* 👈 修正: display: table により margin: auto が復活 */
     margin-right: auto;
+    margin-left: 0;
 }
 
     .bot-message .message-time {
@@ -123,11 +139,13 @@ body {
 
 /* ユーザーメッセージ */
 .user-message {
-    background-color: #4B0082; /* 濃い紫 */
+    background-color: #4B0082;
     color: white;
-    margin-left: auto;
-    border-bottom-right-radius: 4px; /* 角を非対称に */
+    border-bottom-right-radius: 4px;
     text-align: right;
+    /* 👈 修正: display: table により margin: auto が復活 */
+    margin-left: auto;
+    margin-right: 0;
 }
 
     .user-message .message-time {
@@ -137,7 +155,6 @@ body {
 
 /* ローディングメッセージのアニメーション */
 .loading p {
-    /* 3点リーダーのアニメーションをCSSで実装 */
     overflow: hidden;
     white-space: nowrap;
     animation: typing 1.5s steps(3, end) infinite;
@@ -151,7 +168,6 @@ body {
     to {
         width: 40px
     }
-    /* 「考え中...」のドット部分の幅 */
 }
 
 
@@ -162,37 +178,39 @@ body {
     border-top: 1px solid #e0e0e0;
     background-color: #f7f7f7;
     align-items: center;
+    flex-shrink: 0;
 }
 
 #user-input {
     flex-grow: 1;
     padding: 12px 18px;
     border: 1px solid #cfd8dc;
-    border-radius: 25px; /* より丸く */
+    border-radius: 25px;
     margin-right: 10px;
     font-size: 15px;
     outline: none;
     transition: border-color 0.3s, box-shadow 0.3s;
+    min-width: 0;
 }
 
     #user-input:focus {
-        border-color: #6A5ACD; /* フォーカス時の色 */
+        border-color: #6A5ACD;
         box-shadow: 0 0 5px rgba(106, 90, 205, 0.3);
     }
 
 #send-button {
-    /* アイコンフォントを使うことを想定したサイズ */
     background-color: #6A5ACD;
     color: white;
     border: none;
-    width: 40px; /* 正方形に近い形に */
+    width: 40px;
     height: 40px;
-    border-radius: 50%; /* 完全な円に */
+    border-radius: 50%;
     cursor: pointer;
-    font-size: 18px; /* アイコンのサイズ */
+    font-size: 18px;
     line-height: 1;
     transition: background-color 0.2s, transform 0.1s;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
 }
 
     #send-button:hover {
@@ -201,15 +219,5 @@ body {
     }
 
     #send-button:active {
-        transform: scale(0.95); /* クリック時のフィードバック */
+        transform: scale(0.95);
     }
-
-#disclaimer {
-    /* フォームとメッセージエリアの間に配置し、中央寄せ */
-    padding: 8px 10px;
-    text-align: center;
-    font-size: 11px; /* 小さめのフォントで邪魔にならないように */
-    color: #8B0000; /* 濃い赤色で注意を促す */
-    background-color: #FFF0F0; /* わずかに薄い赤の背景 */
-    border-top: 1px solid #e0e0e0;
-}

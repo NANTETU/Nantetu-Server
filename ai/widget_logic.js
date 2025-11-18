@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const loadingMessage = document.createElement('div');
         loadingMessage.classList.add('message', 'bot-message', 'loading');
         // ローディングメッセージにもタイムスタンプを追加
-        loadingMessage.innerHTML = `<p>AIが考え中...</p><span class="message-time">${getCurrentTime()}</span>`;
+        loadingMessage.innerHTML = `<p>...</p><span class="message-time">${getCurrentTime()}</span>`;
         messagesContainer.appendChild(loadingMessage);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
