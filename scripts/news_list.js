@@ -1,5 +1,5 @@
 // scripts/news_list.js ‚Ì“à—e
-const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyUBg7WSzVTOjKLHV92tFHPMU_ekQoEh9SK8OvyggB_cbzxv8V-QZZopT3dxT1mqEj_Nw/exec';
+const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzbDJNkK9eBCjPDE3UNLLU1FcD1vl3NCc-oldclzJ9ayZS5G_i8NKy6qEuyyrGqaLvxgg/exec';
 
 const newsListContainer = document.getElementById('news-list');
 
