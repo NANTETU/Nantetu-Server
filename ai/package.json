@@ -1,7 +1,8 @@
 {
   "name": "nantetu-ai-vercel",
   "version": "1.0.0",
-  "description": "Nantetu AI Assistant migrated to Vercel Functions",
+  "description": "Nantetu AI Assistant",
+  "type": "module",
   "main": "api/chat.js",
   "scripts": {
     "start": "vercel dev"
