@@ -213,13 +213,3 @@ body {
     background-color: #FFF0F0; /* わずかに薄い赤の背景 */
     border-top: 1px solid #e0e0e0;
 }
-
-/* フォームエリアのスタイルはそのまま維持 */
-#input-form {
-    display: flex;
-    padding: 12px 15px;
-    /* border-top は disclaimer に移動したため、ここでは削除または維持 */
-    border-top: 1px solid #e0e0e0; /* 必要に応じてdisclaimerのボーダーと合わせる */
-    background-color: #f7f7f7;
-    align-items: center;
-}
