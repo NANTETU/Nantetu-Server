@@ -5,21 +5,21 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Noto Sans JP', sans-serif;
-    /* 背景色を微調整し、よりソフトに */
     background-color: #f0f4f8;
-    height: 100vh;
+    /* height: 100vh; ← 削除 */
     overflow: hidden;
 }
 
 #chat-container {
     display: flex;
     flex-direction: column;
+    /* 👈 変更: 親（iframe）の高さと幅いっぱいに広がるように設定 */
     height: 100%;
-    max-width: 100%;
-    /* 角丸を少し増やし、ソフトな印象に */
+    width: 100%;
+    /* max-width: 100%; ← 不要になったため削除 */
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* 全体に影を追加 */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 /* ヘッダー */
@@ -206,3 +206,23 @@ body {
     #send-button:active {
         transform: scale(0.95); /* クリック時のフィードバック */
     }
+
+#disclaimer {
+    /* フォームとメッセージエリアの間に配置し、中央寄せ */
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 11px; /* 小さめのフォントで邪魔にならないように */
+    color: #8B0000; /* 濃い赤色で注意を促す */
+    background-color: #FFF0F0; /* わずかに薄い赤の背景 */
+    border-top: 1px solid #e0e0e0;
+}
+
+/* フォームエリアのスタイルはそのまま維持 */
+#input-form {
+    display: flex;
+    padding: 12px 15px;
+    /* border-top は disclaimer に移動したため、ここでは削除または維持 */
+    border-top: 1px solid #e0e0e0; /* 必要に応じてdisclaimerのボーダーと合わせる */
+    background-color: #f7f7f7;
+    align-items: center;
+}
