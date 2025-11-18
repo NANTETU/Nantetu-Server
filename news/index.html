@@ -16,14 +16,13 @@
     <link href="https://fonts.googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display.swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="/style.css">
-    <script src="scripts/news_list.js"></script>
     <script src="scripts/set_base.js"></script>
 </head>
 <body id="top">
-  
-<div id="header-placeholder"></div>
-<script src="/_inject_header.js"></script>
-			
+
+    <div id="header-placeholder"></div>
+    <script src="/_inject_header.js"></script>
+
     <header id="hero" style="padding-top: 80px; padding-bottom: 80px; background: linear-gradient(135deg, rgba(94, 53, 177, 0.7), rgba(0, 0, 0, 0.5)), url('/images/banner.jpg') no-repeat center center; background-size: cover;">
         <div class="content-wrapper">
             <h1 style="font-size: 42px;"><i class="fas fa-bullhorn"></i> サーバーニュース</h1>
@@ -39,9 +38,6 @@
     </section>
     <div id="footer-placeholder"></div>
 
-document.addEventListener('DOMContentLoaded', function() {
-    fetchAndRenderNews();
-});
-</script>
+    <script src="scripts/news_list.js"></script>
 </body>
 </html>
