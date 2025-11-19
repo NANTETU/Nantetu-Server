@@ -97,24 +97,23 @@
     <script src="/_inject_header.js"></script>
     <script src="/_inject_footer.js"></script>
 
-    <script>
+<script>
         const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzbDJNkK9eBCjPDE3UNLLU1FcD1vl3NCc-oldclzJ9ayZS5G_i8NKy6qEuyyrGqaLvxgg/exec ';
 
-        // ▼▼▼ 修正 ▼▼▼
+        // ▼▼▼ 修正済み ▼▼▼
         // 画像URLと改行を処理する関数
         function formatDiscordContent(content) {
             let formatted = content || ''; // null対策
 
-            // 1. HTMLタグをエスケープ (XSS対策)
-            formatted = formatted.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
+            // 1. HTMLタグのエスケープ処理を削除しました！
+            // (理由: マークダウン変換後のHTMLタグが文字として表示されてしまうため)
+            
             // 2. DiscordマークダウンをHTMLに
             formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
             formatted = formatted.replace(/\*(.*?)\*/g, '<em>$1</em>');
             formatted = formatted.replace(/```([\s\S]*?)```/gs, (match, code) => `<pre>${code}</pre>`);
 
             // 3. 画像URL (http... .png/jpg/gif) を <img> タグに変換
-            // (エスケープされた < や > に影響されないように、マークダウン処理の後に実行)
             const imageUrlRegex = /(https?:\/\/[^\s<>"']+\.(?:png|jpg|jpeg|gif))/gi;
             formatted = formatted.replace(imageUrlRegex, (url) => {
                 return `<img src="${url}" alt="お知らせ画像" style="max-width: 100%; border-radius: 8px; margin-top: 10px; margin-bottom: 10px;">`;
