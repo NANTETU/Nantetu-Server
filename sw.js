@@ -1,74 +1,68 @@
-// ƒLƒƒƒbƒVƒ…–¼ (ƒo[ƒWƒ‡ƒ“‚ðã‚°‚é‚±‚Æ‚ÅAV‚µ‚¢ƒAƒZƒbƒg‚ÉXV‚Å‚«‚Ü‚·)
-const CACHE_NAME = 'nantetu-server-cache-v2'; // v1 ‚©‚ç v2 ‚É•ÏXI
-const OFFLINE_URL = '/offline.html';
-
-// Service Worker‚ªƒLƒƒƒbƒVƒ…‚·‚×‚«ƒAƒZƒbƒg‚ÌƒŠƒXƒg
-const filesToCache = [
-    '/',
-    OFFLINE_URL,
-    '/style.css',
-
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css',
-    'https://fonts./googleapis.com/css2?family=RocknRoll+One&family=Noto+Sans+JP:wght@400;700;900&display=swap',
-
-    // 'https://fonts.gstatic.com' 
-
+const CACHE_NAME = 'nantetu-server-cache-v1.0.3'; // ã‚­ãƒ£ãƒƒã‚·ãƒ¥åã‚’ãƒãƒ¼ã‚¸ãƒ§ãƒ³ç®¡ç†ã™ã‚‹
+const FILES_TO_CACHE = [
+  '/', // ãƒˆãƒƒãƒ—ãƒšãƒ¼ã‚¸
+  '/index.html',
+  '/style.css',
+  '/_header.html', // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã—ãŸã„å…±é€šãƒ‘ãƒ¼ãƒ„
+  '/_footer.html',
+  '/scripts/dom-injector.js', // ä¸Šè¨˜ã§ææ¡ˆã—ãŸJSãƒ•ã‚¡ã‚¤ãƒ«
+  // ãã®ä»–ã®é‡è¦ãªã‚¢ã‚»ãƒƒãƒˆã‚’ã“ã“ã«è¿½åŠ ...
 ];
 
-// 1. ƒCƒ“ƒXƒg[ƒ‹ƒCƒxƒ“ƒg: ƒLƒƒƒbƒVƒ…‚Ìì¬‚ÆƒAƒZƒbƒg‚Ì’Ç‰Á
 self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then((cache) => {
-                console.log('Service Worker: ƒLƒƒƒbƒVƒ…‚ðŠJ‚¢‚ÄƒAƒZƒbƒg‚ð’Ç‰Á’†:', CACHE_NAME);
-                // •K{ƒtƒ@ƒCƒ‹‚ðƒLƒƒƒbƒVƒ…‚É’Ç‰Á
-                return cache.addAll(filesToCache);
-            })
-            .then(() => self.skipWaiting()) // ƒCƒ“ƒXƒg[ƒ‹Œã‚·‚®‚ÉƒAƒNƒeƒBƒx[ƒg
-            .catch(error => console.error('Service Worker: ƒLƒƒƒbƒVƒ…ƒCƒ“ƒXƒg[ƒ‹Ž¸”s:', error))
-    );
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then((cache) => {
+        console.log('Opened cache');
+        return cache.addAll(FILES_TO_CACHE);
+      })
+  );
+  self.skipWaiting(); // æ–°ã—ã„Service WorkerãŒã™ãã«ã‚¢ã‚¯ãƒ†ã‚£ãƒ–ã«ãªã‚‹ã‚ˆã†ã«ã™ã‚‹
 });
 
-// 2. ƒAƒNƒeƒBƒx[ƒgƒCƒxƒ“ƒg: ŒÃ‚¢ƒLƒƒƒbƒVƒ…‚Ìíœ
-self.addEventListener('activate', (event) => {
-    event.waitUntil(
-        caches.keys().then((cacheNames) => {
-            return Promise.all(
-                cacheNames.map((cacheName) => {
-                    if (cacheName !== CACHE_NAME) {
-                        console.log('Service Worker: ŒÃ‚¢ƒLƒƒƒbƒVƒ…‚ðíœ:', cacheName);
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        }).then(() => self.clients.claim())
-    );
-});
-
-// 3. ƒtƒFƒbƒ`ƒCƒxƒ“ƒg: ƒŠƒNƒGƒXƒg‚Ì–TŽó‚ÆƒIƒtƒ‰ƒCƒ“Žž‚Ì‘Î‰ž
 self.addEventListener('fetch', (event) => {
-    // GETƒŠƒNƒGƒXƒg‚©‚ÂŽ©ƒTƒCƒg‚©‚ç‚ÌƒŠƒNƒGƒXƒg‚Ì‚Ýˆ—
-    if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
-        return;
-    }
+  // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã«å­˜åœ¨ã™ã‚‹ãƒªã‚½ãƒ¼ã‚¹ã‚’å„ªå…ˆçš„ã«ä½¿ç”¨ã™ã‚‹ (Stale-While-Revalidate)
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      // 1. ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‹ã‚‰ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’è¿”ã™ï¼ˆã€Œå¤ã„ã€ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ï¼‰
+      const fetchedResponsePromise = fetch(event.request).then((networkResponse) => {
+        // 2. ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã‹ã‚‰æ–°ã—ã„ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’å–å¾—ã—ã€ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’æ›´æ–°
+        // ï¼ˆãŸã ã—ã€POSTãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚„ã‚¯ãƒ­ã‚¹ã‚ªãƒªã‚¸ãƒ³ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®ä¸€éƒ¨ã¯ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã—ãªã„ï¼‰
+        if (networkResponse.ok && networkResponse.type === 'basic') {
+          const cacheClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, cacheClone);
+          });
+        }
+        return networkResponse;
+      }).catch(error => {
+        // ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ãŒã‚ªãƒ•ãƒ©ã‚¤ãƒ³ã®å ´åˆã®ã‚¨ãƒ©ãƒ¼ãƒãƒ³ãƒ‰ãƒªãƒ³ã‚°
+        console.error('Fetch failed: ', error);
+        // å¿…è¦ã«å¿œã˜ã¦ã‚ªãƒ•ãƒ©ã‚¤ãƒ³ãƒšãƒ¼ã‚¸ã‚’è¿”ã™
+        if (event.request.mode === 'navigate') {
+          return caches.match('/offline.html');
+        }
+      });
+      
+      // ã‚­ãƒ£ãƒƒã‚·ãƒ¥ãŒã‚ã‚Œã°ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’è¿”ã—ã€è£ã§ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã‹ã‚‰å–å¾—ã€‚ãªã‘ã‚Œã°ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã‹ã‚‰å–å¾—ã€‚
+      return cachedResponse || fetchedResponsePromise;
+    })
+  );
+});
 
-    event.respondWith(
-        caches.match(event.request) // 1. ‚Ü‚¸ƒLƒƒƒbƒVƒ…‚ðŠm”F
-            .then((response) => {
-                if (response) {
-                    return response; // ƒLƒƒƒbƒVƒ…‚ª‚ ‚ê‚Î‚»‚ê‚ð•Ô‚·
-                }
-
-                // 2. ƒLƒƒƒbƒVƒ…‚ª‚È‚¯‚ê‚Îƒlƒbƒgƒ[ƒN‚©‚çŽæ“¾‚ðŽŽ‚Ý‚é
-                return fetch(event.request).catch(() => {
-                    // 3. ƒlƒbƒgƒ[ƒNƒGƒ‰[‚ª”­¶‚µ‚½ê‡
-                    if (event.request.mode === 'navigate') {
-                        // HTMLƒy[ƒW‚Ö‚ÌƒiƒrƒQ[ƒVƒ‡ƒ“ƒŠƒNƒGƒXƒg‚È‚çAƒIƒtƒ‰ƒCƒ“ƒy[ƒW‚ð•Ô‚·
-                        return caches.match(OFFLINE_URL);
-                    }
-                    // ‰æ‘œ‚âCSS‚È‚Ç‚ÌƒŠƒ\[ƒXƒŠƒNƒGƒXƒg‚ªŽ¸”s‚µ‚½ê‡‚Í‚»‚Ì‚Ü‚ÜƒGƒ‰[
-                    throw new Error('Network request failed and no cache available.');
-                });
-            })
-    );
+self.addEventListener('activate', (event) => {
+  // å¤ã„ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ã‚¯ãƒªãƒ¼ãƒ³ã‚¢ãƒƒãƒ—
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cacheName) => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            console.log(`Deleting old cache: ${cacheName}`);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
 });
