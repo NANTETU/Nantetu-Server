@@ -872,7 +872,7 @@ body.dark-mode .feature-item {
 
     .policy-content p, .policy-content li, .policy-content ol li {
         font-size: 16px;
-        line-height: 2.0; /* 行間を広めに */
+        line-height: 1.8; /* 行間を広めに */
         margin-bottom: 15px;
     }
 
@@ -1278,3 +1278,36 @@ footer {
     z-index: 9999;
     transition: width 0.3s ease;
 }
+
+/* ------------------------------------------- */
+/* 共通スタイル: PC表示 (1000px以上を想定) */
+/* ------------------------------------------- */
+.menu-toggle {
+    /* PCではハンバーガーメニューを非表示 */
+    display: none;
+}
+
+.nav-links {
+    /* PCではナビゲーションを通常表示 */
+    display: flex;
+    gap: 20px; /* リンク間のスペースを確保 */
+    transition: none; /* PCモードではトランジション不要 */
+}
+
+/* スキップリンクのCSS */
+.skip-link {
+    position: absolute; /* 位置を絶対指定 */
+    top: -40px; /* 普段は画面外に隠す */
+    left: 0;
+    padding: 8px;
+    background: var(--color-primary);
+    color: var(--color-bg-base);
+    z-index: 9999;
+    text-decoration: none;
+    transition: top 0.3s;
+}
+
+    /* フォーカスが当たったら表示する */
+    .skip-link:focus {
+        top: 0; /* 画面内へ移動 */
+    }
