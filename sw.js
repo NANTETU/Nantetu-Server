@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nantetu-server-cache-v1.0.3'; // キャッシュ名をバージョン管理する
+const CACHE_NAME = 'nantetu-server-cache-v1.0.4'; // キャッシュ名をバージョン管理する
 const FILES_TO_CACHE = [
   '/', // トップページ
   '/index.html',
@@ -6,7 +6,7 @@ const FILES_TO_CACHE = [
   '/_header.html', // キャッシュしたい共通パーツ
   '/_footer.html',
   '/scripts/dom-injector.js', // 上記で提案したJSファイル
-  // その他の重要なアセットをここに追加...
+  '/offline.html'
 ];
 
 self.addEventListener('install', (event) => {
