@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nantetu-server-cache-v1.0.3'; // キャッシュ名をバージョン管理する
+const CACHE_NAME = 'nantetu-server-cache-v1.0.4'; // キャッシュ名をバージョン管理する
 const FILES_TO_CACHE = [
   '/', // トップページ
   '/index.html',
